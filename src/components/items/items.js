@@ -1,15 +1,10 @@
 import React from 'react';
-import gql from 'graphql-tag';
+import { GET_ITEMS } from './queries/queries';
 import { useQuery } from 'react-apollo-hooks';
-import './items.css';
+import { Link } from 'react-router-dom';
 
-const GET_ITEMS = gql`
-  {
-    articl {
-      title
-    }
-  }
-`;
+import { API_URL } from '../../config';
+import './items.css';
 
 const Items = () => {
   const { data, error, loading } = useQuery(GET_ITEMS);
@@ -21,12 +16,22 @@ const Items = () => {
   }
 
   return (
-    <ul>
-      {/* {data.articl.map(item => (
-        <li key={item.id}>{item.title}</li>
-      ))} */}
-      {console.log(data)}
-    </ul>
+    <div className="Cards">
+      {data.posts.map(item => (
+        <Link
+          to={{
+            pathname: `${item.id}`,
+            props: { item }
+          }}
+          key={item.id}
+          className="Card"
+        >
+          <img src={`${API_URL}${item.images[0].url}`} alt="" />
+          <h2>{item.title}</h2>
+          <h2>{item.price}</h2>
+        </Link>
+      ))}
+    </div>
   );
 };
 

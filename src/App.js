@@ -1,21 +1,19 @@
 import React from 'react';
 import ApolloClient from 'apollo-boost';
+import Router from './routes';
 import { ApolloProvider } from 'react-apollo-hooks';
-import Layout from './components/index';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { API_URL } from './config';
+
+import './css/index.css';
 
 const client = new ApolloClient({
-  uri: 'http://sweetdreams.ru.com:1337/graphql'
+  uri: `${API_URL}graphql`
 });
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Layout} />
-        </Switch>
-      </Router>
+      <Router />
     </ApolloProvider>
   );
 }
