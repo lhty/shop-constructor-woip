@@ -1,9 +1,7 @@
 .header {
+  display: flex;
+  justify-content: center;
+  margin-top: 1vh;
 }
 .logo {
-  font-family: Notoitalic;
-  font-size: 5rem;
-
-  display: table;
-  margin: 0 auto;
 }

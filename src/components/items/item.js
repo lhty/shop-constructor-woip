@@ -2,13 +2,14 @@ import React from 'react';
 import { GET_ITEM } from './queries/queries';
 import { useQuery } from 'react-apollo-hooks';
 import { API_URL } from '../../config';
+import Loading from './loading';
 
 const Item = props => {
   const { data, error, loading } = useQuery(GET_ITEM, {
     variables: { id: props.match.params.title }
   });
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (error) {
     return <div>Error! {error.message}</div>;
