@@ -6,6 +6,10 @@
   box-sizing: border-box;
   text-decoration: none;
 }
+.centered {
+  margin-right: 50%;
+  margin-left: 50%;
+}
 @font-face {
   font-family: Noto;
   src: url('../fonts/NotoSerif-Regular.ttf');

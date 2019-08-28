@@ -10,10 +10,12 @@
     "react-apollo-hooks": "^0.5.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "react-vk": "^5.0.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=80 && react-scripts start",
+    "startnix": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -32,5 +34,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }
