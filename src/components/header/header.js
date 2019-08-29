@@ -3,6 +3,9 @@ import './header.css';
 import { Link } from 'react-router-dom';
 import Logo from './logo';
 import VK, { Auth } from 'react-vk';
+import Strapi from 'strapi-sdk-javascript';
+
+const strapi = new Strapi('http://sweetdreams.ru.com:1337/');
 
 export default function header() {
   return (
@@ -14,7 +17,11 @@ export default function header() {
         <Auth
           options={{
             onAuth: user => {
-              console.log(user);
+              strapi.register(
+                `${user.first_name} ${user.last_name}`,
+                'TBD',
+                'TBD pass gen'
+              );
             }
           }}
         />
