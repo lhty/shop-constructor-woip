@@ -9,10 +9,16 @@ export default function header() {
     <div className="header">
       <Link to="/">
         <Logo />
-        <VK apiId={6870521}>
-          <Auth />
-        </VK>
       </Link>
+      <VK apiId={6870521}>
+        <Auth
+          options={{
+            onAuth: user => {
+              console.log(user);
+            }
+          }}
+        />
+      </VK>
     </div>
   );
 }
