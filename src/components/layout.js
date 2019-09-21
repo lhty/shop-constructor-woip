@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './header';
 import Promo from './promo';
-import Staticinfo from './staticinfo';
 import { Route } from 'react-router';
 import Grid from './grid';
 
@@ -13,7 +12,6 @@ const Layout = () => {
     <>
       <Header />
       <Promo />
-      <Staticinfo />
       <Route exact path="/" component={Grid} />
       <Route exact path="/:id/:title" component={Product} />
     </>

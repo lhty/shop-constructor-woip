@@ -19,7 +19,7 @@ const Product = ({ match }) => {
   // });
   // const data = JSON.parse(localStorage.getItem('data'));
   return (
-    <section className="centered">
+    <section className="product">
       {loading ? (
         <></>
       ) : (
