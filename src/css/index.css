@@ -1,15 +1,3 @@
-*,
-*::before,
-*::after {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-  text-decoration: none;
-}
-.centered {
-  margin-right: 50%;
-  margin-left: 50%;
-}
 @font-face {
   font-family: Noto;
   src: url('../fonts/NotoSerif-Regular.ttf');
@@ -22,6 +10,14 @@
   font-family: Notoitalic;
   src: url('../fonts/NotoSerif-RegularItalic.ttf');
 }
+*,
+*::before,
+*::after {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -29,6 +25,23 @@ a {
 html,
 body {
   font-family: Noto;
-
+  background-color: #f4eae1;
   height: 100%;
+}
+.page {
+  position: relative;
+  width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.centered {
+  width: 50%;
+  height: 70%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }

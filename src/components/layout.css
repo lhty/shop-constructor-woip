@@ -1,0 +1,77 @@
+.layout-grid {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(auto-fill, 400px);
+  grid-gap: 10px;
+  margin: 5vh 30vh 0 30vh;
+}
+.layout-grid img {
+  border-radius: 15px;
+  box-shadow: 0px 7px 21px -5px rgba(181, 181, 181, 1);
+}
+.promo-container {
+  height: 550px;
+  background-color: #ffc2a859;
+  border-radius: 0px 0px 15px 15px;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+}
+.promo {
+  height: 450px;
+  width: 100%;
+  position: absolute;
+  top: 100px;
+}
+.promo-svg-label {
+  position: relative;
+  left: 50%;
+  right: 50%;
+}
+.promo-prev {
+  width: 24px;
+  height: 42px;
+  background: url(../img/arrow.svg);
+  transform: rotate(180deg);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  left: 5%;
+  top: 45%;
+}
+.promo-next {
+  width: 24px;
+  height: 42px;
+  background: url(../img/arrow.svg);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 5%;
+  top: 45%;
+}
+.static-container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.static-grid {
+  display: grid;
+  grid-template-columns: 400px 400px 400px;
+  grid-template-rows: 100px 100px;
+  grid-gap: 50px;
+}
+.static-card {
+  border-radius: 10px;
+  border: 1px solid #833904;
+  box-sizing: border-box;
+  box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
+    10px 10px 25px rgba(112, 124, 151, 0.05);
+}
+.static-card p {
+  padding: 15px;
+}
