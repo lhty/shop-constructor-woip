@@ -27,6 +27,15 @@ const PRODUCT = gql`
     }
   }
 `;
+const PROMO = gql`
+  {
+    promos(sort: "id:desc") {
+      promo_banners {
+        url
+      }
+    }
+  }
+`;
 
 export const Context = React.createContext();
 
@@ -52,6 +61,7 @@ const Provider = props => {
       value={{
         PRODUCTS,
         PRODUCT,
+        PROMO,
         selected,
         Setselected,
         selectedtitle,
