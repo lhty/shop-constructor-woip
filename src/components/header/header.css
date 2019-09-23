@@ -20,6 +20,7 @@
   width: 100%;
   z-index: 10000;
   margin-top: 10px;
+  top: 0;
 }
 .top-menu-label {
   top: 69px;
@@ -27,6 +28,17 @@
   max-width: 95%;
   left: 50%;
   transform: translateX(-50%);
+}
+.cart {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.login {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #dedede;
 }
 /* .toppanelfragment {
   display: table;

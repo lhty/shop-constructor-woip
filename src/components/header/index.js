@@ -1,6 +1,7 @@
 import React from 'react';
 import './header.css';
 import Logo from './logo';
+import Cart from './cart';
 import { Link } from 'react-router-dom';
 
 export default function header() {
@@ -8,9 +9,10 @@ export default function header() {
     <section className="header">
       <div className="top-panel">
         <Link to="/">
+          <h1 className="login">LOGIN/LOGOUT</h1>
           <Logo />
-          <div>LOGIN/LOGOUT</div>
         </Link>
+        <Cart />
         {bottomlabel}
       </div>
     </section>

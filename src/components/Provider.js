@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import gql from 'graphql-tag';
-// import { useQuery } from 'react-apollo-hooks';
 
 const PRODUCTS = gql`
   {
@@ -39,22 +38,8 @@ const PROMO = gql`
 
 export const Context = React.createContext();
 
-// export const Getdata = val => {
-//   const { data, error, loading } = useQuery(val);
-//   if (data) {
-//     return data;
-//   }
-//   if (loading) {
-//     return <></>;
-//   }
-//   if (error) {
-//     return <>{console.log(error.message)}</>;
-//   }
-// };
-
 const Provider = props => {
-  const [selected, Setselected] = useState();
-  const [selectedtitle, Setselectedtitle] = useState();
+  const [selected, Setselected] = useState({ id: 0, title: '' });
 
   return (
     <Context.Provider
@@ -63,9 +48,7 @@ const Provider = props => {
         PRODUCT,
         PROMO,
         selected,
-        Setselected,
-        selectedtitle,
-        Setselectedtitle
+        Setselected
       }}
     >
       {props.children}

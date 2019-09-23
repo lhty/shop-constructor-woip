@@ -8,16 +8,7 @@ const Product = ({ match }) => {
   const { loading, data } = useQuery(PRODUCT, {
     variables: { id: match.params.id }
   });
-  // const data = products.find(product => product.id === selected);
 
-  // JSON.parse(localStorage.getItem('data'));
-
-  // useEffect(() => {
-  //   if (!localStorage.getItem('data')) {
-  //     localStorage.setItem('data', JSON.stringify(data));
-  //   }
-  // });
-  // const data = JSON.parse(localStorage.getItem('data'));
   return (
     <section className="product">
       {loading ? (

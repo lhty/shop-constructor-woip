@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo-hooks';
 import Staticinfo from './staticinfo';
 
 const Grid = () => {
-  const { PRODUCTS, Setselected, Setselectedtitle } = useContext(Context);
+  const { PRODUCTS, Setselected } = useContext(Context);
   const { loading, data } = useQuery(PRODUCTS);
   return (
     <>
@@ -19,8 +19,7 @@ const Grid = () => {
             <Link key={product.id} to={product.id + '/' + product.title}>
               <img
                 onClick={() => {
-                  Setselected(product.id);
-                  Setselectedtitle(product.title);
+                  Setselected({ id: product.id, title: product.title });
                 }}
                 key={product.id}
                 src={`${API_URL}${product.images[0].url.slice(
