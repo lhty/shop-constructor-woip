@@ -1,36 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Context } from './Provider';
-import { API_URL } from '../config';
-import { Link } from 'react-router-dom';
 import { useQuery } from 'react-apollo-hooks';
 import Staticinfo from './staticinfo';
+import Productcard from './productcard';
 
 const Grid = () => {
-  const { PRODUCTS, Setselected } = useContext(Context);
-  const { loading, data } = useQuery(PRODUCTS);
+  const { PRODUCTS } = useContext(Context);
+  const { data, error, loading } = useQuery(PRODUCTS);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const onCompleted = data => {
+      setItems([...data.posts]);
+    };
+    const onError = error => {
+      return <></>;
+    };
+    if (onCompleted || onError) {
+      if (onCompleted && !loading && !error) {
+        onCompleted(data);
+      } else if (onError && !loading && error) {
+        onError(error);
+      }
+    }
+  }, [loading, data, error]);
+
   return (
     <>
       <Staticinfo />
       <div className="layout-grid">
-        {loading ? (
-          <></>
-        ) : (
-          data.posts.map(product => (
-            <Link key={product.id} to={product.id + '/' + product.title}>
-              <img
-                onClick={() => {
-                  Setselected({ id: product.id, title: product.title });
-                }}
-                key={product.id}
-                src={`${API_URL}${product.images[0].url.slice(
-                  1,
-                  9
-                )}thumbnail/th-${product.images[0].url.slice(9)}`}
-                alt=""
-              />
-            </Link>
-          ))
-        )}
+        {Object.keys(items).length > 0 ? <Productcard product={items} /> : null}
       </div>
     </>
   );

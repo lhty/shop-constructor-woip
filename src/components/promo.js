@@ -29,7 +29,6 @@ const Promo = () => {
     );
   }, [loading, data, error, list.length, current]);
 
-  if (loading) return <></>;
   return (
     <>
       <section className="promo-container">
@@ -42,12 +41,16 @@ const Promo = () => {
             }}
           ></button>
           <div className="banner">
-            <img
-              src={`${API_URL}${
-                list.map(banner => banner.promo_banners[0].url)[current]
-              }`}
-              alt=""
-            ></img>
+            {list.length > 0 ? (
+              <img
+                src={`${API_URL}${
+                  list.map(banner => banner.promo_banners[0].url)[current]
+                }`}
+                alt=""
+              ></img>
+            ) : (
+              <></>
+            )}
           </div>
           <button
             className="promo-next"

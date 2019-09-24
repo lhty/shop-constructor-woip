@@ -40,6 +40,7 @@ export const Context = React.createContext();
 
 const Provider = props => {
   const [selected, Setselected] = useState({ id: 0, title: '' });
+  const [cart, setCart] = useState([]);
 
   return (
     <Context.Provider
@@ -48,7 +49,9 @@ const Provider = props => {
         PRODUCT,
         PROMO,
         selected,
-        Setselected
+        Setselected,
+        cart,
+        setCart
       }}
     >
       {props.children}
