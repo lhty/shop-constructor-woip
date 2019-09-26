@@ -1,0 +1,8 @@
+.ProductList-wrapper {
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  flex-wrap: wrap;
+  width: 100%;
+}

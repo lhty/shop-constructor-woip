@@ -1,0 +1,10 @@
+.ProductPage-wrapper {
+  max-width: 1920px;
+  border: 1px dashed #833904;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding: 25px;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+}

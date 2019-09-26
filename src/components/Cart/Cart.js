@@ -1,16 +1,34 @@
-import React, { useContext } from 'react';
-import { Context } from '../Provider';
+import React, { useState, useContext } from 'react';
+import { Context } from '../Providers/Provider';
+import './Cart.css';
 
 const Cart = () => {
+  const [toggle, setToggle] = useState(false);
   const { cart } = useContext(Context);
   return (
-    <div className="cart">
+    <div
+      className="cart"
+      onClick={() => {
+        setToggle(cart.length > 0 ? !toggle : false);
+      }}
+    >
       <Bucket cart={cart} />
+      {toggle ? <Catrlist cart={cart} /> : null}
     </div>
   );
 };
 
 export default Cart;
+
+const Catrlist = cart => {
+  const list = cart.cart.map((val, i) => (
+    <div className="cart-element" key={i}>
+      {val.title}
+    </div>
+  ));
+
+  return <div className="cart-list">{list}</div>;
+};
 
 const Bucket = cart => {
   return (

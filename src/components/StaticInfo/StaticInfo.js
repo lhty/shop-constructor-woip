@@ -1,40 +1,42 @@
 import React from 'react';
 
-const Staticinfo = () => {
+import './StaticInfo.css';
+
+const StaticInfo = () => {
   return (
-    <section className="static-container">
-      <div className="static-grid">
-        <div className="static-card">
+    <section className="StaticInfo-container">
+      <div className="StaticInfo-grid">
+        <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div className="static-card">
+        <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div className="static-card">
+        <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div className="static-card">
+        <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div className="static-card">
+        <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
-        <div className="static-card">
+        <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -45,4 +47,4 @@ const Staticinfo = () => {
   );
 };
 
-export default Staticinfo;
+export default StaticInfo;

@@ -1,19 +1,17 @@
 import React from 'react';
-import Header from './header';
-import Promo from './promo';
+import Header from './Header/Header';
+import Promo from './Promo/Promo';
 import { Route } from 'react-router';
-import Grid from './grid';
-
-import Product from './product';
-import './layout.css';
+import ProductList from './Products/ProductList';
+import ProductPage from './Products/ProductPage';
 
 const Layout = () => {
   return (
     <>
       <Header />
       <Promo />
-      <Route exact path="/" component={Grid} />
-      <Route exact path="/:id/:title" component={Product} />
+      <Route exact path="/" component={ProductList} />
+      <Route exact path="/:id/:title" component={ProductPage} />
     </>
   );
 };

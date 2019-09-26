@@ -1,0 +1,23 @@
+.StaticInfo-container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.StaticInfo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100px 100px;
+  grid-gap: 50px;
+}
+.StaticInfo-card {
+  border-radius: 10px;
+  border: 1px dashed #833904;
+  box-sizing: border-box;
+  box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
+    10px 10px 25px rgba(112, 124, 151, 0.05);
+}
+.StaticInfo-card p {
+  padding: 15px;
+}

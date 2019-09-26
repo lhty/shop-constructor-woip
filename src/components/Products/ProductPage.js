@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
-import { API_URL } from '../config';
-import { Context } from './Provider';
+import { API_URL } from '../../config';
+import { Context } from '../Providers/Provider';
 import { useQuery } from 'react-apollo-hooks';
+
+import './ProductPage.css';
 
 const Product = ({ match }) => {
   const { PRODUCT } = useContext(Context);
@@ -10,7 +12,7 @@ const Product = ({ match }) => {
   });
 
   return (
-    <section className="product">
+    <section className="ProductPage-wrapper">
       {loading ? (
         <></>
       ) : (

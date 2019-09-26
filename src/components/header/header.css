@@ -17,10 +17,10 @@
   animation: letter-animation 1.5s linear forwards;
   position: absolute;
   height: 115%;
-  width: 100%;
   z-index: 10000;
   margin-top: 10px;
-  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .top-menu-label {
   top: 69px;
@@ -29,23 +29,7 @@
   left: 50%;
   transform: translateX(-50%);
 }
-.cart {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-.cart-counter {
-  height: 20px;
-  width: 20px;
-  background-color: #a70f0fa3;
-  border-radius: 50%;
-  position: absolute;
-  right: -3px;
-  top: 8px;
-  text-align: center;
-  font-size: 14px;
-  color: white;
-}
+
 .login {
   position: absolute;
   left: 10px;

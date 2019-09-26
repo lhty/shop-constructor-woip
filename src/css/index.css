@@ -28,20 +28,3 @@ body {
   background-color: #f4eae1;
   height: 100%;
 }
-.page {
-  position: relative;
-  width: 1920px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.centered {
-  width: 50%;
-  height: 70%;
-  overflow: auto;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}

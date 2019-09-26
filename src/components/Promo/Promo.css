@@ -1,0 +1,43 @@
+.Promo-container {
+  height: 550px;
+  background-color: #ffc2a859;
+  border-radius: 0px 0px 15px 15px;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+.Promo {
+  height: 450px;
+  width: 100%;
+  position: absolute;
+  top: 100px;
+}
+.Promo-svg-label {
+  position: relative;
+  left: 50%;
+  right: 50%;
+}
+.Promo-prev {
+  width: 24px;
+  height: 42px;
+  background: url(../../img/arrow.svg);
+  transform: rotate(180deg);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  left: 5%;
+  top: 45%;
+}
+.Promo-next {
+  width: 24px;
+  height: 42px;
+  background: url(../../img/arrow.svg);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 5%;
+  top: 45%;
+}

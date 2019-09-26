@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Context } from './Provider';
+import { Context } from '../Providers/Provider';
 import { useQuery } from 'react-apollo-hooks';
-import Staticinfo from './staticinfo';
-import Productcard from './productcard';
+import Staticinfo from '../StaticInfo/StaticInfo';
+import ProductCard from './ProductCard';
 
-const Grid = () => {
+import './ProductList.css';
+
+const ProductList = () => {
   const { PRODUCTS } = useContext(Context);
   const { data, error, loading } = useQuery(PRODUCTS);
   const [items, setItems] = useState([]);
@@ -28,10 +30,10 @@ const Grid = () => {
   return (
     <>
       <Staticinfo />
-      <div className="layout-grid">
-        {Object.keys(items).length > 0 ? <Productcard product={items} /> : null}
+      <div className="ProductList-wrapper">
+        {Object.keys(items).length > 0 ? <ProductCard product={items} /> : null}
       </div>
     </>
   );
 };
-export default Grid;
+export default ProductList;

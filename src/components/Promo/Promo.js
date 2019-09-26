@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Context } from './Provider';
+import { Context } from '../Providers/Provider';
 import { useQuery } from 'react-apollo-hooks';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
+
+import './Promo.css';
 
 const Promo = () => {
   const { PROMO } = useContext(Context);
@@ -25,22 +27,22 @@ const Promo = () => {
     }
     setTimeout(
       () => setCurrent(current === list.length - 1 ? 0 : current + 1),
-      2000
+      35000
     );
   }, [loading, data, error, list.length, current]);
 
   return (
     <>
-      <section className="promo-container">
-        <div className="promo">
+      <section className="Promo-container">
+        <div className="Promo">
           <button
-            className="promo-prev"
+            className="Promo-prev"
             type="button"
             onClick={() => {
               setCurrent(current === 0 ? list.length - 1 : current - 1);
             }}
           ></button>
-          <div className="banner">
+          <div className="Promo-banner">
             {list.length > 0 ? (
               <img
                 src={`${API_URL}${
@@ -53,7 +55,7 @@ const Promo = () => {
             )}
           </div>
           <button
-            className="promo-next"
+            className="Promo-next"
             type="button"
             onClick={() => {
               setCurrent(current === list.length - 1 ? 0 : current + 1);
@@ -68,7 +70,7 @@ const Promo = () => {
 
 const Promobotlabel = (
   <svg
-    className="promo-svg-label"
+    className="Promo-svg-label"
     width="71"
     height="31"
     viewBox="0 0 71 31"

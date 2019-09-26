@@ -1,0 +1,41 @@
+.ProductCard-wrapper {
+  position: relative;
+  margin: 5px;
+  transition: 1.4s;
+}
+.ProductCard-title {
+  position: absolute;
+  color: #3d3129;
+  background: linear-gradient(
+    90.47deg,
+    #ffffff 11.63%,
+    rgba(244, 234, 225, 0) 91.53%
+  );
+  border-radius: 5px 0px 0px 0px;
+  padding: 0px 0px 0px 10px;
+}
+.hover-buttons {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  cursor: pointer;
+}
+.hover-buttons :hover {
+  transform: scale(1.03, 1.03);
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+.hbutton {
+  height: 45px;
+  width: 140px;
+  margin: 10px;
+  background: url(../../img/cartadd.svg);
+}
+.ProductCard-thumbnail {
+  width: inherit;
+  height: inherit;
+  border-radius: 5px;
+  object-fit: cover;
+  border: 2px solid #e38a4a;
+}
