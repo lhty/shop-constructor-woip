@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
-import { API_URL } from '../../config';
 import { Context } from '../Providers/Provider';
 import { useQuery } from 'react-apollo-hooks';
 
 import './ProductPage.css';
 
 const Product = ({ match }) => {
-  const { PRODUCT } = useContext(Context);
-  const { loading, data } = useQuery(PRODUCT, {
+  const { ImgUrl, PRODUCT_QUERY } = useContext(Context);
+  const { loading, data } = useQuery(PRODUCT_QUERY, {
     variables: { id: match.params.id }
   });
 
@@ -18,7 +17,7 @@ const Product = ({ match }) => {
       ) : (
         <>
           <h1>{data.post.title}</h1>
-          <img src={`${API_URL}${data.post.images[0].url}`} alt="" />
+          <img src={ImgUrl(data.post)} alt="" />
           <p>{data.post.description}</p>
           <label>{data.post.price}</label>
         </>

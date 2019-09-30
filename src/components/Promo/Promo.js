@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from '../Providers/Provider';
 import { useQuery } from 'react-apollo-hooks';
 import { API_URL } from '../../config';
@@ -6,47 +6,38 @@ import { API_URL } from '../../config';
 import './Promo.css';
 
 const Promo = () => {
-  const { PROMO } = useContext(Context);
-  const { data, error, loading } = useQuery(PROMO);
+  const { PROMO_QUERY } = useContext(Context);
+  const { data, error, loading } = useQuery(PROMO_QUERY);
   const [current, setCurrent] = useState(0);
-  const [list, setList] = useState([]);
 
-  useEffect(() => {
-    const onCompleted = data => {
-      setList([...data.promos]);
-    };
-    const onError = error => {
-      return <></>;
-    };
-    if (onCompleted || onError) {
-      if (onCompleted && !loading && !error) {
-        onCompleted(data);
-      } else if (onError && !loading && error) {
-        onError(error);
-      }
-    }
+  const Timer = delay => {
     setTimeout(
-      () => setCurrent(current === list.length - 1 ? 0 : current + 1),
-      35000
+      () => setCurrent(current === data.promos.length - 1 ? 0 : current + 1),
+      delay * 1000
     );
-  }, [loading, data, error, list.length, current]);
+  };
+
+  if (loading || error) return <></>;
 
   return (
     <>
+      {Timer(35)}
       <section className="Promo-container">
         <div className="Promo">
           <button
             className="Promo-prev"
             type="button"
             onClick={() => {
-              setCurrent(current === 0 ? list.length - 1 : current - 1);
+              setCurrent(current === 0 ? data.promos.length - 1 : current - 1);
             }}
           ></button>
           <div className="Promo-banner">
-            {list.length > 0 ? (
+            {data.promos.length > 0 ? (
               <img
                 src={`${API_URL}${
-                  list.map(banner => banner.promo_banners[0].url)[current]
+                  data.promos.map(banner => banner.promo_banners[0].url)[
+                    current
+                  ]
                 }`}
                 alt=""
               ></img>
@@ -58,7 +49,7 @@ const Promo = () => {
             className="Promo-next"
             type="button"
             onClick={() => {
-              setCurrent(current === list.length - 1 ? 0 : current + 1);
+              setCurrent(current === data.promos.length - 1 ? 0 : current + 1);
             }}
           ></button>
         </div>

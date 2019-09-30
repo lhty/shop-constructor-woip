@@ -31,3 +31,10 @@
 .cart-element {
   padding: 5px;
 }
+.cart-element-quantity {
+  font-weight: bold;
+  color: brown;
+  margin-left: 15px;
+  background-color: #f1daca;
+  border-radius: 5px;
+}

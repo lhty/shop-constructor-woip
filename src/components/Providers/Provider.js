@@ -1,57 +1,23 @@
-import React, { useState } from 'react';
-import gql from 'graphql-tag';
-
-const PRODUCTS = gql`
-  {
-    posts(sort: "id:desc") {
-      id
-      title
-      price
-      images {
-        url
-      }
-    }
-  }
-`;
-const PRODUCT = gql`
-  query($id: ID!) {
-    post(id: $id) {
-      id
-      title
-      description
-      price
-      images {
-        url
-      }
-    }
-  }
-`;
-const PROMO = gql`
-  {
-    promos(sort: "id:desc") {
-      promo_banners {
-        url
-      }
-    }
-  }
-`;
+import React, { useReducer } from 'react';
+import { ThumbnailUrl, ImgUrl } from './ThumbnailUrls';
+import { PRODUCTS_QUERY, PRODUCT_QUERY, PROMO_QUERY } from './Queries';
+import { CartReducer } from './CartReducers';
 
 export const Context = React.createContext();
 
 const Provider = props => {
-  const [selected, Setselected] = useState({ id: 0, title: '' });
-  const [cart, setCart] = useState([]);
+  const [cart, cartDispath] = useReducer(CartReducer, []);
 
   return (
     <Context.Provider
       value={{
-        PRODUCTS,
-        PRODUCT,
-        PROMO,
-        selected,
-        Setselected,
+        PRODUCTS_QUERY,
+        PRODUCT_QUERY,
+        PROMO_QUERY,
         cart,
-        setCart
+        cartDispath,
+        ThumbnailUrl,
+        ImgUrl
       }}
     >
       {props.children}

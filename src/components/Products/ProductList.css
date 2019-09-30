@@ -1,8 +1,15 @@
-.ProductList-wrapper {
+.ProductList-container {
   z-index: 0;
   display: flex;
   justify-content: center;
   padding-top: 30px;
   flex-wrap: wrap;
   width: 100%;
+}
+.ProductList-wrapper {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }

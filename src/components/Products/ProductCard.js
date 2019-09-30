@@ -1,23 +1,19 @@
 import React, { useContext } from 'react';
 import { Context } from '../Providers/Provider';
-import { API_URL } from '../../config';
 import { Link } from 'react-router-dom';
 
 import './ProductCard.css';
 
-const ProductCard = products => {
-  const { cart, setCart } = useContext(Context);
+const ProductCard = ({ product }) => {
+  const { ThumbnailUrl, cartDispath } = useContext(Context);
 
-  return products.product.map(product => (
+  return product.map(product => (
     <div key={product.id} className="ProductCard-wrapper">
       <p className="ProductCard-title">{product.title}</p>
       <Link to={product.id + '/' + product.title}>
         <img
           className="ProductCard-thumbnail"
-          src={`${API_URL}${product.images[0].url.slice(
-            1,
-            9
-          )}thumbnail/th-${product.images[0].url.slice(9)}`}
+          src={ThumbnailUrl(product)}
           alt=""
         />
       </Link>
@@ -25,7 +21,15 @@ const ProductCard = products => {
         <div
           className="hbutton"
           onClick={() => {
-            setCart([...cart, product]);
+            cartDispath({
+              type: 'CART_ADD',
+              payload: {
+                id: parseInt(product.id),
+                quantity: 1,
+                title: product.title,
+                image: ThumbnailUrl(product)
+              }
+            });
           }}
         ></div>
       </div>
