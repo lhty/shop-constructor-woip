@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../Providers/Provider';
 import Cart from '../Cart/Cart';
 import { Link } from 'react-router-dom';
+import Auth from '../Auth/Auth';
 
 import './Header.css';
 
@@ -8,8 +10,8 @@ export default function Header() {
   return (
     <section className="header">
       <div className="top-panel">
+        <Auth />
         <Link to="/">
-          <h1 className="login">LOGIN/LOGOUT</h1>
           <Logo />
         </Link>
         <Cart />
@@ -69,6 +71,7 @@ const bottomlabel = (
   </svg>
 );
 const Logo = () => {
+  const { toggleDispatch } = useContext(Context);
   return (
     <svg
       className="svgfilter"
@@ -77,6 +80,11 @@ const Logo = () => {
       viewBox="0 0 400 90"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      onClick={() => {
+        toggleDispatch({
+          type: 'Clear'
+        });
+      }}
     >
       <path
         fillRule="evenodd"

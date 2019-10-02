@@ -30,12 +30,6 @@
   transform: translateX(-50%);
 }
 
-.login {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  color: #dedede;
-}
 /* .toppanelfragment {
   display: table;
   margin: 0 auto;

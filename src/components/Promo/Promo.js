@@ -10,18 +10,9 @@ const Promo = () => {
   const { data, error, loading } = useQuery(PROMO_QUERY);
   const [current, setCurrent] = useState(0);
 
-  const Timer = delay => {
-    setTimeout(
-      () => setCurrent(current === data.promos.length - 1 ? 0 : current + 1),
-      delay * 1000
-    );
-  };
-
   if (loading || error) return <></>;
-
   return (
     <>
-      {Timer(35)}
       <section className="Promo-container">
         <div className="Promo">
           <button
@@ -34,6 +25,7 @@ const Promo = () => {
           <div className="Promo-banner">
             {data.promos.length > 0 ? (
               <img
+                className="Promo-img"
                 src={`${API_URL}${
                   data.promos.map(banner => banner.promo_banners[0].url)[
                     current

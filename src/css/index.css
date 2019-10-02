@@ -17,6 +17,7 @@
   padding: 0px;
   box-sizing: border-box;
   text-decoration: none;
+  user-select: none;
 }
 a {
   color: inherit;

@@ -11,15 +11,19 @@ const Product = ({ match }) => {
   });
 
   return (
-    <section className="ProductPage-wrapper">
+    <section className="product-page-container">
       {loading ? (
         <></>
       ) : (
         <>
-          <h1>{data.post.title}</h1>
-          <img src={ImgUrl(data.post)} alt="" />
-          <p>{data.post.description}</p>
-          <label>{data.post.price}</label>
+          <div className="product-page-left">
+            <img src={ImgUrl(data.post)} alt="" />
+          </div>
+          <div className="product-page-right">
+            <h1>{data.post.title}</h1>
+            <p>{data.post.description}</p>
+            <label>{data.post.price} руб.</label>
+          </div>
         </>
       )}
     </section>

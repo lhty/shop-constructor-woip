@@ -8,10 +8,12 @@
   overflow: hidden;
 }
 .Promo {
-  height: 450px;
   width: 100%;
   position: absolute;
   top: 100px;
+}
+.Promo-img {
+  width: 100%;
 }
 .Promo-svg-label {
   position: relative;

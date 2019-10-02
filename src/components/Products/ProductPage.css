@@ -1,10 +1,40 @@
-.ProductPage-wrapper {
+.product-page-container {
+  position: relative;
+  display: flex;
   max-width: 1920px;
   border: 1px dashed #833904;
   box-sizing: border-box;
   border-radius: 15px;
   padding: 25px;
-  display: block;
   margin: 20px auto;
   text-align: center;
+}
+
+.product-page-left {
+}
+.product-page-left img {
+  border-radius: 15px;
+}
+.product-page-right {
+  margin-left: 20px;
+}
+.product-page-right h1 {
+  margin-bottom: 50px;
+  font-size: 30px;
+  color: #4f2202;
+}
+.product-page-right p {
+  width: 60%;
+  margin: 0 auto;
+  font-size: 20px;
+  font-weight: 500;
+  color: #431d02;
+}
+.product-page-right label {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  font-size: 50px;
+  font-weight: bold;
+  color: #833904;
 }

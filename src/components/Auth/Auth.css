@@ -1,0 +1,10 @@
+.auth {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  transition: 0.4s;
+  cursor: pointer;
+  width: 50px;
+  height: 40px;
+  background: url(../../img/UserIcon.svg);
+}

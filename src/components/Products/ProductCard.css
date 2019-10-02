@@ -5,14 +5,9 @@
 }
 .ProductCard-title {
   position: absolute;
-  color: #3d3129;
-  background: linear-gradient(
-    90.47deg,
-    #ffffff 11.63%,
-    rgba(244, 234, 225, 0) 91.53%
-  );
-  border-radius: 5px 0px 0px 0px;
-  padding: 0px 0px 0px 10px;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 5px;
 }
 .hover-buttons {
   position: absolute;
@@ -37,5 +32,7 @@
   height: inherit;
   border-radius: 5px;
   object-fit: cover;
-  border: 2px solid #e38a4a;
+  border: 1px dashed #833904;
+  box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
+    10px 10px 25px rgba(112, 124, 151, 0.05);
 }

@@ -5,7 +5,7 @@ import './StaticInfo.css';
 const StaticInfo = () => {
   return (
     <section className="StaticInfo-container">
-      <div className="StaticInfo-grid">
+      <div className="StaticInfo-wrapper">
         <div className="StaticInfo-card">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

@@ -1,12 +1,18 @@
 import React, { useReducer } from 'react';
 import { ThumbnailUrl, ImgUrl } from './ThumbnailUrls';
 import { PRODUCTS_QUERY, PRODUCT_QUERY, PROMO_QUERY } from './Queries';
-import { CartReducer } from './CartReducers';
+import { CartReducer } from './Reducers/CartReducers';
+import { Toggler } from './Reducers/Toggler';
 
 export const Context = React.createContext();
 
 const Provider = props => {
   const [cart, cartDispath] = useReducer(CartReducer, []);
+
+  const [toggleWhat, toggleDispatch] = useReducer(Toggler, {
+    toggleCart: false,
+    toggleAuth: false
+  });
 
   return (
     <Context.Provider
@@ -17,7 +23,9 @@ const Provider = props => {
         cart,
         cartDispath,
         ThumbnailUrl,
-        ImgUrl
+        ImgUrl,
+        toggleWhat,
+        toggleDispatch
       }}
     >
       {props.children}
