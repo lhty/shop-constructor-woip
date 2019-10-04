@@ -2,9 +2,9 @@ import React from 'react';
 import Signup from './Signup';
 import Login from './Login';
 
-import './Authpage.css';
+import './AuthPage.css';
 
-const Authpage = () => {
+const AuthPage = () => {
   return (
     <div className="auth-page-container">
       <div className="auth-page-wrapper">
@@ -15,4 +15,4 @@ const Authpage = () => {
   );
 };
 
-export default Authpage;
+export default AuthPage;
