@@ -1,16 +1,18 @@
 import React from 'react';
-import SignIn from './SignIn';
+import Signup from './Signup';
+import Login from './Login';
 
-import './AuthPage.css';
+import './Authpage.css';
 
-const AuthPage = () => {
+const Authpage = () => {
   return (
     <div className="auth-page-container">
       <div className="auth-page-wrapper">
-        <SignIn />
+        <Signup />
+        <Login />
       </div>
     </div>
   );
 };
 
-export default AuthPage;
+export default Authpage;

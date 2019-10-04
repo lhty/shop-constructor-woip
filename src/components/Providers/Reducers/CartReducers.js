@@ -1,28 +1,31 @@
 const CART_ADD = 'CART_ADD';
 const CART_REMOVE = 'CART_REMOVE';
+const CART_RETRIVE = 'CART_RETRIVE';
 
 export const CartReducer = (cart, action) => {
   switch (action.type) {
     case CART_ADD:
-      const FindDuplicate = cart.find(obj => obj.id === action.id);
+      const FindDuplicate = cart.find(obj => obj.id === action.payload.id);
       return [
         ...cart,
         FindDuplicate
           ? {
-              ...action,
+              ...action.payload,
               quantity: FindDuplicate.quantity + 1
             }
-          : action
+          : action.payload
       ].filter(
-        (obj, index) => index !== cart.findIndex(obj => obj.id === action.id)
+        (obj, index) =>
+          index !== cart.findIndex(obj => obj.id === action.payload.id)
       );
-
     case CART_REMOVE:
       return cart
         .map(obj =>
           obj.id === action.id ? { ...obj, quantity: obj.quantity - 1 } : obj
         )
         .filter(obj => obj.quantity > 0);
+    case CART_RETRIVE:
+      return action.payload;
     default:
       return cart;
   }

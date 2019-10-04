@@ -23,10 +23,12 @@ const ProductCard = ({ product }) => {
           onClick={() => {
             cartDispath({
               type: 'CART_ADD',
-              id: parseInt(product.id),
-              quantity: 1,
-              title: product.title,
-              image: ThumbnailUrl(product)
+              payload: {
+                id: parseInt(product.id),
+                quantity: 1,
+                title: product.title,
+                image: ThumbnailUrl(product)
+              }
             });
           }}
         ></div>

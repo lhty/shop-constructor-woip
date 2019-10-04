@@ -13,6 +13,10 @@ const CartList = () => {
       });
   }, [cart, toggleDispatch]);
 
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
   const list = cart
     .sort((a, b) => b.id - a.id)
     .map((val, i) => (
@@ -38,10 +42,12 @@ const CartList = () => {
             onClick={() => {
               cartDispath({
                 type: 'CART_ADD',
-                id: val.id,
-                quantity: val.quantity,
-                title: val.title,
-                image: val.image
+                payload: {
+                  id: val.id,
+                  quantity: val.quantity,
+                  title: val.title,
+                  image: val.image
+                }
               });
             }}
           >

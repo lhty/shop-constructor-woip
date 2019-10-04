@@ -1,0 +1,34 @@
+.auth-page-signup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.auth-page-signup-title {
+  color: #833904;
+  margin-bottom: 10px;
+}
+.auth-page-signup input {
+  border: 0.5px dashed #833904;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 25px;
+  padding: 5px;
+  background-color: #f4eae1;
+  text-align: center;
+}
+.auth-page-signup button {
+  border: 0.5px dashed #833904;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  color: #7e4a24;
+  height: 35px;
+  padding: 5px;
+  background-color: #f6e0cd;
+  cursor: pointer;
+}
+.auth-page-signup button:hover {
+  background-color: #f3cdac;
+}

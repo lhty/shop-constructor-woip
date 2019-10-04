@@ -1,13 +1,13 @@
-.auth-page-signin {
+.auth-page-login {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.auth-page-signin-title {
+.auth-page-login-title {
   color: #833904;
   margin-bottom: 10px;
 }
-.auth-page-signin input {
+.auth-page-login input {
   border: 0.5px dashed #833904;
   box-sizing: border-box;
   border-radius: 5px;
@@ -17,7 +17,7 @@
   background-color: #f4eae1;
   text-align: center;
 }
-.auth-page-signin button {
+.auth-page-login button {
   border: 0.5px dashed #833904;
   box-sizing: border-box;
   font-size: 15px;
@@ -29,6 +29,6 @@
   background-color: #f6e0cd;
   cursor: pointer;
 }
-.auth-page-signin button:hover {
+.auth-page-login button:hover {
   background-color: #f3cdac;
 }
