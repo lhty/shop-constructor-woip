@@ -3,7 +3,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo-hooks';
 import { API_URL } from './config';
 import Provider from './components/Providers/Provider';
-import Layout from './components/';
+import Layout from './components/Layout';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './css/index.css';

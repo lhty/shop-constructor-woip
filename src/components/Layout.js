@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Header from './Nav/Headernav';
+import Header from './Header/Header';
 import Promo from './Promo/Promo';
 import { Route, Switch } from 'react-router';
 import ProductList from './Products/ProductList';

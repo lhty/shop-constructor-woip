@@ -4,7 +4,7 @@ import Cart from '../Cart/Cart';
 import { Link } from 'react-router-dom';
 import Auth from '../Auth/Auth';
 
-import './Nav.css';
+import './Header.css';
 
 export default function Header() {
   return (
