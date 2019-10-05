@@ -4,7 +4,7 @@ import { Context } from '../Providers/Provider';
 
 import './CartList.css';
 
-const CartList = () => {
+const CartList = ({ match }) => {
   const { cartDispath, cart, toggleDispatch } = useContext(Context);
 
   useEffect(() => {
@@ -22,7 +22,10 @@ const CartList = () => {
     .sort((a, b) => b.id - a.id)
     .map((val, i) => (
       <div className="cart-element" key={i}>
-        <Link className="cart-element-description" to={val.link}>
+        <Link
+          className="cart-element-description"
+          to={{ pathname: `${match.url}${val.id}/${val.title}` }}
+        >
           <img className="cart-element-img" src={val.image} alt=""></img>
           <p>{val.title}</p>
         </Link>
@@ -50,7 +53,7 @@ const CartList = () => {
                   quantity: val.quantity,
                   title: val.title,
                   image: val.image,
-                  link: val.link
+                  price: val.price
                 }
               });
             }}
@@ -62,9 +65,16 @@ const CartList = () => {
     ));
 
   return (
-    <div className="cart-list-container">
+    <section className="cart-list-container">
       <div className="cart-list-wrapper">{list}</div>
-    </div>
+      {cart.length > 0 && (
+        <h1 className="cart-list-overallprice">
+          Итого :
+          {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}
+          руб.
+        </h1>
+      )}
+    </section>
   );
 };
 
