@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Context } from '../Providers/Provider';
 
 import './CartList.css';
@@ -21,8 +22,10 @@ const CartList = () => {
     .sort((a, b) => b.id - a.id)
     .map((val, i) => (
       <div className="cart-element" key={i}>
-        <img className="cart-element-img" src={val.image} alt=""></img>
-        {val.title}
+        <Link className="cart-element-description" to={val.link}>
+          <img className="cart-element-img" src={val.image} alt=""></img>
+          <p>{val.title}</p>
+        </Link>
         <label className="cart-element-quantity">
           <label
             className="cart-element-remove"
@@ -46,7 +49,8 @@ const CartList = () => {
                   id: val.id,
                   quantity: val.quantity,
                   title: val.title,
-                  image: val.image
+                  image: val.image,
+                  link: val.link
                 }
               });
             }}

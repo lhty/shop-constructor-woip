@@ -12,6 +12,7 @@ const Auth = () => {
         toggleDispatch({
           type: 'toggleAuth'
         });
+        window.scrollTo(0, 0);
       }}
     ></div>
   );

@@ -27,7 +27,8 @@ const ProductCard = ({ product }) => {
                 id: parseInt(product.id),
                 quantity: 1,
                 title: product.title,
-                image: ThumbnailUrl(product)
+                image: ThumbnailUrl(product),
+                link: product.id + '/' + product.title
               }
             });
           }}

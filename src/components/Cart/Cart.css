@@ -4,6 +4,7 @@
   top: 10px;
   transition: 0.4s;
   cursor: pointer;
+  z-index: 10000;
 }
 .cart-counter {
   height: 20px;

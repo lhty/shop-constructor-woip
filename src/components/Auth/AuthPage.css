@@ -1,9 +1,10 @@
 .auth-page-container {
   background-color: #ffc2a859;
   border-radius: 0px 0px 15px 15px;
-  max-width: 1920px;
+  max-width: 85%;
   overflow: hidden;
   margin: 0 auto;
+  animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .auth-page-wrapper {
   margin: 120px 0 20px 0;

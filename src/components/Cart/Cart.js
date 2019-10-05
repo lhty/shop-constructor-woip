@@ -22,6 +22,7 @@ const Cart = () => {
           toggleDispatch({
             type: 'toggleCart'
           });
+        window.scrollTo(0, 0);
       }}
     >
       <Bucket cart={cart} />

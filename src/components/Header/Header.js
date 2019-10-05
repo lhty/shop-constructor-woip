@@ -84,6 +84,7 @@ const Logo = () => {
         toggleDispatch({
           type: 'Clear'
         });
+        window.scrollTo(0, 0);
       }}
     >
       <path

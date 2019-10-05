@@ -1,45 +1,44 @@
 .Promo-container {
-  height: 550px;
   background-color: #ffc2a859;
   border-radius: 0px 0px 15px 15px;
-  max-width: 1920px;
-  margin: 0 auto;
-  position: relative;
+  max-width: 85%;
   overflow: hidden;
+  margin: 0 auto;
+  animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .Promo {
-  width: 100%;
-  position: absolute;
-  top: 100px;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1%;
 }
+.Promo-banner {
+  animation: 1s ease 0s 1 normal none running bounceRight;
+}
+
 .Promo-img {
   width: 100%;
 }
 .Promo-svg-label {
-  position: relative;
-  left: 50%;
-  right: 50%;
+  width: 100%;
 }
 .Promo-prev {
-  width: 24px;
+  min-width: 24px;
   height: 42px;
   background: url(../../img/arrow.svg);
   transform: rotate(180deg);
   border: none;
   outline: none;
   cursor: pointer;
-  position: absolute;
-  left: 5%;
-  top: 45%;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 .Promo-next {
-  width: 24px;
+  min-width: 24px;
   height: 42px;
-  background: url(../../img/arrow.svg);
+  background: url(/static/media/arrow.eab726b2.svg);
   border: none;
   outline: none;
   cursor: pointer;
-  position: absolute;
-  right: 5%;
-  top: 45%;
 }
