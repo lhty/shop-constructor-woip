@@ -1,13 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../Providers/Provider';
 
 import './Auth.css';
 
 const Auth = () => {
-  const { toggleDispatch } = useContext(Context);
+  const { toggleDispatch, user, userDispatch } = useContext(Context);
+
+  useEffect(() => {
+    return localStorage.getItem('user')
+      ? userDispatch({ type: 'temp' })
+      : undefined;
+  }, [userDispatch]);
+
   return (
     <div
-      className="auth"
+      className={user ? 'auth' : 'auth authFalse'}
       onClick={() => {
         toggleDispatch({
           type: 'toggleAuth'

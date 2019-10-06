@@ -6,7 +6,22 @@ import { Toggler } from './Reducers/Toggler';
 
 export const Context = React.createContext();
 
+const UserReducer = (user, action) => {
+  switch (action.type) {
+    case 'temp':
+      return (user = true);
+    case 'LOG_OUT':
+      return (user = false);
+    case 'LOG_IN':
+      return action.payload;
+    default:
+      return user;
+  }
+};
+
 const Provider = props => {
+  const [user, userDispatch] = useReducer(UserReducer, false);
+
   const [cart, cartDispath] = useReducer(CartReducer, []);
 
   const [toggleWhat, toggleDispatch] = useReducer(Toggler, {
@@ -25,7 +40,9 @@ const Provider = props => {
         ThumbnailUrl,
         ImgUrl,
         toggleWhat,
-        toggleDispatch
+        toggleDispatch,
+        user,
+        userDispatch
       }}
     >
       {props.children}

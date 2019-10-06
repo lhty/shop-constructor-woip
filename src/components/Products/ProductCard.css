@@ -32,7 +32,6 @@
   height: inherit;
   border-radius: 5px;
   object-fit: cover;
-  border: 1px dashed #833904;
   box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
     10px 10px 25px rgba(112, 124, 151, 0.05);
 }

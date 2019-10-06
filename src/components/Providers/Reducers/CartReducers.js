@@ -1,6 +1,7 @@
 const CART_ADD = 'CART_ADD';
 const CART_REMOVE = 'CART_REMOVE';
 const CART_RETRIVE = 'CART_RETRIVE';
+const CART_CLEAR = 'CART_CLEAR';
 
 export const CartReducer = (cart, action) => {
   switch (action.type) {
@@ -24,6 +25,8 @@ export const CartReducer = (cart, action) => {
           obj.id === action.id ? { ...obj, quantity: obj.quantity - 1 } : obj
         )
         .filter(obj => obj.quantity > 0);
+    case CART_CLEAR:
+      return [];
     case CART_RETRIVE:
       return action.payload;
     default:

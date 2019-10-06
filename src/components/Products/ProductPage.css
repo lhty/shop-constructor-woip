@@ -14,6 +14,7 @@
 }
 .product-page-left img {
   border-radius: 15px;
+  width: 100%;
 }
 .product-page-right {
   margin-left: 20px;
@@ -31,10 +32,13 @@
   color: #431d02;
 }
 .product-page-right label {
-  position: absolute;
-  right: 20px;
-  bottom: 10px;
+  float: right;
   font-size: 50px;
   font-weight: bold;
   color: #833904;
+}
+@media only screen and (max-width: 1350px) {
+  .product-page-container {
+    flex-direction: column;
+  }
 }

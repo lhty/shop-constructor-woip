@@ -37,8 +37,10 @@
 .Promo-next {
   min-width: 24px;
   height: 42px;
-  background: url(/static/media/arrow.eab726b2.svg);
+  background: url(../../img/arrow.svg);
   border: none;
   outline: none;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center center;
 }

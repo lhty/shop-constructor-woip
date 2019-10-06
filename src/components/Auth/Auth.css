@@ -7,5 +7,9 @@
   width: 50px;
   height: 40px;
   background: url(../../img/UserIcon.svg);
+  background-repeat: no-repeat;
   z-index: 10001;
+}
+.authFalse {
+  filter: grayscale(110%) brightness(105%) brightness(105%);
 }

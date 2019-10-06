@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../config';
+import { Context } from '../Providers/Provider';
 
 import './Signup.css';
 
 const Signup = () => {
+  const { userDispatch } = useContext(Context);
   const [inputValues, setInputValues] = useState();
   const handleOnChange = event => {
     const { name, value } = event.target;
@@ -19,20 +21,15 @@ const Signup = () => {
         password: inputValues.Password
       })
       .then(response => {
-        // // Handle success.
-        // console.log('Well done!');
-        // console.log('User profile', response.data.user);
-        console.log('User token', response.data.jwt);
+        localStorage.setItem('user', response.data.jwt);
+        userDispatch({ type: 'temp' });
       })
-      .catch(error => {
-        // Handle error.
-        console.log('An error occurred:', error);
-      });
+      .catch(error => {});
   };
 
   return (
     <form className="auth-page-signup" onSubmit={handleSubmit}>
-      <h1 className="auth-page-signup-title">Sign-UP</h1>
+      <h1 className="auth-page-signup-title">Регистрация</h1>
       <input
         name="Name"
         placeholder="Как к вам обращатсья ?"
@@ -51,7 +48,7 @@ const Signup = () => {
         onChange={handleOnChange}
         required
       ></input>
-      <button type="submit">Зарегетрироваться</button>
+      <button type="submit">Зарегистрироваться</button>
     </form>
   );
 };
