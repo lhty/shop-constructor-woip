@@ -13,3 +13,9 @@
 .authFalse {
   filter: grayscale(110%) brightness(105%) brightness(105%);
 }
+.username {
+  position: absolute;
+  left: 55px;
+  top: 20px;
+  color: #e4bfa0;
+}
