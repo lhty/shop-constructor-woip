@@ -1,0 +1,17 @@
+.Maintenance-container {
+  border: 2px dashed #fdc9b2;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 600px;
+  height: 600px;
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  margin: 50px;
+}
+.Maintenance-logo {
+  background: url(../../img/maintenance.svg);
+  min-height: 500px;
+  width: 500px;
+  margin: 0 auto;
+}

@@ -9,8 +9,8 @@ const Profile = () => {
   return !user[0] ? (
     <></>
   ) : (
-    <div>
-      Привет : {user[0].username}
+    <div className="profile-wrapper">
+      {console.log(user)}
       <button
         onClick={() => {
           userDispatch({ type: 'LOG_OUT' });
@@ -18,7 +18,7 @@ const Profile = () => {
           localStorage.clear();
         }}
       >
-        LOGOUT
+        Выйти
       </button>
     </div>
   );

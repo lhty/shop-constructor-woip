@@ -1,0 +1,17 @@
+.profile-wrapper {
+  margin: 120px 0 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+.profile-wrapper button {
+  border: 0.5px dashed #833904;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  color: #7e4a24;
+  height: 35px;
+  padding: 5px;
+  background-color: #f6e0cd;
+  cursor: pointer;
+}

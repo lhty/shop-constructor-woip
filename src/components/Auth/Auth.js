@@ -7,20 +7,20 @@ import './Auth.css';
 
 const Auth = () => {
   const { toggleDispatch, user, userDispatch } = useContext(Context);
+  const token = localStorage.getItem('user');
+  const userid = token
+    ? JSON.parse(
+        atob(
+          localStorage
+            .getItem('user')
+            .split('.')[1]
+            .replace('-', '+')
+            .replace('_', '/')
+        )
+      ).id
+    : undefined;
 
   useEffect(() => {
-    const token = localStorage.getItem('user');
-    const userid = token
-      ? JSON.parse(
-          atob(
-            localStorage
-              .getItem('user')
-              .split('.')[1]
-              .replace('-', '+')
-              .replace('_', '/')
-          )
-        ).id
-      : undefined;
     if (userid)
       axios
         .get(`${API_URL}users`, {
@@ -37,7 +37,7 @@ const Auth = () => {
         .catch(error => {
           console.log('An error occurred:', error);
         });
-  }, [userDispatch]);
+  }, [userid, token, userDispatch]);
 
   return !user[0] ? (
     <div

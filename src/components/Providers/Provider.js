@@ -2,26 +2,13 @@ import React, { useReducer } from 'react';
 import { ThumbnailUrl, ImgUrl } from './ThumbnailUrls';
 import { PRODUCTS_QUERY, PRODUCT_QUERY, PROMO_QUERY } from './Queries';
 import { CartReducer } from './Reducers/CartReducers';
+import { LoginReducer } from './Reducers/LoginReducer';
 import { Toggler } from './Reducers/Toggler';
 
 export const Context = React.createContext();
 
-const UserReducer = (user, action) => {
-  switch (action.type) {
-    case 'temp':
-      return (user = true);
-    case 'LOG_OUT':
-      return (user = false);
-    case 'LOG_IN':
-      return action.payload;
-    default:
-      return user;
-  }
-};
-
 const Provider = props => {
-  const [user, userDispatch] = useReducer(UserReducer, false);
-
+  const [user, userDispatch] = useReducer(LoginReducer, false);
   const [cart, cartDispath] = useReducer(CartReducer, []);
 
   const [toggleWhat, toggleDispatch] = useReducer(Toggler, {

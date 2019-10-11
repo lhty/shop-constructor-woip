@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Header from './Header/Header';
+
 import Promo from './Promo/Promo';
 import { Route, Switch } from 'react-router';
 import ProductList from './Products/ProductList';
@@ -8,8 +9,9 @@ import AuthPage from './Auth/AuthPage';
 import ProductPage from './Products/ProductPage';
 import { Context } from './Providers/Provider';
 
-const Layout = () => {
+const Layout = ({ error }) => {
   const { toggleWhat } = useContext(Context);
+
   return (
     <>
       <Header />

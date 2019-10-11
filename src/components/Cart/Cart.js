@@ -7,13 +7,14 @@ const Cart = () => {
   const { cart, cartDispath, toggleDispatch } = useContext(Context);
 
   useEffect(() => {
-    if (localStorage.getItem('cart') !== null)
+    if (localStorage.getItem('cart'))
       cartDispath({
-        type: 'CART_RETRIVE',
-        payload: JSON.parse(localStorage.getItem('cart'))
+        type: 'CART_RETRIVE'
       });
   }, [cartDispath]);
-
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
   return (
     <div
       className="cart"

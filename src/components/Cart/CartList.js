@@ -14,10 +14,6 @@ const CartList = ({ match }) => {
       });
   }, [cart, toggleDispatch]);
 
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
-
   const list = cart
     .sort((a, b) => b.id - a.id)
     .map((val, i) => (

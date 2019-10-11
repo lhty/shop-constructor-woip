@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../config';
-import { Context } from '../Providers/Provider';
 
 import './Signup.css';
 
 const Signup = () => {
-  const { userDispatch } = useContext(Context);
   const [inputValues, setInputValues] = useState();
   const handleOnChange = event => {
     const { name, value } = event.target;
@@ -22,7 +20,6 @@ const Signup = () => {
       })
       .then(response => {
         localStorage.setItem('user', response.data.jwt);
-        userDispatch({ type: 'temp' });
       })
       .catch(error => {});
   };

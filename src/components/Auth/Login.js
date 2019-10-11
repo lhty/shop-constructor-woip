@@ -9,10 +9,12 @@ const Login = () => {
   const { userDispatch } = useContext(Context);
 
   const [inputValues, setInputValues] = useState();
+
   const handleOnChange = event => {
     const { name, value } = event.target;
     setInputValues({ ...inputValues, [name]: value });
   };
+
   const handleSubmit = e => {
     e.preventDefault();
     axios
@@ -22,9 +24,11 @@ const Login = () => {
       })
       .then(response => {
         localStorage.setItem('user', response.data.jwt);
-        userDispatch({ type: 'temp' });
-      })
-      .catch(error => {});
+        userDispatch({
+          type: 'LOG_IN',
+          payload: response.data.user
+        });
+      });
   };
 
   return (

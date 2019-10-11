@@ -11,6 +11,7 @@ const Promo = () => {
   const [current, setCurrent] = useState(0);
 
   if (loading || error) return <></>;
+
   return (
     <>
       <section className="Promo-container">

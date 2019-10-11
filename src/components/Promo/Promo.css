@@ -19,6 +19,11 @@
 
 .Promo-img {
   width: 100%;
+  cursor: pointer;
+  transition: all 1s ease;
+}
+.Promo img:hover {
+  filter: saturate(200%);
 }
 .Promo-svg-label {
   width: 100%;
