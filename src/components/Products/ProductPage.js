@@ -22,7 +22,7 @@ const Product = ({ match }) => {
           <div className="product-page-right">
             <h1>{data.post.title}</h1>
             <p>{data.post.description}</p>
-            <label>{data.post.price} руб.</label>
+            <label>{data.post.price} руб</label>
           </div>
         </>
       )}

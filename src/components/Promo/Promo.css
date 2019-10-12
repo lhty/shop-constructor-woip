@@ -21,7 +21,23 @@
   width: 100%;
   cursor: pointer;
   transition: all 1s ease;
+  animation: animationName 35s infinite;
 }
+@keyframes animationName {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .Promo img:hover {
   filter: saturate(200%);
 }

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../Providers/Provider';
+import { useInterval } from '../Providers/Hooks/useInterval';
 import { useQuery } from 'react-apollo-hooks';
 import { API_URL } from '../../config';
 
@@ -9,6 +10,10 @@ const Promo = () => {
   const { PROMO_QUERY } = useContext(Context);
   const { data, error, loading } = useQuery(PROMO_QUERY);
   const [current, setCurrent] = useState(0);
+
+  useInterval(() => {
+    setCurrent(current === data.promos.length - 1 ? 0 : current + 1);
+  }, 35000);
 
   if (loading || error) return <></>;
 

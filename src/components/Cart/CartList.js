@@ -67,7 +67,7 @@ const CartList = ({ match }) => {
         <h1 className="cart-list-overallprice">
           Итого :
           {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}
-          руб.
+          руб
         </h1>
       )}
     </section>

@@ -10,7 +10,6 @@ const Profile = () => {
     <></>
   ) : (
     <div className="profile-wrapper">
-      {console.log(user)}
       <button
         onClick={() => {
           userDispatch({ type: 'LOG_OUT' });

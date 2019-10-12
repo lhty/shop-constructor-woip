@@ -32,3 +32,23 @@
 .auth-page-login button:hover {
   background-color: #f3cdac;
 }
+.auth-page-vk {
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  background: url(../../img/vk.svg);
+  background-repeat: no-repeat;
+  margin-top: 5%;
+}
+.auth-page-login-400 {
+  position: absolute;
+  top: 45px;
+  border: 0.5px solid #833904;
+  border-radius: 5px;
+  background-color: #f4eae1;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+  width: 150px;
+  color: #a82323;
+}

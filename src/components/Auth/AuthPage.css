@@ -7,6 +7,7 @@
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .auth-page-wrapper {
+  position: relative;
   margin: 120px 0 20px 0;
   display: flex;
   justify-content: space-around;
