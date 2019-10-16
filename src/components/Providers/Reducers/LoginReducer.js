@@ -4,6 +4,8 @@ export const LoginReducer = (user, action) => {
       return (user = false);
     case 'LOG_IN':
       return action.payload;
+    case 'SIGN_UP':
+      return action.payload;
     default:
       return user;
   }

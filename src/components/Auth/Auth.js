@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../Providers/Provider';
 import axios from 'axios';
 import { API_URL } from '../../config';
-
-import './Auth.css';
+import Userphoto from './Elements/Userphoto';
 
 const Auth = () => {
   const { toggleDispatch, user, userDispatch } = useContext(Context);
@@ -39,30 +38,7 @@ const Auth = () => {
         });
   }, [userid, token, userDispatch]);
 
-  return !user[0] ? (
-    <div
-      className="auth authFalse"
-      onClick={() => {
-        toggleDispatch({
-          type: 'toggleAuth'
-        });
-        window.scrollTo(0, 0);
-      }}
-    ></div>
-  ) : (
-    <>
-      <div
-        className={user ? 'auth' : 'auth authFalse'}
-        onClick={() => {
-          toggleDispatch({
-            type: 'toggleAuth'
-          });
-          window.scrollTo(0, 0);
-        }}
-      ></div>
-      <div className="username">Привет {user[0].username}</div>
-    </>
-  );
+  return <Userphoto user={user} toggleDispatch={toggleDispatch} />;
 };
 
 export default Auth;

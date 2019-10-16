@@ -1,0 +1,32 @@
+.auth {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  transition: 0.4s;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #e4bfa0;
+  border-radius: 50px 50px 50px 50px;
+  z-index: 10001;
+}
+.authFalse {
+  border: 2px solid #dedede;
+}
+.icon {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+}
+.photo {
+  position: absolute;
+  right: 0;
+  border-radius: 50px 50px 50px 50px;
+  width: 36px;
+}
+.username {
+  position: absolute;
+  left: 55px;
+  top: 20px;
+  color: #e4bfa0;
+}
