@@ -7,6 +7,7 @@
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .cart-list-wrapper {
+  min-height: 230px;
   margin: 120px 0 20px 0;
 }
 .cart-list-overallprice {

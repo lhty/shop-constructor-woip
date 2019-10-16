@@ -9,8 +9,7 @@ export const Toggler = (toggleWhat, action) => {
     case 'toggleAuth':
       return {
         ...toggleWhat,
-        toggleAuth: !toggleWhat.toggleAuth,
-        toggleCart: false
+        toggleAuth: !toggleWhat.toggleAuth
       };
     case 'Clear':
       return {

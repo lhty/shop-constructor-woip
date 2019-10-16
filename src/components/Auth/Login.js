@@ -20,10 +20,7 @@ const Login = () => {
 
   return (
     <>
-      <label className="auth-page-vk" onClick={() => Vklogin()}></label>
       <form className="auth-page-login" onSubmit={handleSubmit}>
-        <h1 className="auth-page-login-title">Вход</h1>
-
         <input
           name="name"
           placeholder="Номер телефона / Имя"
@@ -38,6 +35,7 @@ const Login = () => {
         ></input>
         <button type="submit">Войти</button>
       </form>
+      <label className="auth-page-vk" onClick={() => Vklogin()}></label>
     </>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Header from './Header/Header';
-
 import Promo from './Promo/Promo';
 import { Route, Switch } from 'react-router';
 import ProductList from './Products/ProductList';
@@ -9,18 +8,24 @@ import AuthPage from './Auth/AuthPage';
 import ProductPage from './Products/ProductPage';
 import { Context } from './Providers/Provider';
 
-const Layout = ({ error }) => {
+const Layout = () => {
   const { toggleWhat } = useContext(Context);
 
   return (
     <>
       <Header />
       <Switch>
-        {!toggleWhat.toggleAuth && !toggleWhat.toggleCart ? (
-          <Route component={Promo} />
-        ) : null}
-        {toggleWhat.toggleCart ? <Route component={CartList} /> : null}
-        {toggleWhat.toggleAuth ? <Route component={AuthPage} /> : null}
+        {toggleWhat.toggleCart ? (
+          <>
+            {toggleWhat.toggleAuth && <Route component={AuthPage} />}
+            <Route component={CartList} />
+          </>
+        ) : (
+          <>
+            {toggleWhat.toggleAuth && <Route component={AuthPage} />}
+            <Route component={Promo} />
+          </>
+        )}
       </Switch>
       <Route exact path="/" component={ProductList} />
       <Route exact path="/:id/:title" component={ProductPage} />

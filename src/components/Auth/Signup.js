@@ -17,7 +17,6 @@ const Signup = () => {
 
   return (
     <form className="auth-page-signup" onSubmit={handleSubmit}>
-      <h1 className="auth-page-signup-title">Регистрация</h1>
       <input
         name="name"
         placeholder="Как к вам обращатсья ?"
