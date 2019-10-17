@@ -10,7 +10,6 @@ const Userphoto = ({ user, toggleDispatch }) => {
         toggleDispatch({
           type: 'toggleAuth'
         });
-        window.scrollTo(0, 0);
       }}
     >
       {Icon(user)}

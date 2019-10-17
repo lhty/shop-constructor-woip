@@ -1,5 +1,5 @@
 .auth-page-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   background-color: #f9f3ee;
   border-radius: 0px 0px 15px 15px;
@@ -27,7 +27,7 @@
 }
 .auth-page-wrapper {
   position: relative;
-  margin: 75px 0 20px 0;
+  margin: 75px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

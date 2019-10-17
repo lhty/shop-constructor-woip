@@ -26,7 +26,8 @@
 }
 .username {
   position: absolute;
-  left: 42px;
-  top: 6px;
+  white-space: nowrap;
+  left: 40px;
+  top: 5px;
   color: #e4bfa0;
 }
