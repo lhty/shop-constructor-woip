@@ -63,7 +63,6 @@ const Provider = props => {
       })
       .catch(error => {
         if (error) {
-          console.log('email already taken');
         }
       });
   }
@@ -83,11 +82,26 @@ const Provider = props => {
           'users.get',
           { user_ids: response.session.user.id, fields: 'photo_50', v: '5.73' },
           response => {
-            Register({
-              ...userdata,
-              photo: response.response[0].photo_50
-            });
-            Login(userdata);
+            axios
+              .post(`${API_URL}auth/local`, {
+                identifier: userdata.name,
+                password: userdata.password
+              })
+              .then(response => {
+                localStorage.setItem('user', response.data.jwt);
+                userDispatch({
+                  type: 'LOG_IN',
+                  payload: response.data.user
+                });
+              })
+              .catch(error => {
+                error.response.status === 400
+                  ? Register({
+                      ...userdata,
+                      photo: response.response[0].photo_50
+                    })
+                  : console.log('Mainenance');
+              });
           }
         );
       }

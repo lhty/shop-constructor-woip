@@ -9,16 +9,16 @@ const ProductCard = ({ product }) => {
 
   return product.map(product => (
     <div key={product.id} className="ProductCard-wrapper">
-      <p className="ProductCard-title">{product.title}</p>
       <Link to={product.id + '/' + product.title}>
         <img
           className="ProductCard-thumbnail"
           src={ThumbnailUrl(product)}
           alt=""
         />
+        <p className="ProductCard-title">{product.title}</p>
       </Link>
       <div className="hover-buttons">
-        <div
+        <button
           className="hbutton"
           onClick={() => {
             cartDispath({
@@ -32,7 +32,9 @@ const ProductCard = ({ product }) => {
               }
             });
           }}
-        ></div>
+        >
+          В корзину
+        </button>
       </div>
     </div>
   ));

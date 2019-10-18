@@ -16,14 +16,14 @@ const CartList = ({ match }) => {
 
   const list = cart
     .sort((a, b) => b.id - a.id)
-    .map((val, i) => (
-      <div className="cart-element" key={i}>
+    .map(item => (
+      <div className="cart-element" key={item.id}>
         <Link
           className="cart-element-description"
-          to={{ pathname: `${match.url}${val.id}/${val.title}` }}
+          to={{ pathname: `${match.url}${item.id}/${item.title}` }}
         >
-          <img className="cart-element-img" src={val.image} alt=""></img>
-          <p>{val.title}</p>
+          <img className="cart-element-img" src={item.image} alt=""></img>
+          <p>{item.title}</p>
         </Link>
         <label className="cart-element-quantity">
           <label
@@ -31,25 +31,25 @@ const CartList = ({ match }) => {
             onClick={() => {
               cartDispath({
                 type: 'CART_REMOVE',
-                id: val.id,
-                quantity: val.quantity
+                id: item.id,
+                quantity: item.quantity
               });
             }}
           >
             -
           </label>
-          <label className="cart-element-number">{val.quantity}</label>
+          <label className="cart-element-number">{item.quantity}</label>
           <label
             className="cart-element-add"
             onClick={() => {
               cartDispath({
                 type: 'CART_ADD',
                 payload: {
-                  id: val.id,
-                  quantity: val.quantity,
-                  title: val.title,
-                  image: val.image,
-                  price: val.price
+                  id: item.id,
+                  quantity: item.quantity,
+                  title: item.title,
+                  image: item.image,
+                  price: item.price
                 }
               });
             }}
@@ -62,14 +62,21 @@ const CartList = ({ match }) => {
 
   return (
     <section className="cart-list-container">
-      <div className="cart-list-wrapper">{list}</div>
-      {cart.length > 0 && (
-        <h1 className="cart-list-overallprice">
-          Итого :
-          {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}
-          руб
-        </h1>
-      )}
+      <div className="cart-list-wrapper">
+        {list}
+
+        {cart.length > 0 && (
+          <div className="cart-list-checkout">
+            <button className="cart-list-proceed">Продолжить</button>
+            <h1 className="cart-list-overallprice">
+              {cart
+                .map(obj => obj.price * obj.quantity)
+                .reduce((a, b) => a + b)}{' '}
+              руб
+            </h1>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

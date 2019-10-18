@@ -12,7 +12,7 @@ const Layout = () => {
   const { toggleWhat } = useContext(Context);
 
   return (
-    <>
+    <div className="wrapper">
       <Header />
       <Switch>
         {toggleWhat.toggleCart ? (
@@ -29,7 +29,7 @@ const Layout = () => {
       </Switch>
       <Route exact path="/" component={ProductList} />
       <Route exact path="/:id/:title" component={ProductPage} />
-    </>
+    </div>
   );
 };
 

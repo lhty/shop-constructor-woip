@@ -9,15 +9,13 @@ import './Header.css';
 export default function Header() {
   return (
     <section className="header">
-      <div className="top-panel">
-        <Auth />
-        <Link to="/">
+      <Auth />
+        <Link className="header-logo" to="/">
           <Logo />
         </Link>
         <Cart />
         {bottomlabel}
-      </div>
-    </section>
+     </section>
   );
 }
 const bottomlabel = (

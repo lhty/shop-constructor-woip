@@ -1,33 +1,25 @@
 .header {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 85%;
   z-index: 10000;
-}
-.top-panel {
-  height: 70px;
+  width: 85%;
+  height: 71px;
   background: #f9f3ee;
   border-radius: 0px 0px 15px 15px;
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
 }
-
+.header-logo {
+  z-index: 10000;
+}
 .svgfilter {
   fill: #833904;
   animation: letter-animation 1.5s linear forwards;
-  position: absolute;
-  height: 100%;
-  z-index: 10000;
-  margin-top: 1%;
-  left: 50%;
-  transform: translateX(-50%);
 }
 .top-menu-label {
-  top: 69px;
-  position: absolute;
   max-width: 95%;
-  left: 50%;
-  transform: translateX(-50%);
+  position: absolute;
+  top: 70px;
 }
 
 @keyframes letter-animation {

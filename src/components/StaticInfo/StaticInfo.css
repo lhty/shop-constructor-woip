@@ -1,9 +1,4 @@
 .StaticInfo-container {
-  max-width: 85%;
-  width: 100%;
-  margin: 0 auto;
-}
-.StaticInfo-wrapper {
   margin: 30px 0;
   z-index: 0;
   display: flex;

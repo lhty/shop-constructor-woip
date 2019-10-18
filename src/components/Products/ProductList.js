@@ -15,11 +15,9 @@ const ProductList = () => {
   return (
     <>
       <Staticinfo />
-      <div className="ProductList-container">
-        <div className="ProductList-wrapper">
-          <ProductCard product={data.posts} />
-        </div>
-      </div>
+      <section className="ProductList-container">
+         <ProductCard product={data.posts} />
+      </section>
     </>
   );
 };

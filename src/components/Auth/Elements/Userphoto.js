@@ -13,9 +13,7 @@ const Userphoto = ({ user, toggleDispatch }) => {
       }}
     >
       {Icon(user)}
-      {user.length > 0 && (
-        <label className="username">{user[0].username}</label>
-      )}
+      {user && <label className="username">{user.username}</label>}
     </div>
   );
 };
@@ -25,8 +23,8 @@ export default Userphoto;
 const Icon = user => {
   return (
     <>
-      {user[0] && user[0].photo !== '0' ? (
-        <img className="photo" src={user[0].photo} alt=""></img>
+      {user && user.photo !== '0' ? (
+        <img className="photo" src={user.photo} alt=""></img>
       ) : (
         <svg
           className="icon"
@@ -45,23 +43,3 @@ const Icon = user => {
     </>
   );
 };
-
-/* <>
-<div
-  className={!user ? 'auth authFalse' : 'auth'}
-  onClick={() => {
-    toggleDispatch({
-      type: 'toggleAuth'
-    });
-    window.scrollTo(0, 0);
-  }}
-></div>
-{user === undefined || !user[0] ? (
-  <></>
-) : (
-  <div className="username">
-    {user[0].username}
-    <img src={user[0].photo} alt="" />
-  </div>
-)}
-</> */

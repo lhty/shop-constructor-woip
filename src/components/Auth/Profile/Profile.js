@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Context } from '../Providers/Provider';
+import { Context } from '../../Providers/Provider';
 
 import './Profile.css';
 

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context } from '../Providers/Provider';
 import Signup from './Signup';
 import Login from './Login';
-import Profile from './Profile';
+import Profile from './Profile/Profile';
 
 import './AuthPage.css';
 

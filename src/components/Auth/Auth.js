@@ -38,7 +38,7 @@ const Auth = () => {
         });
   }, [userid, token, userDispatch]);
 
-  return <Userphoto user={user} toggleDispatch={toggleDispatch} />;
+  return <Userphoto user={user[0]} toggleDispatch={toggleDispatch} />;
 };
 
 export default Auth;

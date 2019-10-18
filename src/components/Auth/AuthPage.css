@@ -3,7 +3,6 @@
   top: 0;
   background-color: #f9f3ee;
   border-radius: 0px 0px 15px 15px;
-  margin: 0px 7.5%;
   animation: 1s ease 0s 1 normal none running bounceInDown;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   z-index: 1;
@@ -27,7 +26,7 @@
 }
 .auth-page-wrapper {
   position: relative;
-  margin: 75px 0 0 0;
+  margin: 65px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
