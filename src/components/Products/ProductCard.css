@@ -9,6 +9,7 @@
   flex-flow: row wrap;
   box-shadow: 20px 20px 12px -28px rgba(131, 58, 5, 0.79);
   max-width: 400px;
+  color: #4f2202;
 }
 .hover-buttons {
   cursor: pointer;
@@ -21,14 +22,12 @@
   outline: none;
   box-sizing: border-box;
   font-size: 15px;
-  font-weight: bold;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   color: #5b2600;
   background-color: #e9bc64;
   cursor: pointer;
   width: 90px;
   height: 35px;
-  margin: 5px;
   box-shadow: 12px 2px 20px -13px rgba(0, 0, 0, 0.75);
 }
 .ProductCard-thumbnail {

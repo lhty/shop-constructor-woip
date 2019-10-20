@@ -1,27 +1,25 @@
 .header {
   position: fixed;
-  z-index: 10000;
+  background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
+  top: 0px;
   width: 85%;
-  height: 71px;
-  background: #f9f3ee;
-  border-radius: 0px 0px 15px 15px;
-  display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
-}
-.header-logo {
   z-index: 10000;
+  /* border-radius: 0 0 10px 10px; */
+  height: 65px;
 }
-.svgfilter {
-  fill: #833904;
-  animation: letter-animation 1.5s linear forwards;
-}
-.top-menu-label {
-  max-width: 95%;
+.header-svg {
   position: absolute;
-  top: 70px;
+  top: 65px;
+  left: 0;
 }
-
+.logo-path {
+  position: absolute;
+  z-index: 10000;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  /* margin-top: 5px; */
+}
 @keyframes letter-animation {
   0% {
     opacity: 0;

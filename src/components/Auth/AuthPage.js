@@ -20,7 +20,7 @@ const AuthPage = () => {
               className={
                 active ? 'auth-page-title auth-active' : 'auth-page-title'
               }
-              onClick={() => setActive(true)}
+              onClick={() => setActive(!active)}
             >
               Вход
             </h1>
@@ -28,7 +28,7 @@ const AuthPage = () => {
               className={
                 !active ? 'auth-page-link auth-active' : 'auth-page-link'
               }
-              onClick={() => setActive(false)}
+              onClick={() => setActive(!active)}
             >
               Регистрация
             </h1>

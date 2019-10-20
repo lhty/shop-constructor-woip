@@ -13,7 +13,7 @@ const Userphoto = ({ user, toggleDispatch }) => {
       }}
     >
       {Icon(user)}
-      {user && <label className="username">{user.username}</label>}
+      {/* {user && <label className="username">{user.username}</label>} */}
     </div>
   );
 };
@@ -28,9 +28,9 @@ const Icon = user => {
       ) : (
         <svg
           className="icon"
-          width="30"
-          height="34"
-          viewBox="0 0 30 34"
+          width="40"
+          height="45"
+          viewBox="0 0 40 45"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >

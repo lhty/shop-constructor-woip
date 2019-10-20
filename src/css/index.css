@@ -116,6 +116,10 @@ body {
   .header {
     width: 100%;
   }
+  .logo-path {
+    margin-top: 0;
+    width: 300px;
+  }
   .cart-list-wrapper {
     width: 100%;
   }

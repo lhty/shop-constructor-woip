@@ -12,12 +12,11 @@
   padding: 110px 10px 10px 10px;
   width: 40%;
   float: right;
-  min-height: 320px;
+  min-height: 240px;
 }
 .cart-element {
   display: flex;
   background-color: #ffffff45;
-  max-height: 70px;
   margin: 3px;
   border-radius: 5px 20px 20px 5px;
   box-shadow: 5px 8px 8px -15px rgba(0, 0, 0, 0.75);

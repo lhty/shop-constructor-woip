@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo-hooks';
 import { API_URL } from './config';
@@ -10,16 +10,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './css/index.css';
 
 function App() {
-  const [err, setErr] = useState(false);
+  const online = useRef(true);
 
   const client = new ApolloClient({
     uri: `${API_URL}graphql`,
     onError: () => {
-      setErr(true);
+      online.current = false;
     }
   });
 
-  return !err ? (
+  return online.current ? (
     <ApolloProvider client={client}>
       <Provider>
         <Router>
