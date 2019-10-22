@@ -4,8 +4,10 @@
   top: 0px;
   width: 85%;
   z-index: 10000;
-  /* border-radius: 0 0 10px 10px; */
   height: 65px;
+}
+.header-title {
+  margin: 20px;
 }
 .header-svg {
   position: absolute;
@@ -18,7 +20,6 @@
   left: 50%;
   transform: translateX(-50%);
   width: 340px;
-  /* margin-top: 5px; */
 }
 @keyframes letter-animation {
   0% {

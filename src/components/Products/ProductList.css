@@ -1,8 +1,62 @@
 .ProductList-container {
-  background-color: #f9f3ee8a;
-  border-radius: 15px 15px 0 0;
   z-index: 0;
+  display: flex;
+  flex-flow: row wrap;
+}
+.ProductList-bundles {
+  position: relative;
+  margin-top: 75px;
+  width: 50%;
   display: flex;
   justify-content: center;
   flex-flow: row wrap;
+  background: linear-gradient(270deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
+  border-radius: 0px 25px 0px 0px;
+}
+.ProductList-bundles-title {
+  position: absolute;
+  transform: translateY(-96%);
+}
+.ProductList-bundles-sort {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 0 25px 0 0;
+  width: 100%;
+  height: 50px;
+}
+.sort-byprice {
+  font-size: 15px;
+  line-height: 46px;
+  letter-spacing: -0.08em;
+  color: #763e2e;
+}
+.sort-byprice-link {
+  align-self: center;
+  background: url(../../img/sort-byprice.svg) no-repeat;
+  width: 9px;
+  height: 8px;
+  margin-left: 3px;
+}
+.bundles-checkbox {
+  height: 24px;
+  width: 24px;
+  background-color: #f39c12;
+  border: 1px solid #ffbc98;
+  border-radius: 10px;
+}
+.sort {
+  position: absolute;
+  cursor: pointer;
+  right: 75px;
+}
+.reversed {
+  transform: rotate(180deg);
+}
+.hidden {
+  display: none;
+}
+.inactive {
+  filter: grayscale(100%);
 }

@@ -17,17 +17,13 @@ const AuthPage = () => {
         ) : (
           <>
             <h1
-              className={
-                active ? 'auth-page-title auth-active' : 'auth-page-title'
-              }
+              className={active ? 'auth-page auth-active' : 'auth-page'}
               onClick={() => setActive(!active)}
             >
               Вход
             </h1>
             <h1
-              className={
-                !active ? 'auth-page-link auth-active' : 'auth-page-link'
-              }
+              className={!active ? 'auth-page auth-active' : 'auth-page'}
               onClick={() => setActive(!active)}
             >
               Регистрация

@@ -34,20 +34,8 @@ body {
 .wrapper {
   max-width: 85%;
   margin: 0 auto;
+  box-shadow: 0px 8px 35px -28px rgb(98, 41, 10);
 }
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-/* animation: 1s ease 0s 1 normal none running bounceInDown; */
-
 @keyframes bounceInDown {
   0% {
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -74,7 +62,26 @@ body {
     transform: none;
   }
 }
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
 
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 /* animation: 1s ease 0s 1 normal none running bounceRight; */
 @keyframes bounceRight {
   0% {
@@ -116,6 +123,9 @@ body {
   .header {
     width: 100%;
   }
+  .header-title {
+    margin: 0;
+  }
   .logo-path {
     margin-top: 0;
     width: 300px;
@@ -138,5 +148,8 @@ body {
   .Promo-prev {
     position: absolute;
     left: 0;
+  }
+  .ProductList-bundles {
+    width: 100%;
   }
 }

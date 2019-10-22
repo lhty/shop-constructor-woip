@@ -4,6 +4,7 @@ import { useInterval } from '../Providers/Hooks/useInterval';
 import { useQuery } from 'react-apollo-hooks';
 import { API_URL } from '../../config';
 
+import border from '../../img/promoborder.svg';
 import './Promo.css';
 
 const Promo = () => {
@@ -22,7 +23,7 @@ const Promo = () => {
       <section className="Promo-container">
         <div className="Promo">
           <button
-            className="Promo-prev"
+            className="Promo-button prev"
             type="button"
             onClick={() => {
               setCurrent(current === 0 ? data.promos.length - 1 : current - 1);
@@ -44,7 +45,7 @@ const Promo = () => {
             )}
           </div>
           <button
-            className="Promo-next"
+            className="Promo-button"
             type="button"
             onClick={() => {
               setCurrent(current === data.promos.length - 1 ? 0 : current + 1);
@@ -52,6 +53,7 @@ const Promo = () => {
           ></button>
         </div>
       </section>
+      <img className="Promo-bottom" src={border} alt="" />
     </>
   );
 };

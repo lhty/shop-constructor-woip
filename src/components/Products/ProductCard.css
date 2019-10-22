@@ -1,28 +1,40 @@
 .ProductCard-wrapper {
+  position: relative;
   transition: 1.4s;
-  flex: 1 1;
   background-color: #fafafa12;
   border-radius: 10px;
-  margin: 10px;
+  margin: 4px;
   display: flex;
-  justify-content: center;
   flex-flow: row wrap;
   box-shadow: 20px 20px 12px -28px rgba(131, 58, 5, 0.79);
   max-width: 400px;
   color: #4f2202;
+  overflow: hidden;
+  animation: 1s ease-in-out fadeIn;
+}
+.ProductCard-description {
+  z-index: 1;
+}
+.ProductCard-title {
+  background: linear-gradient(270deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
 }
 .hover-buttons {
   cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
-.hover-buttons :hover {
-  transform: scale(1.03, 1.03);
+.hover-buttons:hover {
+  transform: scale(1.1, 1.1);
 }
 .hbutton {
   border: none;
   outline: none;
   box-sizing: border-box;
   font-size: 15px;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 0 0 0;
   color: #5b2600;
   background-color: #e9bc64;
   cursor: pointer;
@@ -32,7 +44,12 @@
 }
 .ProductCard-thumbnail {
   border-radius: 5px;
-  object-fit: cover;
   box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
     10px 10px 25px rgba(112, 124, 151, 0.05);
+  transition: 5s ease;
+  z-index: 0;
+}
+
+.ProductCard-thumbnail:hover {
+  transform: scale(1.1, 1.1);
 }

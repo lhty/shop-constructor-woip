@@ -1,7 +1,9 @@
 .Promo-container {
-  background-color: #f8dccd;
-  border-radius: 0px 0px 15px 15px;
+  background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
   overflow: hidden;
+  animation: 1s ease 0s 1 normal none running bounceInDown;
+}
+.Promo-bottom {
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .Promo {
@@ -42,24 +44,16 @@
 .Promo-svg-label {
   width: 100%;
 }
-.Promo-prev {
+.Promo-button {
   min-width: 24px;
   height: 42px;
   background: url(../../img/arrow.svg);
-  transform: rotate(180deg);
   border: none;
   outline: none;
   cursor: pointer;
   background-repeat: no-repeat;
   background-position: center center;
 }
-.Promo-next {
-  min-width: 24px;
-  height: 42px;
-  background: url(../../img/arrow.svg);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center center;
+.prev {
+  transform: rotate(180deg);
 }

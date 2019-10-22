@@ -7,14 +7,9 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   z-index: 1;
   padding: 15px;
-}
-.auth-page-title {
   color: #ad7247;
-  font-size: 1em;
-  cursor: pointer;
 }
-.auth-page-link {
-  color: #ad7247;
+.auth-page {
   font-size: 1em;
   cursor: pointer;
 }

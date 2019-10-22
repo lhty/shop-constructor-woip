@@ -27,7 +27,7 @@ const CartList = ({ match }) => {
         </Link>
         <label className="cart-element-quantity">
           <label
-            className="cart-element-remove"
+            className="action remove"
             onClick={() => {
               cartDispath({
                 type: 'CART_REMOVE',
@@ -38,9 +38,9 @@ const CartList = ({ match }) => {
           >
             -
           </label>
-          <label className="cart-element-number">{item.quantity}</label>
+          <label className="action number">{item.quantity}</label>
           <label
-            className="cart-element-add"
+            className="action add"
             onClick={() => {
               cartDispath({
                 type: 'CART_ADD',
