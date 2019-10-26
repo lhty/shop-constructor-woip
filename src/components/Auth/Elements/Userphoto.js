@@ -2,18 +2,13 @@ import React from 'react';
 
 import './Userphoto.css';
 
-const Userphoto = ({ user, toggleDispatch }) => {
+const Userphoto = ({ user }) => {
   return (
-    <div
-      className={!user ? 'auth authFalse' : 'auth'}
-      onClick={() => {
-        toggleDispatch({
-          type: 'toggleAuth'
-        });
-      }}
-    >
+    <div className={user ? 'auth' : 'auth authFalse'}>
       {Icon(user)}
-      {/* {user && <label className="username">{user.username}</label>} */}
+      {/* {user && user.role.id > 2 && (
+        <label className="username">{user.username}</label>
+      )} */}
     </div>
   );
 };

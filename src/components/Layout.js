@@ -1,32 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Header from './Header/Header';
+import Staticinfo from './StaticInfo/StaticInfo';
 import Promo from './Promo/Promo';
-import { Route, Switch } from 'react-router';
+import { Route } from 'react-router';
 import ProductList from './Products/ProductList';
-import CartList from './Cart/CartList';
-import AuthPage from './Auth/AuthPage';
 import ProductPage from './Products/ProductPage';
-import { Context } from './Providers/Provider';
+import UserProvider from './Providers/UserProvider';
 
 const Layout = () => {
-  const { toggleWhat } = useContext(Context);
-
   return (
     <div className="wrapper">
-      <Header />
-      <Switch>
-        {toggleWhat.toggleCart ? (
-          <>
-            {toggleWhat.toggleAuth && <Route component={AuthPage} />}
-            <Route component={CartList} />
-          </>
-        ) : (
-          <>
-            {toggleWhat.toggleAuth && <Route component={AuthPage} />}
-            <Route component={Promo} />
-          </>
-        )}
-      </Switch>
+      <UserProvider>
+        <Route component={Header} />
+        <Route component={Promo} />
+      </UserProvider>
+      <Staticinfo />
       <Route exact path="/" component={ProductList} />
       <Route exact path="/:id/:title" component={ProductPage} />
     </div>

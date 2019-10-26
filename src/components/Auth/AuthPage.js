@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../Providers/Provider';
 import Signup from './Signup';
 import Login from './Login';
 import Profile from './Profile/Profile';
+import { UserContext } from '../Providers/UserProvider';
 
 import './AuthPage.css';
 
 const AuthPage = () => {
+  const { user } = useContext(UserContext);
   const [active, setActive] = useState(true);
-  const { user } = useContext(Context);
+
   return (
     <div className="auth-page-container">
       <div className="auth-page-wrapper">

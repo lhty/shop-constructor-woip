@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 
-import { Context } from '../Providers/Provider';
+import { UserContext } from '../Providers/UserProvider';
 
 import './Login.css';
 
 const Login = () => {
-  const { Login, Vklogin } = useContext(Context);
+  const { Login, Vklogin, setActive, active } = useContext(UserContext);
   const [inputValues, setInputValues] = useState();
 
   const handleOnChange = event => {
@@ -35,7 +35,13 @@ const Login = () => {
         ></input>
         <button type="submit">Войти</button>
       </form>
-      <label className="auth-page-vk" onClick={() => Vklogin()}></label>
+      <label
+        className="auth-page-vk"
+        onClick={() => {
+          Vklogin();
+          setActive({ ...active, auth: !active.auth });
+        }}
+      ></label>
     </>
   );
 };

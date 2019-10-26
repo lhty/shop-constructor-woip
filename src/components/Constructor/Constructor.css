@@ -1,0 +1,34 @@
+.Constructor-wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(90deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
+}
+.Constructor-wrapper select {
+  width: 20%;
+  align-self: center;
+}
+.box-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  width: 60%;
+  margin: 0 auto;
+}
+.slot-wrapper {
+  cursor: pointer;
+  height: 60px;
+  width: 60px;
+  border: 1px solid black;
+  margin: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Itemlist-wrapper {
+  position: absolute;
+  background: white;
+}

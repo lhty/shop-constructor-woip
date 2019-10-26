@@ -115,6 +115,14 @@ body {
   }
 }
 
+@media (max-width: 1200px) {
+  .cart-list-wrapper {
+    width: 100%;
+  }
+  .cart-list-wrapper {
+    background-color: #ffffffb5;
+  }
+}
 @media (max-width: 800px) {
   .wrapper {
     max-width: 100%;
@@ -129,9 +137,6 @@ body {
   .logo-path {
     margin-top: 0;
     width: 300px;
-  }
-  .cart-list-wrapper {
-    width: 100%;
   }
   .svgfilter {
     height: 60px;

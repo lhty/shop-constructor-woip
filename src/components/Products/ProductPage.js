@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { Context } from '../Providers/Provider';
 import { useQuery } from 'react-apollo-hooks';
+import { PRODUCT_QUERY } from '../Providers/Queries';
 
 import './ProductPage.css';
 
 const Product = ({ match }) => {
-  const { ImgUrl, PRODUCT_QUERY } = useContext(Context);
+  const { ImgUrl } = useContext(Context);
   const { loading, data } = useQuery(PRODUCT_QUERY, {
     variables: { id: match.params.id }
   });

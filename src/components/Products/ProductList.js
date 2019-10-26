@@ -1,9 +1,10 @@
-import React, { useContext, useState, useReducer } from 'react';
-import { Context } from '../Providers/Provider';
+import React, { useState, useReducer } from 'react';
 import { useQuery } from 'react-apollo-hooks';
-import Staticinfo from '../StaticInfo/StaticInfo';
+import { PRODUCTS_QUERY } from '../Providers/Queries';
 import ProductCard from './ProductCard';
+import Constructor from '../Constructor/Constructor';
 
+import prodlistsvg from '../../img/productlisttop.svg';
 import './ProductList.css';
 
 const ProductList = () => {
@@ -21,7 +22,6 @@ const ProductList = () => {
     }
   }
 
-  const { PRODUCTS_QUERY } = useContext(Context);
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
 
   const [sortstate, setSortstate] = useState({ byprice: null });
@@ -31,8 +31,9 @@ const ProductList = () => {
 
   return (
     <>
-      <Staticinfo />
       <section className="ProductList-container">
+        <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
+        <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
         <div className="ProductList-bundles">
           <div className="ProductList-bundles-sort">
             <div
@@ -62,6 +63,7 @@ const ProductList = () => {
             product={(productsort.length > 0 && productsort) || data.posts}
           />
         </div>
+        <Constructor />
       </section>
     </>
   );

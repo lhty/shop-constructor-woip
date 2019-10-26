@@ -1,26 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../Providers/Provider';
 
 import './CartList.css';
 
-const CartList = ({ match }) => {
-  const { cartDispath, cart, toggleDispatch } = useContext(Context);
-
-  useEffect(() => {
-    if (cart.length < 1)
-      return toggleDispatch({
-        type: 'Clear'
-      });
-  }, [cart, toggleDispatch]);
-
+const CartList = ({ url }) => {
+  const { cartDispath, cart } = useContext(Context);
   const list = cart
     .sort((a, b) => b.id - a.id)
     .map(item => (
       <div className="cart-element" key={item.id}>
         <Link
           className="cart-element-description"
-          to={{ pathname: `${match.url}${item.id}/${item.title}` }}
+          to={{ pathname: `${url}${item.id}/${item.title}` }}
         >
           <img className="cart-element-img" src={item.image} alt=""></img>
           <p>{item.title}</p>
@@ -61,11 +53,10 @@ const CartList = ({ match }) => {
     ));
 
   return (
-    <section className="cart-list-container">
-      <div className="cart-list-wrapper">
-        {list}
-
-        {cart.length > 0 && (
+    cart.length > 0 && (
+      <section className="cart-list-container">
+        <div className="cart-list-wrapper">
+          {list}
           <div className="cart-list-checkout">
             <button className="cart-list-proceed">Продолжить</button>
             <h1 className="cart-list-overallprice">
@@ -75,9 +66,9 @@ const CartList = ({ match }) => {
               руб
             </h1>
           </div>
-        )}
-      </div>
-    </section>
+        </div>
+      </section>
+    )
   );
 };
 

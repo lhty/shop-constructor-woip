@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { Context } from '../Providers/Provider';
+import React, { useState } from 'react';
 import { useInterval } from '../Providers/Hooks/useInterval';
 import { useQuery } from 'react-apollo-hooks';
+import { PROMO_QUERY } from '../Providers/Queries';
 import { API_URL } from '../../config';
 
 import border from '../../img/promoborder.svg';
 import './Promo.css';
 
 const Promo = () => {
-  const { PROMO_QUERY } = useContext(Context);
   const { data, error, loading } = useQuery(PROMO_QUERY);
   const [current, setCurrent] = useState(0);
 

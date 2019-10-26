@@ -1,21 +1,17 @@
 .cart-list-container {
-  background-color: #ffc2a859;
-  border-radius: 0px 0px 15px 15px;
-  overflow: hidden;
-  margin: 0 auto;
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .cart-list-wrapper {
   background-color: #ffffff4f;
   border-radius: 0px 0px 15px 15px;
-  padding: 110px 10px 10px 10px;
+  padding: 120px 10px 10px 10px;
   width: 40%;
   float: right;
   min-height: 240px;
 }
 .cart-element {
   display: flex;
-  background-color: #ffffff45;
+  background-color: #ffffff;
   margin: 3px;
   border-radius: 5px 20px 20px 5px;
   box-shadow: 5px 8px 8px -15px rgba(0, 0, 0, 0.75);

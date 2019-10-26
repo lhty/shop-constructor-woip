@@ -34,3 +34,36 @@ export const PROMO_QUERY = gql`
     }
   }
 `;
+export const PROPORTION_QUERY = gql`
+  {
+    proportions(sort: "id:desc") {
+      id
+      x
+      y
+      z
+      countmin
+      countmax
+    }
+  }
+`;
+export const ITEM_QUERY = gql`
+  {
+    items(sort: "id:desc") {
+      id
+      name
+      description
+      weight
+      chocolate
+      price
+      discount
+      taste
+      difficult
+      size_width
+      size_height
+      size_length
+      image {
+        url
+      }
+    }
+  }
+`;

@@ -1,26 +1,27 @@
 import React, { useContext } from 'react';
-import { Context } from '../Providers/Provider';
 import { Link } from 'react-router-dom';
 import Cart from '../Cart/Cart';
+import CartList from '../Cart/CartList';
 import Auth from '../Auth/Auth';
+import AuthPage from '../Auth/AuthPage';
+import { UserContext } from '../Providers/UserProvider';
 
 import title from '../../img/title.svg';
 import './Header.css';
 
-export default function Header() {
-  const { toggleDispatch } = useContext(Context);
+export default function Header({ match: { url } }) {
+  const { setActive, active } = useContext(UserContext);
   return (
     <section className="header">
-      <Auth />
+      <div className="header background"></div>
       <Link to="/">
         <span className="logo-path">
           <img
             className="header-title"
             onClick={() => {
-              toggleDispatch({
-                type: 'Clear'
-              });
-              window.scrollTo(0, 0);
+              window.pageYOffset === 0
+                ? setActive({ auth: false, cart: false })
+                : window.scrollTo(0, 0);
             }}
             src={title}
             alt=""
@@ -28,7 +29,10 @@ export default function Header() {
         </span>
       </Link>
       {header_svg}
+      <Auth />
+      {active.auth && <AuthPage />}
       <Cart />
+      {active.cart && <CartList url={url} />}
     </section>
   );
 }

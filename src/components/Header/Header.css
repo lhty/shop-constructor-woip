@@ -1,10 +1,12 @@
 .header {
   position: fixed;
-  background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
   top: 0px;
   width: 85%;
   z-index: 10000;
   height: 65px;
+}
+.background {
+  background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
 }
 .header-title {
   margin: 20px;
@@ -13,6 +15,7 @@
   position: absolute;
   top: 65px;
   left: 0;
+  z-index: 9999;
 }
 .logo-path {
   position: absolute;

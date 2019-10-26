@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../Providers/Provider';
+import { UserContext } from '../Providers/UserProvider';
 
 import './Cart.css';
 
 const Cart = () => {
-  const { cart, cartDispath, toggleDispatch } = useContext(Context);
+  const { cart, cartDispath } = useContext(Context);
+  const { setActive, active } = useContext(UserContext);
 
   useEffect(() => {
     if (localStorage.getItem('cart'))
@@ -19,11 +21,9 @@ const Cart = () => {
     <div
       className="cart"
       onClick={() => {
-        if (cart.length > 0)
-          toggleDispatch({
-            type: 'toggleCart'
-          });
-        window.scrollTo(0, 0);
+        if (cart.length > 0) {
+          setActive({ ...active, cart: !active.cart });
+        }
       }}
     >
       <Bucket cart={cart} />
