@@ -73,6 +73,18 @@ const Constructor = () => {
         </select>
         <Box size={size} />
         {slotIndex >= 0 && <ItemList />}
+        <p>
+          Overall price:
+          {custom.set
+            ? [...custom.set.map(obj => obj.price)]
+                .filter(obj => obj)
+                .reduce((a, b) => a + b, 0) + 'руб'
+            : ''}
+        </p>
+        <p>
+          Overall quantity:{' '}
+          {custom.set ? custom.set.filter(obj => obj.price).length + 'шт' : ''}
+        </p>
       </div>
     </ConstructorContext.Provider>
   );
