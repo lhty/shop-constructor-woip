@@ -54,20 +54,16 @@ const CartList = ({ url }) => {
 
   return (
     cart.length > 0 && (
-      <section className="cart-list-container">
-        <div className="cart-list-wrapper">
-          {list}
-          <div className="cart-list-checkout">
-            <button className="cart-list-proceed">Продолжить</button>
-            <h1 className="cart-list-overallprice">
-              {cart
-                .map(obj => obj.price * obj.quantity)
-                .reduce((a, b) => a + b)}{' '}
-              руб
-            </h1>
-          </div>
+      <div className="cart-list-wrapper">
+        {list}
+        <div className="cart-list-checkout">
+          <button className="cart-list-proceed">Продолжить</button>
+          <h1 className="cart-list-overallprice">
+            {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}{' '}
+            руб
+          </h1>
         </div>
-      </section>
+      </div>
     )
   );
 };

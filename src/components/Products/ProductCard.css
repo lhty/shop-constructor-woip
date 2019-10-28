@@ -1,30 +1,32 @@
 .ProductCard-wrapper {
   position: relative;
   transition: 1.4s;
-  background-color: #fafafa12;
+  background-color: #fafafa99;
   border-radius: 10px;
-  margin: 4px;
-  display: flex;
-  flex-flow: row wrap;
-  box-shadow: 20px 20px 12px -28px rgba(131, 58, 5, 0.79);
-  max-width: 400px;
+  margin: 0 0 2px 2px;
+  width: 30%;
   color: #4f2202;
   overflow: hidden;
   animation: 1s ease-in-out fadeIn;
-}
-.ProductCard-description {
-  z-index: 1;
+  transform: rotate(-3deg);
+  box-shadow: -14px 16px 25px -13px rgb(154, 121, 93);
 }
 .ProductCard-title {
+  display: none;
+  position: absolute;
+  width: 100%;
   background: linear-gradient(270deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
+  padding: 5px 0 0 5px;
+  border-radius: 5px;
+  z-index: 1;
 }
 .hover-buttons {
   cursor: pointer;
   position: absolute;
   bottom: 0;
   right: 0;
-  cursor: pointer;
   transition: 0.2s ease;
+  z-index: 1;
 }
 .hover-buttons:hover {
   transform: scale(1.1, 1.1);
@@ -43,11 +45,11 @@
   box-shadow: 12px 2px 20px -13px rgba(0, 0, 0, 0.75);
 }
 .ProductCard-thumbnail {
-  border-radius: 5px;
+  width: 100%;
+  border-radius: 2px 2px 10px 10px;
   box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
     10px 10px 25px rgba(112, 124, 151, 0.05);
-  transition: 5s ease;
-  z-index: 0;
+  transition: 3s ease;
 }
 
 .ProductCard-thumbnail:hover {

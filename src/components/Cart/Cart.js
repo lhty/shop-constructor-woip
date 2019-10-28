@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../Providers/Provider';
 import { UserContext } from '../Providers/UserProvider';
 
@@ -7,19 +7,29 @@ import './Cart.css';
 const Cart = () => {
   const { cart, cartDispath } = useContext(Context);
   const { setActive, active } = useContext(UserContext);
+  const [cartAction, setCartAction] = useState('cart');
 
   useEffect(() => {
+    let timer = null;
+    setCartAction('cart bubble');
+    timer = setTimeout(() => {
+      setCartAction('cart');
+    }, 1000);
     if (localStorage.getItem('cart'))
       cartDispath({
         type: 'CART_RETRIVE'
       });
+    return () => {
+      clearTimeout(timer);
+    };
   }, [cartDispath]);
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
   return (
     <div
-      className="cart"
+      className={cartAction}
       onClick={() => {
         if (cart.length > 0) {
           setActive({ ...active, cart: !active.cart });

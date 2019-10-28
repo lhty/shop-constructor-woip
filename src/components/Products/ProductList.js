@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useMemo } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { PRODUCTS_QUERY } from '../Providers/Queries';
 import ProductCard from './ProductCard';
@@ -27,13 +27,15 @@ const ProductList = () => {
   const [sortstate, setSortstate] = useState({ byprice: null });
   const [productsort, sortDispatch] = useReducer(sortReducer, {});
 
+  const ConstructorMemo = useMemo(() => <Constructor />, []);
+
   if (loading || error) return <></>;
 
   return (
-    <>
-      <section className="ProductList-container">
-        <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
-        <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
+    <section className="ProductList-container">
+      <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
+      <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
+      <div className="ProductList-wrapper">
         <div className="ProductList-bundles">
           <div className="ProductList-bundles-sort">
             <div
@@ -63,9 +65,9 @@ const ProductList = () => {
             product={(productsort.length > 0 && productsort) || data.posts}
           />
         </div>
-        <Constructor />
-      </section>
-    </>
+        {ConstructorMemo}
+      </div>
+    </section>
   );
 };
 export default ProductList;

@@ -2,20 +2,21 @@ import React, { useState, useReducer, useContext } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { PROPORTION_QUERY } from '../Providers/Queries';
 import { ITEM_QUERY } from '../Providers/Queries';
+import { API_URL } from '../../config';
 
 import './Constructor.css';
 
 const ConstructorContext = React.createContext();
 
 const Reducer = (custom, action) => {
-  const InsertObj = (state, index, obj) => {
-    state.set.splice(index, 0, obj);
+  const InsertObj = (index, obj) => {
+    custom.set.splice(index, 1, obj);
   };
   switch (action.type) {
     case 'CREATE_BOX':
       return action.payload;
     case 'ADD':
-      InsertObj(custom, action.index, action.payload);
+      InsertObj(action.index, action.payload);
       return custom;
     default:
       return custom;
@@ -92,9 +93,25 @@ const Slot = ({ item, index }) => {
   const { setslotIndex } = useContext(ConstructorContext);
   return (
     <div className="slot-wrapper" onClick={() => setslotIndex(index)}>
-      {typeof item === 'number' ? item : !item ? '+' : item.name}
+      {typeof item === 'number' ? (
+        item + 1
+      ) : !item ? (
+        '+'
+      ) : item.image.length > 0 ? (
+        <img
+          className="slot-thumb"
+          src={`${API_URL}${item.image[0].url}`}
+          alt=""
+        ></img>
+      ) : (
+        <p>{item.name}</p>
+      )}
     </div>
   );
+};
+
+const Item = ({ item }) => {
+  return <div></div>;
 };
 
 const ItemList = () => {

@@ -1,13 +1,13 @@
-.cart-list-container {
-  animation: 1s ease 0s 1 normal none running bounceInDown;
-}
 .cart-list-wrapper {
+  position: fixed;
+  top: 0;
+  right: 7.5%;
+  z-index: 2;
   background-color: #ffffff4f;
   border-radius: 0px 0px 15px 15px;
-  padding: 120px 10px 10px 10px;
-  width: 40%;
-  float: right;
+  padding: 125px 10px 10px 10px;
   min-height: 240px;
+  animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .cart-element {
   display: flex;
@@ -49,6 +49,7 @@
   transform: translateX(-50%);
 }
 .action {
+  cursor: pointer;
   align-self: center;
   position: absolute;
   background: none;

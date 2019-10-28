@@ -3,26 +3,18 @@
   overflow: hidden;
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
+.Promo-buttons {
+  position: relative;
+  top: 60%;
+  width: 100%;
+}
 .Promo-bottom {
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
-.Promo {
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1%;
-}
 .Promo-banner {
-  /* animation: 1s ease 0s 1 normal none running bounceRight; */
+  margin-top: 100px;
 }
 
-.Promo-img {
-  width: 100%;
-  cursor: pointer;
-  transition: all 1s ease;
-  animation: animationName 35s infinite;
-}
 @keyframes animationName {
   0% {
     opacity: 0;
@@ -38,13 +30,13 @@
   }
 }
 
-.Promo img:hover {
-  filter: saturate(200%);
-}
 .Promo-svg-label {
   width: 100%;
 }
 .Promo-button {
+  position: absolute;
+  right: 5px;
+  margin-top: 20%;
   min-width: 24px;
   height: 42px;
   background: url(../../img/arrow.svg);
@@ -53,7 +45,10 @@
   cursor: pointer;
   background-repeat: no-repeat;
   background-position: center center;
+  z-index: 1;
 }
 .prev {
+  left: 5px;
+  margin-top: 20%;
   transform: rotate(180deg);
 }

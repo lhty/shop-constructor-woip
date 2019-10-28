@@ -9,28 +9,7 @@ const ProductCard = ({ product }) => {
   return product ? (
     product.map(product => (
       <div key={product.id} className="ProductCard-wrapper">
-        <div className="ProductCard-description">
-          <p className="ProductCard-title">{product.title}</p>
-          <div className="hover-buttons">
-            <button
-              className="hbutton"
-              onClick={() => {
-                cartDispath({
-                  type: 'CART_ADD',
-                  payload: {
-                    id: parseInt(product.id),
-                    quantity: 1,
-                    title: product.title,
-                    image: ThumbnailUrl(product),
-                    price: product.price
-                  }
-                });
-              }}
-            >
-              В корзину
-            </button>
-          </div>
-        </div>
+        <p className="ProductCard-title">{product.title}</p>
         <Link to={product.id + '/' + product.title}>
           <img
             className="ProductCard-thumbnail"
@@ -38,6 +17,25 @@ const ProductCard = ({ product }) => {
             alt=""
           />
         </Link>
+        <div className="hover-buttons">
+          <button
+            className="hbutton"
+            onClick={() => {
+              cartDispath({
+                type: 'CART_ADD',
+                payload: {
+                  id: parseInt(product.id),
+                  quantity: 1,
+                  title: product.title,
+                  image: ThumbnailUrl(product),
+                  price: product.price
+                }
+              });
+            }}
+          >
+            В корзину
+          </button>
+        </div>
       </div>
     ))
   ) : (
