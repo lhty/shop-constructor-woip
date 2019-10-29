@@ -122,9 +122,9 @@ const Slot = ({ item, index }) => {
   );
 };
 
-const Item = ({ item }) => {
-  return <div></div>;
-};
+// const Item = ({ item }) => {
+//   return <div></div>;
+// };
 
 const ItemList = () => {
   const { slotIndex, setslotIndex, dispatch } = useContext(ConstructorContext);

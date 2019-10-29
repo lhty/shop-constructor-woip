@@ -1,20 +1,37 @@
 .Promo-container {
+  position: relative;
   background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
   overflow: hidden;
   animation: 1s ease 0s 1 normal none running bounceInDown;
-}
-.Promo-buttons {
-  position: relative;
-  top: 60%;
-  width: 100%;
 }
 .Promo-bottom {
   animation: 1s ease 0s 1 normal none running bounceInDown;
 }
 .Promo-banner {
-  margin-top: 100px;
+  padding-top: 100px;
+  width: 90%;
+  margin: 0 auto;
 }
-
+.Banner-wrapper {
+  min-height: 30vh;
+  display: flex;
+  flex-direction: row;
+  padding: 50px;
+  justify-content: center;
+}
+.Banner-wrapper img {
+  align-self: center;
+  max-width: fit-content;
+}
+.Banner-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.Banner-img {
+  width: 50%;
+  align-self: flex-end;
+}
 @keyframes animationName {
   0% {
     opacity: 0;
@@ -33,12 +50,21 @@
 .Promo-svg-label {
   width: 100%;
 }
-.Promo-button {
+.Promo-buttons {
   position: absolute;
-  right: 5px;
-  margin-top: 20%;
-  min-width: 24px;
-  height: 42px;
+  width: 100%;
+  top: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.Promo-buttons :hover {
+  opacity: 0.5;
+}
+.Promo-button {
+  margin: 0 5px 0 0;
+  min-width: 30px;
+  height: 50px;
   background: url(../../img/arrow.svg);
   border: none;
   outline: none;
@@ -46,9 +72,10 @@
   background-repeat: no-repeat;
   background-position: center center;
   z-index: 1;
+  opacity: 0.15;
+  transition: 1s ease;
 }
 .prev {
-  left: 5px;
-  margin-top: 20%;
+  margin: 0 0 0 5px;
   transform: rotate(180deg);
 }

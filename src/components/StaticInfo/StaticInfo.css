@@ -4,6 +4,7 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
+  animation: 1s ease 0s 1 normal none running fadeInDown;
 }
 .StaticInfo-card {
   border-radius: 10px;

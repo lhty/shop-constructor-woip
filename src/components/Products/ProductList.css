@@ -1,7 +1,7 @@
 .ProductList-container {
   position: relative;
-  margin-top: 50px;
   z-index: 0;
+  animation: 1.5s ease 0s 1 none running fadeInDown;
 }
 .ProductList-wrapper {
   display: flex;
@@ -12,6 +12,8 @@
     #f8f2ed 53.05%,
     #f3ebe5 99.95%
   );
+  padding-bottom: 50px;
+  min-height: 100vh;
 }
 .ProductList-bundles {
   width: 50%;
@@ -19,6 +21,8 @@
   display: flex;
   justify-content: center;
   flex-flow: row wrap;
+  animation: 1s ease 0s 1 normal none running slideInLeft;
+  transition: 1s ease;
 }
 .ProductList-topsvg {
   display: block;

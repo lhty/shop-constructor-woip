@@ -28,6 +28,8 @@ export const PRODUCT_QUERY = gql`
 export const PROMO_QUERY = gql`
   {
     promos(sort: "id:desc") {
+      title
+      description
       promo_banners {
         url
       }

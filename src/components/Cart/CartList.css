@@ -2,12 +2,13 @@
   position: fixed;
   top: 0;
   right: 7.5%;
-  z-index: 2;
+  width: 35%;
   background-color: #ffffff4f;
   border-radius: 0px 0px 15px 15px;
   padding: 125px 10px 10px 10px;
   min-height: 240px;
   animation: 1s ease 0s 1 normal none running bounceInDown;
+  z-index: 9999;
 }
 .cart-element {
   display: flex;

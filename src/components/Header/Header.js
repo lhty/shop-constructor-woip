@@ -15,21 +15,24 @@ export default function Header({ match: { url } }) {
   return (
     <>
       <section className="header">
-        <Link to="/">
-          <img
-            className="header-title"
-            onClick={() => {
-              window.pageYOffset === 0
-                ? setActive({ auth: false, cart: false })
-                : window.scrollTo(0, 0);
-            }}
-            src={title}
-            alt=""
-          />
-        </Link>
+        <div className="header-nav">
+          <Auth />
+          <Link to="/">
+            <img
+              className="header-title"
+              onClick={() => {
+                window.pageYOffset === 0
+                  ? setActive({ auth: false, cart: false })
+                  : window.scrollTo(0, 0);
+              }}
+              src={title}
+              alt=""
+            />
+          </Link>
+          <Cart />
+          {/* <div className="headerbg"></div> */}
+        </div>
         <img className="header-svg" src={headerborder} alt="" />
-        <Auth />
-        <Cart />
       </section>
       {active.auth && <AuthPage />}
       {active.cart && <CartList url={url} />}

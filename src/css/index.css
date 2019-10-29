@@ -26,13 +26,15 @@ a {
 html,
 body {
   font-family: Noto;
-  height: 100%;
   scroll-behavior: smooth;
   background: #f4eae1;
   background-image: url(../img/splash.svg);
+  height: 100%;
+  margin-bottom: 1px;
 }
 .wrapper {
   max-width: 85%;
+  min-height: 100vh;
   margin: 0 auto;
   box-shadow: 0px 8px 35px -28px rgb(98, 41, 10);
 }
@@ -69,8 +71,18 @@ body {
 
   to {
     opacity: 0;
-    -webkit-transform: translate3d(0, 100%, 0);
     transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 @keyframes fadeIn {
@@ -137,9 +149,26 @@ body {
     transform: scale(1);
   }
 }
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 1;
+  }
+}
 @media (max-width: 1200px) {
   .header-title {
+    transform: scale(0.8);
     margin: 5px;
+  }
+  .cart-list-wrapper {
+    position: absolute;
+    top: 0;
+    right: 7.5%;
+    width: 85%;
+    background-color: #ffffffb5;
   }
 }
 @media (max-width: 800px) {
@@ -158,15 +187,19 @@ body {
     margin-top: 10px;
   }
   .auth {
+    transform: scale(0.8);
     left: 5px;
   }
   .cart {
+    transform: scale(0.8);
     right: 5px;
   }
   .cart-list-wrapper {
-    background-color: #ffffffb5;
     width: 100%;
-    right: 0;
+    left: 0;
+  }
+  .Promo-button {
+    display: none;
   }
   .Promo-img {
     max-width: 140vw;
