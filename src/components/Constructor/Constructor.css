@@ -1,15 +1,16 @@
 .Constructor-wrapper {
   position: relative;
-  width: 50%;
   display: flex;
   flex-direction: column;
+  width: 50%;
 }
 .Constructor-wrapper select {
   border: none;
   background: transparent;
   width: 25%;
   align-self: center;
-  font-size: 20px;
+  font-size: 15px;
+  letter-spacing: -0.08em;
 }
 .box-wrapper {
   display: flex;
@@ -17,34 +18,22 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 30px;
+  border-radius: 25px 0px 0px 10px;
+  border-top: 1px dashed #83390447;
+  border-left: 1px dashed #83390430;
 }
 .slot-wrapper {
   cursor: pointer;
   height: 80px;
   width: 120px;
-  border: 1px solid black;
+  border: 1px solid #83390447;
   border-radius: 5px;
   margin: 10px;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.Itemlist-wrapper {
-  cursor: pointer;
-  position: absolute;
-  left: 50%;
-  top: 30%;
-  width: 100%;
-  height: 100%;
-  transform: translate(-50%, -50%);
-  background: #f0f0f0bf;
-  padding: 10px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+  animation: 1s ease 0s 1 normal none running slideInLeft;
 }
 .Itemlist-wrapper ul {
   margin: 10px;
@@ -52,9 +41,44 @@
   width: 25%;
   border-radius: 10px;
   align-self: center;
-  border: 1px solid black;
+  border: 1px solid #763e2e;
+}
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 25px;
+  cursor: pointer;
 }
 .slot-thumb {
   width: 100%;
   height: 100%;
+}
+.box-overall {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+.Constructor-progress {
+  max-width: 350px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin-left: 25%;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+.svgarrow {
+  max-height: 50px;
+}
+.svgicon {
+  max-width: 50px;
+  max-height: 50px;
+}
+.combine {
+  position: absolute;
+  right: 0;
+}
+.empty {
+  filter: grayscale(70%);
 }

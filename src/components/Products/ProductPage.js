@@ -16,17 +16,21 @@ const Product = ({ match }) => {
   if (loading || error) return <Spinner />;
 
   return (
-    <section className="product-page-container">
-      <Link to="/">back</Link>
-      <div className="product-page-left">
-        <img src={ImgUrl(data.post)} alt="" />
+    <>
+      <div className="product-page-back">
+        <Link to="/">Назад</Link>
       </div>
-      <div className="product-page-right">
-        <h1>{data.post.title}</h1>
-        <p>{data.post.description}</p>
-        <label>{data.post.price} руб</label>
-      </div>
-    </section>
+      <section className="product-page-container">
+        <div className="product-page-left">
+          <img src={ImgUrl(data.post)} alt="" />
+        </div>
+        <div className="product-page-right">
+          <h1>{data.post.title}</h1>
+          <p>{data.post.description}</p>
+          <label>{data.post.price} руб</label>
+        </div>
+      </section>
+    </>
   );
 };
 

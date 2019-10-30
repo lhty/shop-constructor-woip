@@ -31,6 +31,7 @@ body {
   background-image: url(../img/splash.svg);
   height: 100%;
   margin-bottom: 1px;
+  color: #763e2e;
 }
 .wrapper {
   max-width: 85%;
@@ -201,6 +202,14 @@ body {
   .Promo-button {
     display: none;
   }
+  .Promo-banner {
+    padding-top: 50px;
+    width: 100%;
+  }
+  .Banner-wrapper {
+    padding: 0 20px 0 20px;
+  }
+
   .Promo-img {
     max-width: 140vw;
     width: unset;

@@ -21,6 +21,9 @@
   display: flex;
   justify-content: center;
   flex-flow: row wrap;
+  border-radius: 0px 0px 25px 0px;
+  border-bottom: 1px dashed #83390463;
+  padding-bottom: 30px;
   animation: 1s ease 0s 1 normal none running slideInLeft;
   transition: 1s ease;
 }
@@ -46,12 +49,13 @@
   width: 100%;
   height: 50px;
   margin-bottom: 25px;
+  border-radius: 0px 0px 25px 0px;
+  border-bottom: 1px dashed #83390463;
 }
 .sort-byprice {
   font-size: 15px;
   line-height: 46px;
   letter-spacing: -0.08em;
-  color: #763e2e;
 }
 .sort-byprice-link {
   align-self: center;
@@ -79,5 +83,5 @@
   display: none;
 }
 .inactive {
-  filter: grayscale(100%);
+  filter: opacity(70%);
 }

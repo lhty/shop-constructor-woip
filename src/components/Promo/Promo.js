@@ -23,6 +23,7 @@ const Promo = () => {
   const options = {
     duration: 500,
     draggable: true,
+    threshold: 50,
     loop: true
   };
 
