@@ -7,29 +7,27 @@ import './Cart.css';
 const Cart = () => {
   const { cart, cartDispath } = useContext(Context);
   const { setActive, active } = useContext(UserContext);
-  const [cartAction, setCartAction] = useState('cart');
-
+  const [cartStyle, setcartStyle] = useState('cart');
   useEffect(() => {
-    let timer = null;
-    setCartAction('cart bubble');
-    timer = setTimeout(() => {
-      setCartAction('cart');
-    }, 1000);
     if (localStorage.getItem('cart'))
       cartDispath({
         type: 'CART_RETRIVE'
       });
-    return () => {
-      clearTimeout(timer);
-    };
   }, [cartDispath]);
 
   useEffect(() => {
+    setcartStyle('cart bubble');
+    let timer = setTimeout(() => {
+      setcartStyle('cart');
+    }, 1000);
     localStorage.setItem('cart', JSON.stringify(cart));
+    return () => {
+      clearTimeout(timer);
+    };
   }, [cart]);
   return (
     <div
-      className={cartAction}
+      className={cartStyle}
       onClick={() => {
         if (cart.length > 0) {
           setActive({ ...active, cart: !active.cart });

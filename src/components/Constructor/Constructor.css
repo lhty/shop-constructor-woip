@@ -143,3 +143,6 @@
   font-weight: bold;
   font-size: 2rem;
 }
+.item-container h1 {
+  margin: 15px 0 15px 0;
+}

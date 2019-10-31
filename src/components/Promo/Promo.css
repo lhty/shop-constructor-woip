@@ -13,6 +13,7 @@
   margin: 0 auto;
 }
 .Banner-wrapper {
+  position: relative;
   min-height: 30vh;
   display: flex;
   flex-direction: row;
@@ -23,10 +24,19 @@
   align-self: center;
   max-width: fit-content;
 }
+.expand {
+  position: absolute;
+  bottom: 0;
+  transform: rotate(90deg);
+}
+.expand label:hover {
+  opacity: 0.5;
+}
 .Banner-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 60%;
 }
 .Banner-img {
   width: 50%;

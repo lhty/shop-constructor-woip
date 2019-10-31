@@ -30,7 +30,6 @@ export default function Header({ match: { url } }) {
             />
           </Link>
           <Cart />
-          {/* <div className="headerbg"></div> */}
         </div>
         <img className="header-svg" src={headerborder} alt="" />
       </section>
