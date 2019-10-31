@@ -43,6 +43,8 @@ export const PROPORTION_QUERY = gql`
       x
       y
       z
+      shape
+      type
       countmin
       countmax
     }

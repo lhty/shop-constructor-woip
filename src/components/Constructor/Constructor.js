@@ -7,7 +7,7 @@ import { API_URL } from '../../config';
 
 import boxsvg from '../../img/constructorBox.svg';
 import sweetssvg from '../../img/constructorSweets.svg';
-import arrowsvg from '../../img/constructorArrow.svg';
+import done from '../../img/constructorDone.svg';
 import './Constructor.css';
 
 const ConstructorContext = React.createContext();
@@ -38,37 +38,56 @@ const Constructor = () => {
   const { data, error, loading } = useQuery(PROPORTION_QUERY);
   if (loading || error) return <Spinner />;
 
-  const sizes = data.proportions
-    .filter(size => size.countmin !== null)
-    .map(size => size.countmin);
-
   return (
     <ConstructorContext.Provider
       value={{ custom, dispatch, slotIndex, setslotIndex }}
     >
       <div className="Constructor-wrapper">
         <div className="Constructor-progress">
-          <img
-            className={custom.set ? 'svgicon' : 'svgicon empty'}
-            src={boxsvg}
-            alt=""
-          />
-          <img
-            className={custom.set ? 'svgarrow' : 'svgarrow empty'}
-            src={arrowsvg}
-            alt=""
-          />
-          <img
-            className={custom.set ? 'svgicon' : 'svgicon empty'}
-            src={sweetssvg}
-            alt=""
-          />
-          <img className={'svgarrow empty'} src={arrowsvg} alt="" />
-          <img className={'svgicon combine empty'} src={boxsvg} alt="" />
-          <img className={'svgicon empty'} src={sweetssvg} alt="" />
+          <div
+            className={
+              custom.set ? 'Constructor-stage' : 'Constructor-stage empty'
+            }
+          >
+            <img
+              onClick={() => {
+                dispatch({ type: 'CLEAR_BOX' });
+                setslotIndex(-1);
+              }}
+              src={boxsvg}
+              alt=""
+            />
+
+            {custom.constructor === Object && (
+              <p>
+                {custom.type} {custom.shape}
+              </p>
+            )}
+          </div>
+          <div
+            className={
+              custom.set && custom.set.filter(obj => obj).length > 0
+                ? 'Constructor-stage'
+                : 'Constructor-stage empty'
+            }
+          >
+            <img onClick={() => setslotIndex(-1)} src={sweetssvg} alt="" />
+            {custom.set && (
+              <p>
+                {custom.set.filter(obj => obj).length} / {custom.size}
+              </p>
+            )}
+          </div>
+          <div className={'Constructor-stage empty'}>
+            <img src={done} alt="" />
+          </div>
         </div>
         {!custom.set && (
-          <BoxSelector sizes={sizes} setSize={setSize} dispatch={dispatch} />
+          <BoxSelector
+            sizes={data.proportions.filter(size => size.countmin !== null)}
+            setSize={setSize}
+            dispatch={dispatch}
+          />
         )}
         {slotIndex >= 0 ? (
           <ItemList />
@@ -100,36 +119,35 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
         <div
           className="slot-wrapper"
           onClick={() => {
-            let _id = new Date().getTime() + Math.floor(Math.random(size));
-            setSize(size);
+            let _id =
+              new Date().getTime() + Math.floor(Math.random(size.countmin));
+            setSize(size.countmin);
             dispatch({
               type: 'CREATE_BOX',
               payload: {
                 id: _id,
                 name: `Custom bundle ${_id}`,
-                size: size,
-                shape: '',
-                set: Array.from(Array(size).keys()),
+                size: size.countmin,
+                shape: size.shape,
+                type: size.type,
+                set: Array.from(Array(size.countmin).fill(false)),
                 image: ''
               }
             });
           }}
           key={i}
         >
-          на {size} конфет
+          на {size.countmin} конфет
         </div>
       ))}
     </div>
   );
 };
 
-const Box = ({ size = 0, dispatch }) => {
+const Box = ({ size = 0 }) => {
   const { custom } = useContext(ConstructorContext);
   return (
     <div className="box-wrapper">
-      <div className="back" onClick={() => dispatch({ type: 'CLEAR_BOX' })}>
-        Назад
-      </div>
       {[...Array(size).keys()].map(
         (slot, index) =>
           custom.set && (
@@ -144,10 +162,8 @@ const Slot = ({ item, index }) => {
   const { setslotIndex } = useContext(ConstructorContext);
   return (
     <div className="slot-wrapper" onClick={() => setslotIndex(index)}>
-      {typeof item === 'number' ? (
-        item + 1
-      ) : !item ? (
-        '+'
+      {!item ? (
+        index + 1
       ) : item.image.length > 0 ? (
         <img
           className="slot-thumb"
@@ -161,32 +177,45 @@ const Slot = ({ item, index }) => {
   );
 };
 
-// const Item = ({ item }) => {
-//   return <div></div>;
-// };
-
 const ItemList = () => {
-  const { slotIndex, setslotIndex, dispatch } = useContext(ConstructorContext);
+  const [details, viewDetails] = useState(false);
   const { data, error, loading } = useQuery(ITEM_QUERY);
   if (loading || error) return <Spinner />;
-  const items = data.items.map(obj => (
-    <ul
-      className="slot-wrapper"
-      key={obj.id}
-      onClick={() => {
-        dispatch({ type: 'ADD', payload: obj, index: slotIndex });
-        setslotIndex(-1);
-      }}
-    >
-      {obj.name}
-    </ul>
-  ));
+  const items = details ? (
+    <Item item={details} viewDetails={viewDetails} />
+  ) : (
+    data.items.map(obj => (
+      <ul
+        onClick={() => {
+          viewDetails(obj);
+        }}
+        className="slot-wrapper"
+        key={obj.id}
+      >
+        {obj.name}
+      </ul>
+    ))
+  );
+  return <div className="box-wrapper">{items}</div>;
+};
+
+const Item = ({ item, viewDetails }) => {
+  const { slotIndex, setslotIndex, dispatch } = useContext(ConstructorContext);
   return (
-    <div className="box-wrapper">
-      <div className="back" onClick={() => setslotIndex(-1)}>
-        Назад
-      </div>
-      {items}
+    <div className="item-container">
+      <img src={`${API_URL}${item.image[0].url}`} alt="" />
+      <h1>{item.name}</h1>
+      <p>{item.description}</p>
+      <label>{item.price} руб</label>
+      <button
+        onClick={() => {
+          dispatch({ type: 'ADD', payload: item, index: slotIndex });
+          setslotIndex(-1);
+          viewDetails(false);
+        }}
+      >
+        Добавить
+      </button>
     </div>
   );
 };

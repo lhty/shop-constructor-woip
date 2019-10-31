@@ -9,14 +9,14 @@
 }
 .Promo-banner {
   padding-top: 100px;
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
 }
 .Banner-wrapper {
   min-height: 30vh;
   display: flex;
   flex-direction: row;
-  padding: 50px;
+  padding: 0px 50px 0 50px;
   justify-content: center;
 }
 .Banner-wrapper img {
