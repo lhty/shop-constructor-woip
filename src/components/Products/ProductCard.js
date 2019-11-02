@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
                   quantity: 1,
                   title: product.title,
                   image: ThumbnailUrl(product),
-                  price: product.price
+                  price: product.price + product.proportion.price
                 }
               });
             }}

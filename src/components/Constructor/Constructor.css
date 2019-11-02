@@ -55,17 +55,12 @@
   height: 100%;
   border-radius: 5px;
 }
-.box-overall {
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-}
 .Constructor-progress {
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding: 5px 15px 10px 15px;
+  padding: 5px 0px 10px 0px;
   justify-content: center;
   animation: 1s ease 0s 1 normal none running slideInLeft;
 }
@@ -74,24 +69,13 @@
   max-width: 50px;
   max-height: 50px;
 }
-.empty {
-  width: 30%;
-  opacity: 0.5;
-  cursor: default;
-  filter: grayscale(70%);
-  border-radius: 25px 0 0 25px;
-  background: linear-gradient(
-    89.97deg,
-    #ffbb96 0.01%,
-    rgba(255, 220, 201, 0) 99.99%
-  );
-}
 .Constructor-stage {
   position: relative;
   display: flex;
-  justify-content: center;
-  width: 30%;
+  flex-direction: row;
+  justify-content: flex-start;
   height: 50px;
+  min-width: 30%;
   border-radius: 25px 0 0 25px;
   background: linear-gradient(
     89.97deg,
@@ -101,24 +85,47 @@
 }
 .Constructor-stage img {
   cursor: pointer;
-  position: absolute;
-  left: 15px;
-  top: 10px;
+  align-self: center;
   max-width: 30px;
   max-height: 30px;
+  margin: 10px;
+}
+.empty {
+  opacity: 0.5;
+  margin-left: 10px;
+  cursor: default;
+  filter: grayscale(70%);
+  border-radius: 25px 0 0 25px;
 }
 .box-overall,
 .Constructor-stage p {
   align-self: center;
-  font-size: 15px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: -0.08em;
 }
-
+.box-overall {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  font-size: 20px;
+}
+.Constructor-stage-info {
+  height: 50px;
+  padding: 10px;
+  font-size: 10px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .item-container {
   position: relative;
   display: flex;
   flex-direction: column;
+}
+.item-container p {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #83390447;
 }
 .item-container img {
   width: 100%;
@@ -138,11 +145,33 @@
   background-color: #f6e0cd;
   cursor: pointer;
 }
-.item-container label {
+.item-container-quantity {
   align-self: flex-end;
   font-weight: bold;
   font-size: 2rem;
 }
+.item-container-quantity p:first-child {
+  font-size: 1.5rem;
+  text-align: end;
+  border: 0;
+  padding: 0;
+}
+.item-container-quantity p:nth-child(2) {
+  text-align: end;
+  border: 0;
+  padding: 0;
+}
 .item-container h1 {
   margin: 15px 0 15px 0;
+}
+.item-container-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.item-container-buttons button:first-child {
+  width: 50%;
+}
+.item-container-buttons button {
+  width: 24%;
 }

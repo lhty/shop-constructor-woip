@@ -164,6 +164,9 @@ body {
     transform: scale(0.8);
     margin: 5px;
   }
+  .Banner-wrapper img {
+    max-width: 25vw;
+  }
   .cart-list-wrapper {
     position: absolute;
     top: 0;
@@ -209,7 +212,9 @@ body {
   .Banner-wrapper {
     padding: 0 20px 0 20px;
   }
-
+  .Banner-wrapper img {
+    max-width: 40vw;
+  }
   .Promo-img {
     max-width: 140vw;
     width: unset;

@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useContext } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { PROPORTION_QUERY } from '../Providers/Queries';
-import Spinner from '../Auth/Elements/Spinner';
+import Spinner from '../Assets/Spinner';
 import { ITEM_QUERY } from '../Providers/Queries';
 import { API_URL } from '../../config';
 
@@ -13,14 +13,17 @@ import './Constructor.css';
 const ConstructorContext = React.createContext();
 
 const Reducer = (custom, action) => {
-  const InsertObj = (index, obj) => {
-    custom.set.splice(index, 1, obj);
-  };
   switch (action.type) {
     case 'CREATE_BOX':
       return action.payload;
     case 'ADD':
-      InsertObj(action.index, action.payload);
+      let iter = action.quantity;
+      action.quantity > 1
+        ? custom.set.map(
+            (obj, i) =>
+              !obj && iter && custom.set.splice(i, 1, action.payload) && iter--
+          )
+        : custom.set.splice(action.index, 1, action.payload);
       return custom;
     case 'CLEAR_BOX':
       return {};
@@ -59,9 +62,9 @@ const Constructor = () => {
             />
 
             {custom.constructor === Object && (
-              <p>
-                {custom.type} {custom.shape}
-              </p>
+              <div className="Constructor-stage-info">
+                <p>{custom.type}</p> <p>{custom.shape}</p>
+              </div>
             )}
           </div>
           <div
@@ -128,6 +131,7 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
                 id: _id,
                 name: `Custom bundle ${_id}`,
                 size: size.countmin,
+                maxsize: size.countmax,
                 shape: size.shape,
                 type: size.type,
                 set: Array.from(Array(size.countmin).fill(false)),
@@ -200,22 +204,54 @@ const ItemList = () => {
 };
 
 const Item = ({ item, viewDetails }) => {
-  const { slotIndex, setslotIndex, dispatch } = useContext(ConstructorContext);
+  const [quantity, setQauntity] = useState(1);
+  const { custom, slotIndex, setslotIndex, dispatch } = useContext(
+    ConstructorContext
+  );
+
   return (
     <div className="item-container">
-      <img src={`${API_URL}${item.image[0].url}`} alt="" />
+      {item.image[0] && <img src={`${API_URL}${item.image[0].url}`} alt="" />}
       <h1>{item.name}</h1>
       <p>{item.description}</p>
-      <label>{item.price} руб</label>
-      <button
-        onClick={() => {
-          dispatch({ type: 'ADD', payload: item, index: slotIndex });
-          setslotIndex(-1);
-          viewDetails(false);
-        }}
-      >
-        Добавить
-      </button>
+      <div className="item-container-quantity">
+        <p>{quantity} шт</p>
+        <p>{item.price * quantity} руб</p>
+      </div>
+      <div className="item-container-buttons">
+        <button
+          onClick={() => {
+            dispatch({
+              type: 'ADD',
+              payload: item,
+              index: slotIndex,
+              quantity: quantity
+            });
+            setslotIndex(-1);
+            viewDetails(false);
+          }}
+        >
+          Добавить
+        </button>
+        <button
+          onClick={() => {
+            setQauntity(quantity === 1 ? 1 : quantity - 1);
+          }}
+        >
+          -
+        </button>
+        <button
+          onClick={() => {
+            setQauntity(
+              custom.set && custom.set.filter(obj => !obj).length === quantity
+                ? quantity
+                : quantity + 1
+            );
+          }}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };

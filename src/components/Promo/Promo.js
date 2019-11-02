@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { PROMO_QUERY } from '../Providers/Queries';
-import Spinner from '../Auth/Elements/Spinner';
+import Spinner from '../Assets/Spinner';
 import { API_URL } from '../../config';
 import { useInterval } from '../Providers/Hooks/useInterval';
 
@@ -38,16 +38,20 @@ const Promo = () => {
     <div className="Banner-wrapper" key={index}>
       <div className="Banner-text">
         <h1>{banner.title}</h1>
-        <p>{banner.description}</p>
+        <p>
+          {banner.description.length > 200
+            ? banner.description.substring(0, 200) + ' ...'
+            : banner.description}
+        </p>
       </div>
-      <img
-        className="Banner-img"
-        key={index}
-        src={`${API_URL}${
-          banner.promo_banners[0] ? banner.promo_banners[0].url : ''
-        }`}
-        alt=""
-      ></img>
+      {banner.promo_banners[0] && (
+        <img
+          className="Banner-img"
+          key={index}
+          src={`${API_URL}${banner.promo_banners[0].url}`}
+          alt=""
+        ></img>
+      )}
       <label className="Promo-button expand"></label>
     </div>
   ));

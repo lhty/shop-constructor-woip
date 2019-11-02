@@ -45,23 +45,24 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-evenly;
+  margin: 5px 0px 10px 0px;
   height: 50px;
-  margin-bottom: 25px;
-  border-radius: 0px 0px 25px 0px;
-  border-bottom: 1px dashed #83390463;
+  width: 100%;
+  border-radius: 0 25px 25px 0;
+  background: linear-gradient(
+    89.97deg,
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
+  );
 }
-.sort-byprice {
+.sort-by {
+  position: relative;
   font-size: 15px;
   line-height: 46px;
   letter-spacing: -0.08em;
 }
-.sort-byprice-link {
-  align-self: center;
-  background: url(../../img/sort-byprice.svg) no-repeat;
-  width: 9px;
-  height: 8px;
+.sort-by :first-child {
   margin-left: 3px;
 }
 .bundles-checkbox {
@@ -78,6 +79,9 @@
 }
 .reversed {
   transform: rotate(180deg);
+}
+.small {
+  transform: scale(0.5);
 }
 .hidden {
   display: none;

@@ -1,12 +1,14 @@
 import React, { useState, useReducer, useMemo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useQuery } from 'react-apollo-hooks';
-import { PRODUCTS_QUERY } from '../Providers/Queries';
-import Spinner from '../Auth/Elements/Spinner';
+import { BUNDLES_QUERY } from '../Providers/Queries';
+import Spinner from '../Assets/Spinner';
 import ProductPage from './ProductPage';
 import ProductCard from './ProductCard';
 import Constructor from '../Constructor/Constructor';
 
+import sortprice from '../../img/sort-byprice.svg';
+import sortsize from '../../img/sort-bypsize.svg';
 import prodlistsvg from '../../img/productlisttop.svg';
 import './ProductList.css';
 
@@ -40,14 +42,21 @@ const Bundles = () => {
             sortstate.byprice ? a.price - b.price : b.price - a.price
           )
         };
+      case 'BY_SIZE':
+        return {
+          ...state,
+          ...action.payload.sort((a, b) =>
+            sortstate.bysize ? a.price - b.price : b.price - a.price
+          )
+        };
       default:
         return action.payload;
     }
   }
 
-  const { data, error, loading } = useQuery(PRODUCTS_QUERY);
+  const { data, error, loading } = useQuery(BUNDLES_QUERY);
 
-  const [sortstate, setSortstate] = useState({ byprice: null });
+  const [sortstate, setSortstate] = useState({ byprice: null, bysize: null });
   const [productsort, sortDispatch] = useReducer(sortReducer, {});
   if (loading || error) return <Spinner />;
   return (
@@ -55,29 +64,49 @@ const Bundles = () => {
       <div className="ProductList-bundles-sort">
         <div
           className={
-            sortstate.byprice === null
-              ? 'sort-byprice inactive'
-              : 'sort-byprice'
+            sortstate.byprice === null ? 'sort-by inactive' : 'sort-by'
           }
           onClick={() => {
-            sortDispatch({ type: 'BY_PRICE', payload: data.posts });
+            sortDispatch({ type: 'BY_PRICE', payload: data.bundles });
             setSortstate({ ...sortstate, byprice: !sortstate.byprice });
           }}
         >
           по цене
+          <img
+            className={
+              sortstate.byprice === null
+                ? 'hidden'
+                : sortstate.byprice
+                ? ''
+                : 'reversed'
+            }
+            src={sortprice}
+            alt=""
+          />
         </div>
-        <span
-          className={
-            sortstate.byprice === null
-              ? 'sort-byprice-link hidden'
-              : sortstate.byprice
-              ? 'sort-byprice-link'
-              : 'sort-byprice-link reversed'
-          }
-        ></span>
+        <div
+          className={sortstate.bysize === null ? 'sort-by inactive' : 'sort-by'}
+          onClick={() => {
+            sortDispatch({ type: 'BY_SIZE', payload: data.bundles });
+            setSortstate({ ...sortstate, bysize: !sortstate.bysize });
+          }}
+        >
+          по размеру
+          <img
+            className={
+              sortstate.bysize === null
+                ? 'hidden'
+                : sortstate.bysize
+                ? ''
+                : 'small'
+            }
+            src={sortsize}
+            alt=""
+          />
+        </div>
       </div>
       <ProductCard
-        product={(productsort.length > 0 && productsort) || data.posts}
+        product={(productsort.length > 0 && productsort) || data.bundles}
       />
     </>
   );

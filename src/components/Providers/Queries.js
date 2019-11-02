@@ -1,30 +1,52 @@
 import gql from 'graphql-tag';
-
-export const PRODUCTS_QUERY = gql`
+export const BUNDLES_QUERY = gql`
   {
-    posts(sort: "id:desc") {
+    bundles(sort: "id:desc") {
       id
       title
+      show
       price
-      images {
+      proportion {
+        id
+        type
+        shape
+        price
+        proportion
+        countmin
+        countmax
+        preview {
+          url
+        }
+        x
+        y
+        z
+      }
+      items
+      image {
         url
       }
     }
-  }
-`;
-export const PRODUCT_QUERY = gql`
-  query($id: ID!) {
-    post(id: $id) {
+    items {
       id
-      title
+      name
       description
+      weight
+      chocolate
       price
-      images {
+      discount
+      taste
+      letter
+      difficult
+      size_width
+      size_height
+      size_length
+      image {
         url
       }
     }
   }
 `;
+
 export const PROMO_QUERY = gql`
   {
     promos(sort: "id:desc") {
@@ -61,6 +83,7 @@ export const ITEM_QUERY = gql`
       price
       discount
       taste
+      letter
       difficult
       size_width
       size_height
