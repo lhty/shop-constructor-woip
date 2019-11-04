@@ -4,13 +4,13 @@ import { Context } from '../../Providers/Provider';
 
 import './Profile.css';
 
-const Profile = ({ logout }) => {
-  const { user, userDispatch, setActive, active } = useContext(UserContext);
+const Profile = ({ logout, user }) => {
+  const { userDispatch, setActive, active } = useContext(UserContext);
   const { cartDispath } = useContext(Context);
 
-  return user[0] ? (
+  return user.online ? (
     <div className="profile-wrapper">
-      {user[0] && user[0].role.id > 2 && <button>Админка</button>}
+      {user.online && user.role.id > 2 && <button>Админка</button>}
       <button
         onClick={() => {
           localStorage.clear();

@@ -6,7 +6,7 @@ import { API_URL } from '../../config';
 export const UserContext = React.createContext();
 
 const UserProvider = props => {
-  const [user, userDispatch] = useReducer(LoginReducer, false);
+  const [user, userDispatch] = useReducer(LoginReducer, { online: false });
   const [active, setActive] = useState({ auth: false, cart: false });
 
   function Login({ name, password }) {
@@ -78,11 +78,12 @@ const UserProvider = props => {
                 password: userdata.password
               })
               .then(response => {
-                localStorage.setItem('user', response.data.jwt);
                 userDispatch({
                   type: 'LOG_IN',
                   payload: response.data.user
                 });
+                if (!localStorage.getItem('user'))
+                  localStorage.setItem('user', response.data.jwt);
               })
               .catch(error => {
                 error.response.status === 400
@@ -98,23 +99,20 @@ const UserProvider = props => {
     }, 4194304);
   }
 
-  const token = localStorage.getItem('user');
-  const userid = token
-    ? JSON.parse(
-        atob(
-          localStorage
-            .getItem('user')
-            .split('.')[1]
-            .replace('-', '+')
-            .replace('_', '/')
-        )
-      ).id
-    : undefined;
-
-  function RetrieveLogin() {
-    if (userid)
+  function RetrieveLogin(token) {
+    let uid = token
+      ? JSON.parse(
+          atob(
+            token
+              .split('.')[1]
+              .replace('-', '+')
+              .replace('_', '/')
+          )
+        ).id
+      : null;
+    uid &&
       axios
-        .get(`${API_URL}users`, {
+        .get(`${API_URL}users?id=${uid}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -122,13 +120,14 @@ const UserProvider = props => {
         .then(response =>
           userDispatch({
             type: 'LOG_IN',
-            payload: response.data.filter(obj => obj.id === userid)
+            payload: response.data[0]
           })
         )
         .catch(error => {
           console.log('An error occurred:', error);
         });
   }
+
   return (
     <UserContext.Provider
       value={{

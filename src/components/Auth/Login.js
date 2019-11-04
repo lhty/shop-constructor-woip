@@ -16,6 +16,7 @@ const Login = () => {
   const handleSubmit = e => {
     e.preventDefault();
     Login(inputValues);
+    setActive({ ...active, auth: !active.auth });
   };
 
   return (

@@ -1,11 +1,18 @@
 import gql from 'graphql-tag';
-export const BUNDLES_QUERY = gql`
+export const PRODUCTS_QUERY = gql`
   {
-    bundles(sort: "id:desc") {
+    products(sort: "id:desc") {
       id
       title
       show
-      price
+      image {
+        url
+      }
+      setschema
+      user {
+        username
+        id
+      }
       proportion {
         id
         type
@@ -21,27 +28,23 @@ export const BUNDLES_QUERY = gql`
         y
         z
       }
-      items
-      image {
-        url
-      }
-    }
-    items {
-      id
-      name
-      description
-      weight
-      chocolate
-      price
-      discount
-      taste
-      letter
-      difficult
-      size_width
-      size_height
-      size_length
-      image {
-        url
+      items {
+        id
+        name
+        description
+        weight
+        chocolate
+        price
+        discount
+        taste
+        letter
+        difficult
+        size_width
+        size_height
+        size_length
+        image {
+          url
+        }
       }
     }
   }

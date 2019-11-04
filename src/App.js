@@ -25,7 +25,6 @@ function App() {
 
   return online ? (
     <ApolloProvider client={client}>
-      {console.log(client.cache.data.data)}
       <Provider>
         <Router>
           <Layout />

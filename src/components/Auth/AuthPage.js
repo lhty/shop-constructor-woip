@@ -1,20 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Signup from './Signup';
 import Login from './Login';
 import Profile from './Profile/Profile';
-import { UserContext } from '../Providers/UserProvider';
 
 import './AuthPage.css';
 
-const AuthPage = () => {
-  const { user } = useContext(UserContext);
+const AuthPage = ({ user }) => {
   const [active, setActive] = useState(true);
 
   return (
     <div className="auth-page-container">
       <div className="auth-page-wrapper">
-        {user ? (
-          <Profile />
+        {user.online ? (
+          <Profile user={user} />
         ) : (
           <>
             <h1
