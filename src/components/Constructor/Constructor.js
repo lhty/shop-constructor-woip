@@ -1,10 +1,10 @@
-import React, { useState, useReducer, useContext } from 'react';
+import React, { useState, useReducer, useContext, useEffect } from 'react';
 import { useQuery } from 'react-apollo-hooks';
 import { PROPORTION_QUERY } from '../Providers/Queries';
 import Spinner from '../Assets/Spinner';
 import { ITEM_QUERY } from '../Providers/Queries';
 import { API_URL } from '../../config';
-
+import { Context } from '../Providers/Provider';
 import boxsvg from '../../img/constructorBox.svg';
 import sweetssvg from '../../img/constructorSweets.svg';
 import done from '../../img/constructorDone.svg';
@@ -33,6 +33,23 @@ const Reducer = (custom, action) => {
 };
 
 const Constructor = () => {
+  const { construct } = useContext(Context);
+
+  useEffect(() => {
+    if (construct) {
+      setSize(construct.proportion.countmin);
+      dispatch({
+        type: 'CREATE_BOX',
+        payload: {
+          name: `Custom bundle ${new Date().getTime() +
+            Math.floor(Math.random(construct.proportion.countmin))}`,
+          proportion: construct.proportion,
+          set: construct.set
+        }
+      });
+    }
+  }, [construct]);
+
   const [size, setSize] = useState();
   const [slotIndex, setslotIndex] = useState(-1);
 
@@ -60,10 +77,9 @@ const Constructor = () => {
               src={boxsvg}
               alt=""
             />
-
-            {custom.constructor === Object && (
+            {custom.proportion && (
               <div className="Constructor-stage-info">
-                <p>{custom.type}</p> <p>{custom.shape}</p>
+                <p>{custom.proportion.type}</p> <p>{custom.proportion.shape}</p>
               </div>
             )}
           </div>
@@ -77,7 +93,8 @@ const Constructor = () => {
             <img onClick={() => setslotIndex(-1)} src={sweetssvg} alt="" />
             {custom.set && (
               <p>
-                {custom.set.filter(obj => obj).length} / {custom.size}
+                {custom.set.filter(obj => obj).length} /{' '}
+                {custom.proportion.countmin}
               </p>
             )}
           </div>
@@ -128,14 +145,15 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
             dispatch({
               type: 'CREATE_BOX',
               payload: {
-                id: _id,
                 name: `Custom bundle ${_id}`,
-                size: size.countmin,
-                maxsize: size.countmax,
-                shape: size.shape,
-                type: size.type,
-                set: Array.from(Array(size.countmin).fill(false)),
-                image: ''
+                proportion: {
+                  id: size.id,
+                  countmin: size.countmin,
+                  countmax: size.countmax,
+                  shape: size.shape,
+                  type: size.type
+                },
+                set: Array.from(Array(size.countmin).fill(false))
               }
             });
           }}

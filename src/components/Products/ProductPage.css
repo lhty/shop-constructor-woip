@@ -7,12 +7,14 @@
   border-top: 1px dashed #83390447;
   animation: 1s ease 0s 1 none running slideInLeft;
 }
-.product-page-back {
+.product-page-nav {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
   margin-top: 50px;
+  z-index: 1;
+}
+.back {
+  left: 0;
 }
 .product-page-left {
   padding: 25px 25px 0px 10px;

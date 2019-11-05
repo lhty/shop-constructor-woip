@@ -42,6 +42,56 @@ export const PRODUCTS_QUERY = gql`
         size_width
         size_height
         size_length
+        quantity
+        construct
+        image {
+          url
+        }
+      }
+    }
+    products(sort: "id:desc") {
+      id
+      title
+      show
+      image {
+        url
+      }
+      setschema
+      user {
+        username
+        id
+      }
+      proportion {
+        id
+        type
+        shape
+        price
+        proportion
+        countmin
+        countmax
+        preview {
+          url
+        }
+        x
+        y
+        z
+      }
+      items {
+        id
+        name
+        description
+        weight
+        chocolate
+        price
+        discount
+        taste
+        letter
+        difficult
+        size_width
+        size_height
+        size_length
+        quantity
+        construct
         image {
           url
         }

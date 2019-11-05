@@ -10,7 +10,7 @@ import './ProductPage.css';
 const Product = ({ match }) => {
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
 
-  const { ImgUrl, MakeSet } = useContext(Context);
+  const { ImgUrl, MakeSet, setConstruct } = useContext(Context);
   const id = match.params.id;
 
   if (loading || error) return <Spinner />;
@@ -19,8 +19,11 @@ const Product = ({ match }) => {
 
   return (
     <>
-      <div className="product-page-back">
+      <div className="product-page-nav back">
         <Link to="/">Назад</Link>
+      </div>
+      <div className="product-page-nav" onClick={() => setConstruct(product)}>
+        В конструктор
       </div>
       <section className="product-page-container">
         <div className="product-page-left">

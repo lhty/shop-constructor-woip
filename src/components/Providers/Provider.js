@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { ThumbnailUrl, ImgUrl } from './ThumbnailUrls';
 import { CartReducer } from './Reducers/CartReducers';
 
@@ -6,6 +6,7 @@ export const Context = React.createContext();
 
 const Provider = props => {
   const [cart, cartDispath] = useReducer(CartReducer, []);
+  const [construct, setConstruct] = useState(false);
 
   function MakeSet(products) {
     function _set(product) {
@@ -37,7 +38,9 @@ const Provider = props => {
         cartDispath,
         ThumbnailUrl,
         ImgUrl,
-        MakeSet
+        MakeSet,
+        construct,
+        setConstruct
       }}
     >
       {props.children}

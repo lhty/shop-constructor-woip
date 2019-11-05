@@ -14,7 +14,7 @@
   display: flex;
   background-color: #ffffff;
   margin: 3px;
-  border-radius: 5px 20px 20px 5px;
+  border-radius: 10px 20px 20px 10px;
   box-shadow: 5px 8px 8px -15px rgba(0, 0, 0, 0.75);
 }
 .cart-element-img {
