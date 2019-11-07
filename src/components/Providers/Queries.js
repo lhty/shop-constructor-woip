@@ -69,6 +69,7 @@ export const PRODUCTS_QUERY = gql`
         proportion
         countmin
         countmax
+        construct
         preview {
           url
         }
@@ -122,6 +123,7 @@ export const PROPORTION_QUERY = gql`
       type
       countmin
       countmax
+      construct
     }
   }
 `;

@@ -52,7 +52,7 @@ const Constructor = () => {
 
   const [size, setSize] = useState();
   const [slotIndex, setslotIndex] = useState(-1);
-
+  const [compose, setCompose] = useState(false);
   const [custom, dispatch] = useReducer(Reducer, {});
 
   const { data, error, loading } = useQuery(PROPORTION_QUERY);
@@ -73,6 +73,7 @@ const Constructor = () => {
               onClick={() => {
                 dispatch({ type: 'CLEAR_BOX' });
                 setslotIndex(-1);
+                setCompose(false);
               }}
               src={boxsvg}
               alt=""
@@ -90,7 +91,14 @@ const Constructor = () => {
                 : 'Constructor-stage empty'
             }
           >
-            <img onClick={() => setslotIndex(-1)} src={sweetssvg} alt="" />
+            <img
+              onClick={() => {
+                setslotIndex(-1);
+                setCompose(false);
+              }}
+              src={sweetssvg}
+              alt=""
+            />
             {custom.set && (
               <p>
                 {custom.set.filter(obj => obj).length} /{' '}
@@ -98,13 +106,19 @@ const Constructor = () => {
               </p>
             )}
           </div>
-          <div className={'Constructor-stage empty'}>
+          <div
+            className={
+              compose ? 'Constructor-stage' : 'Constructor-stage empty'
+            }
+          >
             <img src={done} alt="" />
           </div>
         </div>
         {!custom.set && (
           <BoxSelector
-            sizes={data.proportions.filter(size => size.countmin !== null)}
+            sizes={data.proportions.filter(
+              size => size.countmin !== null && size.construct
+            )}
             setSize={setSize}
             dispatch={dispatch}
           />
@@ -112,7 +126,14 @@ const Constructor = () => {
         {slotIndex >= 0 ? (
           <ItemList />
         ) : (
-          custom.set && <Box size={size} dispatch={dispatch} />
+          custom.set && (
+            <Box
+              compose={compose}
+              setCompose={setCompose}
+              size={size}
+              dispatch={dispatch}
+            />
+          )
         )}
         {custom.set && (
           <div className="box-overall">
@@ -151,7 +172,10 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
                   countmin: size.countmin,
                   countmax: size.countmax,
                   shape: size.shape,
-                  type: size.type
+                  type: size.type,
+                  x: size.x,
+                  y: size.y,
+                  z: size.z
                 },
                 set: Array.from(Array(size.countmin).fill(false))
               }
@@ -166,17 +190,33 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
   );
 };
 
-const Box = ({ size = 0 }) => {
+const Box = ({ compose, setCompose, size = 0 }) => {
   const { custom } = useContext(ConstructorContext);
   return (
-    <div className="box-wrapper">
-      {[...Array(size).keys()].map(
-        (slot, index) =>
-          custom.set && (
-            <Slot key={index} item={custom.set[index]} index={index} />
-          )
-      )}
-    </div>
+    <>
+      <div className="box-wrapper">
+        {compose ? (
+          <Reshuffle custom={custom} />
+        ) : (
+          <>
+            {[...Array(size).keys()].map(
+              (slot, index) =>
+                custom.set && (
+                  <Slot key={index} item={custom.set[index]} index={index} />
+                )
+            )}
+            <button
+              onClick={() => {
+                custom.proportion.countmin <=
+                  custom.set.filter(obj => obj).length && setCompose(true);
+              }}
+            >
+              Далее
+            </button>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
@@ -270,6 +310,50 @@ const Item = ({ item, viewDetails }) => {
           +
         </button>
       </div>
+    </div>
+  );
+};
+
+const Reshuffle = ({ custom }) => {
+  const boxmaxwidth = custom.proportion.x;
+  const rowwidth = [...custom.set.map(obj => obj.size_width)].reduce(
+    (a, b) => a + b
+  );
+  function _cut(array, parts) {
+    let result = [];
+    for (let i = parts; i > 0; i--) {
+      result.push(array.splice(0, Math.ceil(array.length / i)));
+    }
+    return result;
+  }
+  const schema = _cut(
+    custom.set.map(obj => obj.id),
+    Math.ceil(rowwidth / boxmaxwidth)
+  );
+  const createRows = _cut(custom.set, Math.ceil(rowwidth / boxmaxwidth)).map(
+    (row, rowindex) => (
+      <div className="row" key={rowindex}>
+        {row.map((item, itemindex) => (
+          <div className="item" key={itemindex}>
+            {item.image[0] && (
+              <img
+                className="slot-thumb"
+                src={`${API_URL}${item.image[0].url}`}
+                alt=""
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    )
+  );
+  return (
+    <div className="shuffle">
+      {createRows}
+      {console.log('box width :', boxmaxwidth)}
+      {console.log('row width :', rowwidth)}
+      {console.log('rows quantity :', Math.ceil(rowwidth / boxmaxwidth))}
+      {console.log('schema :', schema)}
     </div>
   );
 };
