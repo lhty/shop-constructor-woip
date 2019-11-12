@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 import './ProductCard.css';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ products }) => {
   const { ThumbnailUrl, cartDispath } = useContext(Context);
-  return product ? (
-    product.map(product => (
+  return products ? (
+    products.map(product => (
       <div key={product.id} className="ProductCard-wrapper">
         <p className="ProductCard-title">{product.title}</p>
         <Link to={product.id + '/' + product.title}>

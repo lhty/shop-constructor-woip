@@ -13,7 +13,11 @@
     "react-apollo-hooks": "^0.5.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "react-sortablejs": "^1.5.1",
+    "react-spring": "9.0.0-beta.34",
+    "react-use-gesture": "latest",
+    "sortablejs": "^1.10.1"
   },
   "scripts": {
     "start": "set PORT=80 && react-scripts start",

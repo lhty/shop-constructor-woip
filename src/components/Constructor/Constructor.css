@@ -1,8 +1,12 @@
+*:focus {
+  outline: none;
+}
 .Constructor-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 50%;
+  height: 100%;
 }
 .Constructor-wrapper select {
   border: none;
@@ -15,22 +19,25 @@
 .box-wrapper {
   position: relative;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
-  padding: 30px;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  padding: 25px;
   border-radius: 25px 0px 0px 10px;
   border-top: 1px dashed #83390447;
   border-left: 1px dashed #83390430;
 }
-.box-wrapper button {
-  position: absolute;
-  bottom: 0;
+.box-wrapper section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .slot-wrapper {
   cursor: pointer;
-  height: 80px;
-  width: 120px;
+  width: 20%;
+  min-height: 60px;
   border: 1px solid #83390447;
   border-radius: 5px;
   margin: 10px;
@@ -38,7 +45,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: 1s ease 0s 1 normal none running slideInLeft;
+}
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .Itemlist-wrapper ul {
   margin: 10px;
@@ -57,7 +68,6 @@
 }
 .slot-thumb {
   width: 100%;
-  height: 100%;
   border-radius: 5px;
 }
 .Constructor-progress {
@@ -135,22 +145,10 @@
 }
 .item-container img {
   width: 100%;
-  border-radius: 25px 2px 2px 2px;
+  border-radius: 0 0 5px 5px;
+  box-shadow: -6px -14px 15px -16px rgba(129, 52, 11, 0.67);
 }
-.item-container button {
-  border: 0.5px dashed #833904;
-  box-sizing: border-box;
-  font-size: 15px;
-  width: 100%;
-  font-weight: bold;
-  margin-top: 5px;
-  border-radius: 5px;
-  color: #7e4a24;
-  height: 35px;
-  padding: 5px;
-  background-color: #f6e0cd;
-  cursor: pointer;
-}
+
 .item-container-quantity {
   align-self: flex-end;
   font-weight: bold;
@@ -170,28 +168,82 @@
 .item-container h1 {
   margin: 15px 0 15px 0;
 }
-.item-container-buttons {
+.buttons {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  background: linear-gradient(
+    89.97deg,
+    #ffbb964f 0.01%,
+    rgba(255, 220, 201, 0) 99.99%
+  );
+  height: 50px;
+  border-radius: 20px 5px 0 0;
+  transition: 1s;
+  outline: none;
 }
-.item-container-buttons button:first-child {
+.buttons :active {
+  transform: scale(1.1);
+  outline: none;
+}
+.buttons :first-child {
   width: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  color: #5b2600;
+  cursor: pointer;
+  border-right: 1px dashed #83390426;
 }
-.item-container-buttons button {
-  width: 24%;
-  position: relative;
+.buttons :nth-child(1n + 2):not(p) {
+  width: 50%;
+  color: #5b2600cf;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  border: none;
+  background: transparent;
+}
+.buttons p {
+  color: #5b2600d6;
+  width: 10%;
+  cursor: pointer;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  background: transparent;
+  padding: 0;
 }
 
-.shuffle {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
 .row {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 .item {
   width: 15%;
+}
+.test {
+  width: 80px;
+  height: 80px;
+  background: hotpink;
+  border-radius: 16px;
+}
+.compose {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  color: #5b2600;
+  background-color: #ffffff8a;
+  cursor: pointer;
+  margin: 10px;
+  width: 88%;
+  height: 55px;
+  box-shadow: 8px 8px 15px -16px rgba(0, 0, 0, 0.75);
+  transition: 0.2s ease;
 }

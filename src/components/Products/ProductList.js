@@ -35,6 +35,7 @@ const ProductList = () => {
 
 const Bundles = () => {
   const { MakeSet } = useContext(Context);
+
   function sortReducer(state, action) {
     switch (action.type) {
       case 'BY_PRICE':
@@ -59,9 +60,10 @@ const Bundles = () => {
   }
 
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
-
   const [sortstate, setSortstate] = useState({ byprice: null, bysize: null });
+
   const [productsort, sortDispatch] = useReducer(sortReducer, {});
+
   if (loading || error) return <Spinner />;
 
   const bundles = MakeSet(data.products.filter(obj => obj.show));
@@ -112,9 +114,7 @@ const Bundles = () => {
           />
         </div>
       </div>
-      <ProductCard
-        product={(productsort.length > 0 && productsort) || bundles}
-      />
+      <ProductCard products={productsort.length > 0 ? productsort : bundles} />
     </>
   );
 };
