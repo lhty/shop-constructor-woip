@@ -203,7 +203,7 @@ const Box = ({ compose, setCompose, size = 0 }) => {
               custom.set.filter(obj => obj).length && setCompose(true);
           }}
         >
-          Разложить
+          Разложить (console.log)
         </button>
       )}
       {compose & (custom.set.length > 0) ? (
