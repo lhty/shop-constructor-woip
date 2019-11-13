@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 export const PRODUCTS_QUERY = gql`
   {
     products(sort: "id:desc") {
@@ -8,7 +8,7 @@ export const PRODUCTS_QUERY = gql`
       image {
         url
       }
-      setschema
+      schema
       user {
         username
         id
@@ -56,7 +56,7 @@ export const PRODUCTS_QUERY = gql`
       image {
         url
       }
-      setschema
+      schema
       user {
         username
         id

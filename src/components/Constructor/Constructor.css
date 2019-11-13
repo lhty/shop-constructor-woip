@@ -37,14 +37,20 @@
 .slot-wrapper {
   cursor: pointer;
   width: 20%;
-  min-height: 60px;
-  border: 1px solid #83390447;
+  min-height: 100px;
+  border: 1px solid #8339043d;
+  background-color: #8339040d;
   border-radius: 5px;
   margin: 10px;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.slot-wrapper h1 {
+  font-size: 4rem;
+  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
+    0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 .centered {
   display: flex;
@@ -138,6 +144,31 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+.item-container form {
+  align-self: center;
+  width: 100%;
+  margin: 10px;
+}
+.item-container input {
+  border: 0.5px dashed #833904;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 60px;
+  width: 100%;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 2rem;
+  letter-spacing: 3px;
+  color: #3f1c03;
+  background-color: #f4eae1;
+  text-align: center;
+  box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
+    10px 10px 25px rgba(112, 124, 151, 0.05);
+  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
+    0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 .item-container p {
   padding-bottom: 10px;
@@ -181,6 +212,10 @@
   border-radius: 20px 5px 0 0;
   transition: 1s;
   outline: none;
+}
+.remove {
+  font-size: 1rem !important;
+  font-weight: normal !important;
 }
 .buttons :active {
   transform: scale(1.1);

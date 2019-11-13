@@ -1,6 +1,6 @@
-import React, { useReducer, useState } from 'react';
-import { ThumbnailUrl, ImgUrl } from './ThumbnailUrls';
-import { CartReducer } from './Reducers/CartReducers';
+import React, { useReducer, useState } from "react";
+import { ThumbnailUrl, ImgUrl } from "./ThumbnailUrls";
+import { CartReducer } from "./Reducers/CartReducers";
 
 export const Context = React.createContext();
 
@@ -8,27 +8,36 @@ const Provider = props => {
   const [cart, cartDispath] = useReducer(CartReducer, []);
   const [construct, setConstruct] = useState(false);
 
-  function MakeSet(products) {
-    function _set(product) {
-      const newSet = [];
-      product.setschema.forEach(schema => {
-        for (let i = 0; i < schema.quantity; i++) {
-          newSet.push(
-            product.items.find(item => parseInt(item.id) === schema.itemid)
-          );
-        }
-      });
+  function MakeBundle(products) {
+    function Set(product) {
+      const _set = [];
+      const _schema = product.schema && product.schema.split(",");
+      _schema &&
+        _schema.forEach(id =>
+          _set.push(
+            typeof parseInt(id) && parseInt(id) > 0
+              ? product.items.find(item => parseInt(item.id) === parseInt(id))
+              : product.items.find(item => item.name === "Буква")
+              ? {
+                  ...product.items.find(item => item.name === "Буква"),
+                  letter: id
+                }
+              : false
+          )
+        );
       return {
         ...product,
-        set: newSet,
+        set: _set,
         price:
           product.proportion.price +
-          newSet.map(obj => obj.price).reduce((a, b) => a + b)
+          (_set.length > 0
+            ? _set.map(obj => obj.price).reduce((a, b) => a + b)
+            : 0)
       };
     }
     return products.length > 1
-      ? products.map(product => _set(product))
-      : _set(products);
+      ? products.map(product => Set(product))
+      : Set(products);
   }
 
   return (
@@ -38,7 +47,7 @@ const Provider = props => {
         cartDispath,
         ThumbnailUrl,
         ImgUrl,
-        MakeSet,
+        MakeBundle,
         construct,
         setConstruct
       }}
