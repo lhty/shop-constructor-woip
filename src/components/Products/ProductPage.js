@@ -24,7 +24,7 @@ const Product = ({ match }) => {
         <button onClick={() => setConstruct(product)}>В конструктор</button>
       </div>
       <div className="product-page-left">
-        <img src={ImgUrl(product)} alt="" />
+        <img src={ImgUrl(product)} alt="" draggable="false" />
       </div>
       <div className="product-page-right">
         <h1>{product.title}</h1>

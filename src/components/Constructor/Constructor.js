@@ -231,7 +231,7 @@ const Box = ({ compose, setCompose, size = 0 }) => {
         </button>
       )}
       {compose & (custom.set.length > 0) ? (
-        <Reshuffle custom={custom} />
+        <Reshuffle setCompose={setCompose} custom={custom} />
       ) : (
         <>
           {details ? (
@@ -300,10 +300,15 @@ const ItemList = () => {
 
 const Item = ({ item, viewDetails }) => {
   const [input, setInput] = useState();
-  const [quantity, setQauntity] = useState(1);
+  const [quantity, setQauntity] = useState(item.name === "Буква" ? 0 : 1);
   const { custom, slotIndex, setslotIndex, dispatch } = useContext(
     ConstructorContext
   );
+
+  function hadleInput(e) {
+    setInput(e.target.value.toUpperCase().match(/[а-я,-.1-9]/gi));
+    setQauntity(e.target.value && input ? e.target.value.length : 0);
+  }
 
   return (
     <div className="item-container">
@@ -312,12 +317,21 @@ const Item = ({ item, viewDetails }) => {
           <>
             <button
               onClick={() => {
-                dispatch({
-                  type: "ADD",
-                  payload: item,
-                  index: slotIndex,
-                  quantity: quantity
-                });
+                input && input.length > 0
+                  ? input.map(letter =>
+                      dispatch({
+                        type: "ADD",
+                        payload: { ...item, letter: letter },
+                        index: slotIndex,
+                        quantity: quantity
+                      })
+                    )
+                  : dispatch({
+                      type: "ADD",
+                      payload: item,
+                      index: slotIndex,
+                      quantity: quantity
+                    });
                 setslotIndex(-1);
                 viewDetails(false);
               }}
@@ -353,13 +367,14 @@ const Item = ({ item, viewDetails }) => {
           <>
             <button
               onClick={() => {
+                setslotIndex(-1);
                 viewDetails(false);
               }}
             >
               Назад
             </button>
             <button
-              className="remove"
+              className="buttons-remove"
               onClick={() => {
                 dispatch({
                   type: "REMOVE",
@@ -378,22 +393,13 @@ const Item = ({ item, viewDetails }) => {
         ? item.image[0] && (
             <>
               <img src={`${API_URL}${item.image[0].url}`} alt="" />
-              <form>
+              <form onSubmit={e => e.preventDefault()}>
                 <input
-                  type="text"
-                  pattern="[а-яА-Я]"
-                  required="required"
+                  required
                   maxLength={custom.set.filter(obj => !obj).length}
+                  value={input ? input.join("") : ""}
                   onChange={e => {
-                    setInput(
-                      e.target.value.length >
-                        custom.set.filter(obj => !obj).length
-                        ? input
-                        : e.target.value.match(/[\w\u0430-\u044f]+/gi)
-                        ? e.target.value
-                        : input
-                    );
-                    setQauntity(e.target.value.length);
+                    hadleInput(e);
                   }}
                 ></input>
               </form>
@@ -414,7 +420,7 @@ const Item = ({ item, viewDetails }) => {
   );
 };
 
-const Reshuffle = ({ custom }) => {
+const Reshuffle = ({ setCompose, custom }) => {
   const [set, setSet] = useState(custom.set);
 
   const SharedGroup = ({ set, setSet }) => {
@@ -429,7 +435,6 @@ const Reshuffle = ({ custom }) => {
               className="slot-thumb"
               src={`${API_URL}${item.image[0].url}`}
               alt=""
-              draggable="false"
             />
           )
         )}
@@ -439,8 +444,15 @@ const Reshuffle = ({ custom }) => {
     return (
       <Sortable
         options={{
-          animation: 150,
-          group: "shared"
+          animation: 200,
+          easing: "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+          group: "shared",
+          swapThreshold: 1,
+          invertSwap: false,
+          dragoverBubble: true,
+          removeCloneOnHide: false,
+          chosenClass: "chosen",
+          dragClass: "drag"
         }}
         onChange={order => {
           setSet(
@@ -460,14 +472,22 @@ const Reshuffle = ({ custom }) => {
 
   return (
     <>
-      <button
-        className="compose"
-        onClick={() => {
-          console.log({ ...custom, set: set });
-        }}
-      >
-        Done (console.log)
-      </button>
+      <div className="compose-nav">
+        <button
+          onClick={() => {
+            setCompose(false);
+          }}
+        >
+          Назад
+        </button>
+        <button
+          onClick={() => {
+            console.log({ ...custom, set: set });
+          }}
+        >
+          Done (console.log)
+        </button>
+      </div>
       <SharedGroup set={set} setSet={setSet} />
     </>
   );

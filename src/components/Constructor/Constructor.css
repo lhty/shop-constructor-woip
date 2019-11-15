@@ -152,10 +152,10 @@
   margin: 10px;
 }
 .item-container input {
-  border: 0.5px dashed #833904;
+  border: 0.5px solid #83390446;
   box-sizing: border-box;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin: 25px 0 25px 0;
   height: 60px;
   width: 100%;
   padding: 5px;
@@ -169,6 +169,13 @@
     10px 10px 25px rgba(112, 124, 151, 0.05);
   text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
     0px 0px 0px rgba(46, 11, 1, 0.71);
+  transition: 0.5s ease;
+}
+.item-container input:focus {
+  transform: scale(1.02);
+  border: 0.5px solid #833904;
+  box-shadow: -2px 3px 20px 0px rgba(0, 0, 0, 0.08),
+    -4px 3px 20px 4px rgba(255, 87, 34, 0.12);
 }
 .item-container p {
   padding-bottom: 10px;
@@ -177,11 +184,12 @@
 .item-container img {
   width: 100%;
   border-radius: 0 0 5px 5px;
-  box-shadow: -6px -14px 15px -16px rgba(129, 52, 11, 0.67);
+  box-shadow: 8px 17px 15px -16px rgba(129, 52, 11, 0.67);
 }
 
 .item-container-quantity {
   align-self: flex-end;
+  margin-top: 25px;
   font-weight: bold;
   font-size: 2rem;
 }
@@ -212,8 +220,9 @@
   border-radius: 20px 5px 0 0;
   transition: 1s;
   outline: none;
+  white-space: nowrap;
 }
-.remove {
+.buttons-remove {
   font-size: 1rem !important;
   font-weight: normal !important;
 }
@@ -222,7 +231,7 @@
   outline: none;
 }
 .buttons :first-child {
-  width: 50%;
+  width: 100%;
   border: none;
   background: transparent;
   outline: none;
@@ -239,6 +248,10 @@
   font-weight: bold;
   border: none;
   background: transparent;
+}
+.buttons :last-child {
+  border-radius: 0px 20px 0px 0px;
+  border-right: 1px dashed #83390463 !important;
 }
 .buttons p {
   color: #5b2600d6;
@@ -276,9 +289,42 @@
   color: #5b2600;
   background-color: #ffffff8a;
   cursor: pointer;
-  margin: 10px;
-  width: 88%;
+  width: 90%;
   height: 55px;
   box-shadow: 8px 8px 15px -16px rgba(0, 0, 0, 0.75);
   transition: 0.2s ease;
+}
+.compose-nav {
+  display: flex;
+  flex-flow: row;
+  width: 90%;
+  justify-content: center;
+}
+.compose-nav button {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: bold;
+  color: #5b2600;
+  background-color: #ffffff8a;
+  cursor: pointer;
+  height: 55px;
+  box-shadow: 8px 8px 15px -16px rgba(0, 0, 0, 0.75);
+  transition: 0.2s ease;
+}
+.compose-nav :first-child {
+  width: 20%;
+  border-radius: 10px 2px 2px 10px;
+  background-color: #ffffff75;
+}
+.compose-nav :nth-child(1n + 2) {
+  width: 80%;
+  border-radius: 2px 10px 10px 2px;
+}
+.chosen {
+  transform: scale(1.1);
+}
+.drag {
+  display: none;
 }
