@@ -121,6 +121,7 @@ export const PROPORTION_QUERY = gql`
       z
       shape
       type
+      price
       countmin
       countmax
       construct

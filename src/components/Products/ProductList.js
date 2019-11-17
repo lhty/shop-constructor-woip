@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo, useReducer } from "react";
+import React, { useContext, useState, useReducer } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
@@ -14,8 +14,6 @@ import prodlistsvg from "../../img/productlisttop.svg";
 import "./ProductList.css";
 
 const ProductList = () => {
-  const ConstructorMemo = useMemo(() => <Constructor />, []);
-
   return (
     <section className="ProductList-container">
       <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
@@ -27,7 +25,8 @@ const ProductList = () => {
             <Route exact path="/:id/:title" component={ProductPage} />
           </Switch>
         </div>
-        {ConstructorMemo}
+
+        <Constructor />
       </div>
     </section>
   );

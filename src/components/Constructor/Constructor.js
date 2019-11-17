@@ -30,8 +30,10 @@ const Reducer = (custom, action) => {
         : custom.set.splice(action.index, 1, action.payload);
       return custom;
     case "REMOVE":
-      custom.set[action.index] = false;
+      custom.set.splice(action.index, 1, false);
       return custom;
+    case "UPDATE":
+      return { ...custom, set: action.payload };
     case "CLEAR_BOX":
       return {};
     default:
@@ -41,13 +43,13 @@ const Reducer = (custom, action) => {
 
 const Constructor = () => {
   const { construct } = useContext(Context);
-
   const [size, setSize] = useState();
   const [slotIndex, setslotIndex] = useState(-1);
   const [details, viewDetails] = useState(false);
   const [compose, setCompose] = useState(false);
   const [custom, dispatch] = useReducer(Reducer, {});
-
+  const { data, error, loading } = useQuery(PROPORTION_QUERY);
+  const [updatectx, setupdatectx] = useState(0);
   useEffect(() => {
     if (construct) {
       setSize(construct.proportion.countmin);
@@ -64,125 +66,129 @@ const Constructor = () => {
     }
   }, [construct]);
 
-  const { data, error, loading } = useQuery(PROPORTION_QUERY);
   if (loading || error) return <Spinner />;
 
   return (
     <ConstructorContext.Provider
       value={{
+        construct,
         custom,
         dispatch,
         slotIndex,
         setslotIndex,
+        size,
+        setSize,
         details,
-        viewDetails
+        compose,
+        setCompose,
+        viewDetails,
+        updatectx,
+        setupdatectx
       }}
     >
       <div className="Constructor-wrapper">
-        <div className="Constructor-progress">
-          <div
-            className={
-              custom.set ? "Constructor-stage" : "Constructor-stage empty"
-            }
-          >
-            <img
-              onClick={() => {
-                dispatch({ type: "CLEAR_BOX" });
-                setslotIndex(-1);
-                viewDetails(false);
-                setCompose(false);
-              }}
-              src={boxsvg}
-              alt=""
-            />
-            {custom.proportion && (
-              <div className="Constructor-stage-info">
-                <p>{custom.proportion.type}</p> <p>{custom.proportion.shape}</p>
-              </div>
-            )}
-          </div>
-          <div
-            className={
-              custom.set && custom.set.filter(obj => obj).length > 0
-                ? "Constructor-stage"
-                : "Constructor-stage empty"
-            }
-          >
-            <img
-              onClick={() => {
-                setslotIndex(-1);
-                setCompose(false);
-                viewDetails(false);
-              }}
-              src={sweetssvg}
-              alt=""
-            />
-            {custom.set && (
-              <p>
-                {custom.set.filter(obj => obj).length} /{" "}
-                {custom.proportion.countmin}
-              </p>
-            )}
-          </div>
-          <div
-            className={
-              compose ? "Constructor-stage" : "Constructor-stage empty"
-            }
-          >
-            <img
-              onClick={() => {
-                custom.proportion.countmin <=
-                  custom.set.filter(obj => obj).length && setCompose(true);
-              }}
-              src={done}
-              alt=""
-            />
-          </div>
-        </div>
+        <ProgressBar />
         {!custom.set && (
           <BoxSelector
             sizes={data.proportions.filter(
               size => size.countmin !== null && size.construct
             )}
-            setSize={setSize}
-            dispatch={dispatch}
           />
         )}
-        {slotIndex >= 0 ? (
-          <ItemList />
-        ) : (
-          custom.set && (
-            <Box
-              compose={compose}
-              setCompose={setCompose}
-              size={size}
-              dispatch={dispatch}
-            />
-          )
-        )}
-        {custom.set && slotIndex < 0 && (
-          <div className="box-overall">
-            <p>
-              {`Overall price: ${[...custom.set.map(obj => obj.price)]
-                .filter(obj => obj)
-                .reduce((a, b) => a + b, 0)}руб`}
-            </p>
-            <p>
-              {`Overall quantity:
-          ${custom.set.filter(obj => obj.price).length}шт`}
-            </p>
-          </div>
-        )}
+        {slotIndex >= 0 ? <ItemList /> : custom.set && <Box />}
+        {custom.set && slotIndex < 0 && <Summary set={custom.set} />}
       </div>
     </ConstructorContext.Provider>
   );
 };
 
-const BoxSelector = ({ sizes, setSize, dispatch }) => {
+const Summary = () => {
+  const { custom } = useContext(ConstructorContext);
+  return (
+    <div className="box-overall">
+      <p>
+        {`Overall price: ${custom.set
+          .map(obj => obj.price)
+          .filter(obj => obj)
+          .reduce((a, b) => a + b, 0) + custom.proportion.price}руб`}
+      </p>
+      <p>
+        {`Overall quantity:
+${custom.set.filter(obj => obj).length}шт`}
+      </p>
+    </div>
+  );
+};
+
+const ProgressBar = () => {
+  const {
+    custom,
+    viewDetails,
+    compose,
+    setCompose,
+    setslotIndex,
+    dispatch
+  } = useContext(ConstructorContext);
+  return (
+    <div className="Constructor-progress">
+      <div
+        className={custom.set ? "Constructor-stage" : "Constructor-stage empty"}
+      >
+        <img
+          onClick={() => {
+            dispatch({ type: "CLEAR_BOX" });
+            setslotIndex(-1);
+            viewDetails(false);
+            setCompose(false);
+          }}
+          src={boxsvg}
+          alt=""
+        />
+        {custom.proportion && (
+          <div className="Constructor-stage-info">
+            <p>{custom.proportion.type}</p> <p>{custom.proportion.shape}</p>
+          </div>
+        )}
+      </div>
+      <div
+        className={
+          custom.set && custom.set.filter(obj => obj).length > 0
+            ? "Constructor-stage"
+            : "Constructor-stage empty"
+        }
+      >
+        <img
+          onClick={() => {
+            setslotIndex(-1);
+            setCompose(false);
+            viewDetails(false);
+          }}
+          src={sweetssvg}
+          alt=""
+        />
+        {custom.set && (
+          <p>
+            {custom.set && custom.set.filter(obj => obj).length} /{" "}
+            {custom.proportion.countmin}
+          </p>
+        )}
+      </div>
+      <div
+        className={compose ? "Constructor-stage" : "Constructor-stage empty"}
+      >
+        <img src={done} alt="" />
+      </div>
+    </div>
+  );
+};
+
+const BoxSelector = ({ sizes }) => {
+  const { setSize, dispatch } = useContext(ConstructorContext);
   return (
     <div className="box-wrapper">
       {sizes.map((size, i) => (
         <div
+          style={{ width: "20%", height: "100px" }}
           className="slot-wrapper"
           onClick={() => {
             let _id =
@@ -198,6 +204,7 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
                   countmax: size.countmax,
                   shape: size.shape,
                   type: size.type,
+                  price: size.price,
                   x: size.x,
                   y: size.y,
                   z: size.z
@@ -215,8 +222,16 @@ const BoxSelector = ({ sizes, setSize, dispatch }) => {
   );
 };
 
-const Box = ({ compose, setCompose, size = 0 }) => {
-  const { custom, details, viewDetails } = useContext(ConstructorContext);
+const Box = () => {
+  const {
+    custom,
+    compose,
+    setCompose,
+    size = 0,
+    details,
+    viewDetails
+  } = useContext(ConstructorContext);
+
   return (
     <div className="box-wrapper">
       {custom.set.indexOf(false) < 0 && !compose && !details && (
@@ -231,16 +246,21 @@ const Box = ({ compose, setCompose, size = 0 }) => {
         </button>
       )}
       {compose & (custom.set.length > 0) ? (
-        <Reshuffle setCompose={setCompose} custom={custom} />
+        <Reshuffle />
       ) : (
         <>
           {details ? (
             <Item item={details} viewDetails={viewDetails} />
           ) : (
             [...Array(size).keys()].map(
-              (slot, index) =>
+              (_, index) =>
                 custom.set && (
-                  <Slot key={index} item={custom.set[index]} index={index} />
+                  <Slot
+                    boxwidth={custom.proportion.x}
+                    key={index}
+                    currentitem={custom.set[index]}
+                    index={index}
+                  />
                 )
             )
           )}
@@ -250,24 +270,63 @@ const Box = ({ compose, setCompose, size = 0 }) => {
   );
 };
 
-const Slot = ({ item, index }) => {
-  const { setslotIndex, viewDetails } = useContext(ConstructorContext);
+const Slot = ({ currentitem, boxwidth, index }) => {
+  const {
+    setslotIndex,
+    viewDetails,
+    dispatch,
+    updatectx,
+    setupdatectx
+  } = useContext(ConstructorContext);
+  const [item, setItem] = useState(currentitem);
   return (
-    <div
-      className="slot-wrapper"
-      onClick={() =>
-        item ? (viewDetails(item), setslotIndex(index)) : setslotIndex(index)
-      }
-    >
+    <div style={{ width: `${2500 / boxwidth}%` }} className="slot-wrapper">
+      {item && (
+        <button
+          className="slot-wrapper-del"
+          onClick={() => {
+            dispatch({
+              type: "REMOVE",
+              index: index
+            });
+            setupdatectx(updatectx + 1);
+            setItem(false);
+          }}
+        >
+          +
+        </button>
+      )}
       {!item ? (
-        index + 1
+        <span
+          onClick={() =>
+            item
+              ? (viewDetails(item), setslotIndex(index))
+              : setslotIndex(index)
+          }
+        >
+          +
+        </span>
       ) : item.name === "Буква" ? (
-        <h1>{item.letter}</h1>
+        <h1
+          onClick={() =>
+            item
+              ? (viewDetails(item), setslotIndex(index))
+              : setslotIndex(index)
+          }
+        >
+          {item.letter}
+        </h1>
       ) : item.image.length > 0 ? (
         <img
+          onClick={() =>
+            item
+              ? (viewDetails(item), setslotIndex(index))
+              : setslotIndex(index)
+          }
           className="slot-thumb"
           src={`${API_URL}${item.image[0].url}`}
           alt=""
+          draggable="false"
         ></img>
       ) : (
         <p>{item.name}</p>
@@ -281,7 +340,7 @@ const ItemList = () => {
   const { data, error, loading } = useQuery(ITEM_QUERY);
   if (loading || error) return <Spinner />;
   const items = details ? (
-    <Item item={details} viewDetails={viewDetails} />
+    <Item />
   ) : (
     data.items.map(obj => (
       <ul
@@ -289,6 +348,7 @@ const ItemList = () => {
           viewDetails(obj);
         }}
         className="slot-wrapper"
+        style={{ width: `20%`, height: "100px" }}
         key={obj.id}
       >
         {obj.name}
@@ -298,47 +358,59 @@ const ItemList = () => {
   return <div className="box-wrapper">{items}</div>;
 };
 
-const Item = ({ item, viewDetails }) => {
+const Item = () => {
+  const {
+    details,
+    custom,
+    slotIndex,
+    viewDetails,
+    setslotIndex,
+    dispatch
+  } = useContext(ConstructorContext);
   const [input, setInput] = useState();
-  const [quantity, setQauntity] = useState(item.name === "Буква" ? 0 : 1);
-  const { custom, slotIndex, setslotIndex, dispatch } = useContext(
-    ConstructorContext
-  );
+  const [quantity, setQauntity] = useState(details.name === "Буква" ? 0 : 1);
 
   function hadleInput(e) {
     setInput(e.target.value.toUpperCase().match(/[а-я,-.1-9]/gi));
     setQauntity(e.target.value && input ? e.target.value.length : 0);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    input && input.length > 0
+      ? input.map((letter, index) => {
+          return dispatch({
+            type: "ADD",
+            payload: { ...details, letter: letter },
+            index: slotIndex + index,
+            quantity: 1
+          });
+        })
+      : details.name !== "Буква" &&
+        dispatch({
+          type: "ADD",
+          payload: details,
+          index: slotIndex,
+          quantity: quantity
+        });
+    setslotIndex(-1);
+    viewDetails(false);
+  }
+  function handleRemove() {
+    dispatch({
+      type: "REMOVE",
+      index: slotIndex
+    });
+    setslotIndex(-1);
+    viewDetails(false);
+  }
   return (
     <div className="item-container">
       <div className="buttons">
         {!custom.set[slotIndex] ? (
           <>
-            <button
-              onClick={() => {
-                input && input.length > 0
-                  ? input.map(letter =>
-                      dispatch({
-                        type: "ADD",
-                        payload: { ...item, letter: letter },
-                        index: slotIndex,
-                        quantity: quantity
-                      })
-                    )
-                  : dispatch({
-                      type: "ADD",
-                      payload: item,
-                      index: slotIndex,
-                      quantity: quantity
-                    });
-                setslotIndex(-1);
-                viewDetails(false);
-              }}
-            >
-              Добавить
-            </button>
-            {item.name === "Буква" || (
+            <button onClick={handleSubmit}>Добавить</button>
+            {details.name === "Буква" || (
               <>
                 <button
                   onClick={() => {
@@ -373,27 +445,17 @@ const Item = ({ item, viewDetails }) => {
             >
               Назад
             </button>
-            <button
-              className="buttons-remove"
-              onClick={() => {
-                dispatch({
-                  type: "REMOVE",
-                  index: slotIndex
-                });
-                setslotIndex(-1);
-                viewDetails(false);
-              }}
-            >
+            <button className="buttons-remove" onClick={handleRemove}>
               Удалить
             </button>
           </>
         )}
       </div>
-      {item.name === "Буква"
-        ? item.image[0] && (
+      {details.name === "Буква"
+        ? details.image[0] && (
             <>
-              <img src={`${API_URL}${item.image[0].url}`} alt="" />
-              <form onSubmit={e => e.preventDefault()}>
+              <img src={`${API_URL}${details.image[0].url}`} alt="" />
+              <form onSubmit={handleSubmit}>
                 <input
                   required
                   maxLength={custom.set.filter(obj => !obj).length}
@@ -405,27 +467,33 @@ const Item = ({ item, viewDetails }) => {
               </form>
             </>
           )
-        : item.image[0] && (
+        : details.image[0] && (
             <>
-              <img src={`${API_URL}${item.image[0].url}`} alt="" />
-              <h1>{item.name}</h1>
-              <p>{item.description}</p>
+              <img src={`${API_URL}${details.image[0].url}`} alt="" />
+              <h1>{details.name}</h1>
+              <p>{details.description}</p>
             </>
           )}
       <div className="item-container-quantity">
         <p>{quantity} шт</p>
-        <p>{item.price * quantity} руб</p>
+        <p>{details.price * quantity} руб</p>
       </div>
     </div>
   );
 };
 
-const Reshuffle = ({ setCompose, custom }) => {
+const Reshuffle = () => {
+  const { custom, setCompose, dispatch } = useContext(ConstructorContext);
   const [set, setSet] = useState(custom.set);
 
-  const SharedGroup = ({ set, setSet }) => {
+  const SortableList = ({ set, setSet }) => {
     const items = set.map((item, i) => (
-      <div data-id={item.letter || item.id} className="slot-wrapper" key={i}>
+      <div
+        data-id={item.letter || item.id}
+        className="slot-wrapper"
+        style={{ width: `${(item.size_length * 100) / custom.proportion.x}%` }}
+        key={i}
+      >
         {item.name === "Буква" ? (
           <h1>{item.letter}</h1>
         ) : (
@@ -435,6 +503,7 @@ const Reshuffle = ({ setCompose, custom }) => {
               className="slot-thumb"
               src={`${API_URL}${item.image[0].url}`}
               alt=""
+              draggable="false"
             />
           )
         )}
@@ -446,12 +515,10 @@ const Reshuffle = ({ setCompose, custom }) => {
         options={{
           animation: 200,
           easing: "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
-          group: "shared",
-          swapThreshold: 1,
-          invertSwap: false,
           dragoverBubble: true,
-          removeCloneOnHide: false,
+          draggable: ".slot-wrapper",
           chosenClass: "chosen",
+          ghostClass: "ghost",
           dragClass: "drag"
         }}
         onChange={order => {
@@ -476,6 +543,7 @@ const Reshuffle = ({ setCompose, custom }) => {
         <button
           onClick={() => {
             setCompose(false);
+            dispatch({ type: "UPDATE", payload: set });
           }}
         >
           Назад
@@ -488,7 +556,7 @@ const Reshuffle = ({ setCompose, custom }) => {
           Done (console.log)
         </button>
       </div>
-      <SharedGroup set={set} setSet={setSet} />
+      <SortableList set={set} setSet={setSet} />
     </>
   );
 };
