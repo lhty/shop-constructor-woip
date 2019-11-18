@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 
-import { UserContext } from '../Providers/UserProvider';
+import { UserContext } from "../Providers/UserProvider";
 
-import './Login.css';
+import "./Login.css";
 
 const Login = () => {
   const { Login, Vklogin, setActive, active } = useContext(UserContext);

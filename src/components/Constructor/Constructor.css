@@ -39,39 +39,42 @@
   cursor: pointer;
   border: 1px solid #8339043d;
   background-color: #8339040d;
-  border-radius: 10px 5px 10px 5px;
+  border-radius: 5px;
   margin: 10px;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   transition: 0.4s ease;
 }
 .slot-wrapper span {
-  font-size: 4rem;
+  font-size: 50px;
   font-weight: bold;
   opacity: 0.9;
   text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
     0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 .slot-wrapper h1 {
-  font-size: 4rem;
+  font-size: 40px;
   text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
     0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 .slot-wrapper-del {
-  height: 30px;
-  width: 30px;
-  background-color: #a70f0fa3;
-  border-radius: 50%;
-  border: none;
   position: absolute;
   right: -15px;
   top: -15px;
-  text-align: center;
-  font-size: 29px;
-  transform: rotate(45deg);
+  height: 25px;
+  width: 25px;
+  background-color: #a70f0f7d;
+  border-radius: 50%;
+  font-size: 25px;
   color: white;
+  line-height: 25px;
+  text-align: center;
+  transform: rotate(45deg);
 }
 .centered {
   display: flex;
@@ -148,10 +151,24 @@
 }
 .box-overall {
   display: flex;
-  flex-direction: column;
-  align-self: center;
+  flex-flow: column wrap;
+  align-items: flex-end;
+  width: 100%;
+  font-size: 18px;
+  font-weight: normal;
+  margin-top: 10px;
+  padding: 10px 85px 10px 0;
+  background: linear-gradient(90.94deg, #ffdcc900 0.04%, #f6d8c847 99.97%);
+}
+.box-overall p {
+  font-size: 15px;
+}
+.box-overall :last-child {
   font-size: 20px;
-  margin-top: 30px;
+  margin: 10px 0 0 0;
+  padding: 5px 0 0 0;
+  border-top: 2px solid #763e2e63;
+  font-weight: bold;
 }
 .Constructor-stage-info {
   height: 50px;
@@ -272,7 +289,6 @@
 }
 .buttons :last-child {
   border-radius: 0px 20px 0px 0px;
-  border-right: 1px dashed #83390463 !important;
 }
 .buttons p {
   color: #5b2600d6;
@@ -305,14 +321,17 @@
   outline: none;
   box-sizing: border-box;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 10px;
   color: #5b2600;
+  margin-bottom: 15px;
   background-color: #ffffff8a;
   cursor: pointer;
   width: 90%;
   height: 55px;
   box-shadow: 8px 8px 15px -16px rgba(0, 0, 0, 0.75);
+  text-shadow: 1px -1px 0px rgba(118, 62, 46, 0.32),
+    0px 0px 0px rgba(46, 11, 1, 0.71);
   transition: 0.2s ease;
 }
 .compose-nav {
@@ -326,22 +345,24 @@
   outline: none;
   box-sizing: border-box;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: normal;
   color: #5b2600;
   background-color: #ffffff8a;
   cursor: pointer;
   height: 55px;
   box-shadow: 8px 8px 15px -16px rgba(0, 0, 0, 0.75);
   transition: 0.2s ease;
+  text-shadow: 1px -1px 0px rgba(118, 62, 46, 0.32),
+    0px 0px 0px rgba(46, 11, 1, 0.71);
 }
-.compose-nav :first-child {
+.compose-nav button:nth-of-type(n) {
+  width: 80%;
+  border-radius: 2px 10px 10px 2px;
+}
+.backward {
   width: 20%;
   border-radius: 10px 2px 2px 10px;
   background-color: #ffffff75;
-}
-.compose-nav :nth-child(1n + 2) {
-  width: 80%;
-  border-radius: 2px 10px 10px 2px;
 }
 .chosen {
   transform: scale(1.1);
@@ -351,4 +372,21 @@
 }
 .drag {
   visibility: hidden;
+}
+.compose-offline {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 95%;
+  align-self: center;
+  border-radius: 2px 10px 10px 2px;
+  border-top: 1px dashed #8339046b;
+  border-right: 1px dashed #8339046b;
+  border-bottom: 1px dashed #8339046b;
+}
+.compose-offline p {
+  font-weight: bold;
+  margin: 0 10px 0 10px;
 }

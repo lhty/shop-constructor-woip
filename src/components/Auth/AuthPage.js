@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Signup from './Signup';
-import Login from './Login';
-import Profile from './Profile/Profile';
+import React, { useState } from "react";
+import Signup from "./Signup";
+import Login from "./Login";
+import Profile from "./Profile/Profile";
 
-import './AuthPage.css';
+import "./AuthPage.css";
 
 const AuthPage = ({ user }) => {
   const [active, setActive] = useState(true);
@@ -16,13 +16,13 @@ const AuthPage = ({ user }) => {
         ) : (
           <>
             <h1
-              className={active ? 'auth-page auth-active' : 'auth-page'}
+              className={active ? "auth-page auth-active" : "auth-page"}
               onClick={() => setActive(!active)}
             >
               Вход
             </h1>
             <h1
-              className={!active ? 'auth-page auth-active' : 'auth-page'}
+              className={!active ? "auth-page auth-active" : "auth-page"}
               onClick={() => setActive(!active)}
             >
               Регистрация

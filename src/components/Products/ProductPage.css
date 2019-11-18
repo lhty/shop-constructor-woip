@@ -25,7 +25,12 @@
 }
 .product-page-nav a {
   position: absolute;
-  left: 10px;
+  padding: 15px 0 15px 5px;
+  background-color: #83350c1f;
+  height: 100%;
+  width: 8%;
+  font-size: 14px;
+  border-radius: 0 25px 25px 0;
 }
 .product-page-nav button {
   position: absolute;
@@ -35,8 +40,8 @@
   box-sizing: border-box;
   font-size: 14px;
   height: 50px;
-  padding: 10px;
-  border-radius: 25px 25px 25px 0;
+  padding: 15px;
+  border-radius: 25px 25px 0px 25px;
   color: #5b2600;
   background-color: #83350c1f;
   cursor: pointer;
@@ -63,28 +68,50 @@
   width: 50%;
 }
 .product-page-right h1 {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
   font-size: 30px;
   color: #4f2202;
 }
 .product-page-right p {
-  margin: 0 auto;
-  font-size: 20px;
-  font-weight: 500;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
   color: #431d02;
 }
-.product-page-right label {
-  padding: 0 10px 10px 0;
-  margin-top: 30px;
-  font-size: 50px;
+.product-page-container label {
+  position: absolute;
+  bottom: -30px;
+  right: 10px;
+  font-size: 40px;
   font-weight: bold;
   color: #833904;
+  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
+    0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 .product-page-back {
   position: absolute;
   left: 0;
   padding: 25px;
   cursor: pointer;
+}
+.product-page-inside {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  margin: 0 10px 25px 0;
+  align-self: flex-end;
+}
+.product-page-desc {
+  margin-bottom: 25px;
+}
+.product-page-inside-expand {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  background-color: black;
 }
 @media only screen and (max-width: 1350px) {
   .product-page-container {

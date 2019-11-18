@@ -4,6 +4,7 @@ export const PRODUCTS_QUERY = gql`
     products(sort: "id:desc") {
       id
       title
+      comment
       show
       image {
         url

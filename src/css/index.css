@@ -1,14 +1,14 @@
 @font-face {
   font-family: Noto;
-  src: url('../fonts/NotoSerif-Regular.ttf');
+  src: url("../fonts/NotoSerif-Regular.ttf");
 }
 @font-face {
   font-family: Notobold;
-  src: url('../fonts/NotoSerif-Bold.ttf');
+  src: url("../fonts/NotoSerif-Bold.ttf");
 }
 @font-face {
   font-family: Notoitalic;
-  src: url('../fonts/NotoSerif-RegularItalic.ttf');
+  src: url("../fonts/NotoSerif-RegularItalic.ttf");
 }
 *,
 *::before,

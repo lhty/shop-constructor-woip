@@ -5,6 +5,7 @@ import Spinner from "../Assets/Spinner";
 import { ITEM_QUERY } from "../Providers/Queries";
 import { API_URL } from "../../config";
 import { Context } from "../Providers/Provider";
+import { UserContext } from "../Providers/UserProvider";
 import Sortable from "react-sortablejs";
 import boxsvg from "../../img/constructorBox.svg";
 import sweetssvg from "../../img/constructorSweets.svg";
@@ -63,6 +64,10 @@ const Constructor = () => {
           set: construct.set
         }
       });
+      if (construct.details)
+        viewDetails(
+          construct.items.find(item => item.id === construct.details)
+        );
     }
   }, [construct]);
 
@@ -106,15 +111,18 @@ const Summary = () => {
   const { custom } = useContext(ConstructorContext);
   return (
     <div className="box-overall">
+      <p>{`конфеты ${custom.set.filter(obj => obj).length} шт ${custom.set
+        .map(obj => obj.price)
+        .filter(obj => obj)
+        .reduce((a, b) => a + b, 0)} руб`}</p>
+      <p>{`коробка ${custom.proportion.type.toLowerCase()} ${
+        custom.proportion.price
+      } руб`}</p>
       <p>
-        {`Overall price: ${custom.set
+        {`Итого : ${custom.set
           .map(obj => obj.price)
           .filter(obj => obj)
-          .reduce((a, b) => a + b, 0) + custom.proportion.price}руб`}
-      </p>
-      <p>
-        {`Overall quantity:
-${custom.set.filter(obj => obj).length}шт`}
+          .reduce((a, b) => a + b, 0) + custom.proportion.price} руб`}
       </p>
     </div>
   );
@@ -242,7 +250,7 @@ const Box = () => {
               custom.set.filter(obj => obj).length && setCompose(true);
           }}
         >
-          Разложить
+          Расставить
         </button>
       )}
       {compose & (custom.set.length > 0) ? (
@@ -279,10 +287,18 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     setupdatectx
   } = useContext(ConstructorContext);
   const [item, setItem] = useState(currentitem);
+  const slotStyle = {
+    width: `${2500 / boxwidth}%`,
+    minHeight: "70px",
+    backgroundImage: `url(${item &&
+      item.image.length > 0 &&
+      item.name !== "Буква" &&
+      API_URL + item.image[0].url})`
+  };
   return (
-    <div style={{ width: `${2500 / boxwidth}%` }} className="slot-wrapper">
+    <div style={slotStyle} className="slot-wrapper">
       {item && (
-        <button
+        <div
           className="slot-wrapper-del"
           onClick={() => {
             dispatch({
@@ -294,7 +310,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
           }}
         >
           +
-        </button>
+        </div>
       )}
       {!item ? (
         <span
@@ -317,19 +333,16 @@ const Slot = ({ currentitem, boxwidth, index }) => {
           {item.letter}
         </h1>
       ) : item.image.length > 0 ? (
-        <img
+        <div
+          style={{ width: "100%", height: "100%" }}
           onClick={() =>
             item
               ? (viewDetails(item), setslotIndex(index))
               : setslotIndex(index)
           }
-          className="slot-thumb"
-          src={`${API_URL}${item.image[0].url}`}
-          alt=""
-          draggable="false"
-        ></img>
+        ></div>
       ) : (
-        <p>{item.name}</p>
+        item.image.length < 1 && <p>{item.name}</p>
       )}
     </div>
   );
@@ -370,22 +383,33 @@ const Item = () => {
   const [input, setInput] = useState();
   const [quantity, setQauntity] = useState(details.name === "Буква" ? 0 : 1);
 
+  useEffect(() => {
+    if (details.letter !== "") setInput([details.letter]);
+  }, [details]);
+
   function hadleInput(e) {
-    setInput(e.target.value.toUpperCase().match(/[а-я,-.1-9]/gi));
-    setQauntity(e.target.value && input ? e.target.value.length : 0);
+    setInput(e.target.value.toUpperCase().match(/[а-я,-.1-9 ]/gi));
+    setQauntity(
+      e.target.value && input
+        ? e.target.value.replace(/^\s+|\s+$/g, "").replace(/(\s\s\s*)/g, " ")
+            .length
+        : 0
+    );
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     input && input.length > 0
-      ? input.map((letter, index) => {
-          return dispatch({
-            type: "ADD",
-            payload: { ...details, letter: letter },
-            index: slotIndex + index,
-            quantity: 1
-          });
-        })
+      ? input
+          .filter(val => val !== " ")
+          .map((letter, index) => {
+            return dispatch({
+              type: "ADD",
+              payload: { ...details, letter: letter },
+              index: slotIndex + index,
+              quantity: 1
+            });
+          })
       : details.name !== "Буква" &&
         dispatch({
           type: "ADD",
@@ -455,7 +479,7 @@ const Item = () => {
         ? details.image[0] && (
             <>
               <img src={`${API_URL}${details.image[0].url}`} alt="" />
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={input ? handleSubmit : null}>
                 <input
                   required
                   maxLength={custom.set.filter(obj => !obj).length}
@@ -484,6 +508,7 @@ const Item = () => {
 
 const Reshuffle = () => {
   const { custom, setCompose, dispatch } = useContext(ConstructorContext);
+  const { user, active, setActive } = useContext(UserContext);
   const [set, setSet] = useState(custom.set);
 
   const SortableList = ({ set, setSet }) => {
@@ -491,22 +516,17 @@ const Reshuffle = () => {
       <div
         data-id={item.letter || item.id}
         className="slot-wrapper"
-        style={{ width: `${(item.size_length * 100) / custom.proportion.x}%` }}
+        style={{
+          width: `${(item.size_length * 100) / custom.proportion.x}%`,
+          minHeight: "70px",
+          backgroundImage: `url(${item &&
+            item.image.length > 0 &&
+            item.name !== "Буква" &&
+            API_URL + item.image[0].url})`
+        }}
         key={i}
       >
-        {item.name === "Буква" ? (
-          <h1>{item.letter}</h1>
-        ) : (
-          item.image[0] && (
-            <img
-              key={i}
-              className="slot-thumb"
-              src={`${API_URL}${item.image[0].url}`}
-              alt=""
-              draggable="false"
-            />
-          )
-        )}
+        {item.name === "Буква" && <h1>{item.letter}</h1>}
       </div>
     ));
 
@@ -541,6 +561,7 @@ const Reshuffle = () => {
     <>
       <div className="compose-nav">
         <button
+          className="backward"
           onClick={() => {
             setCompose(false);
             dispatch({ type: "UPDATE", payload: set });
@@ -548,13 +569,25 @@ const Reshuffle = () => {
         >
           Назад
         </button>
-        <button
-          onClick={() => {
-            console.log({ ...custom, set: set });
-          }}
-        >
-          Done (console.log)
-        </button>
+        {user.online ? (
+          <>
+            <button>Не хочу расставлять</button>
+            <button
+              onClick={() => {
+                console.log({ ...custom, set: set });
+              }}
+            >
+              Готово
+            </button>
+          </>
+        ) : (
+          <div
+            className="compose-offline"
+            onClick={() => setActive({ ...active, auth: !active.auth })}
+          >
+            Необходимо <p>войти</p> или <p>зарегистрироваться</p>
+          </div>
+        )}
       </div>
       <SortableList set={set} setSet={setSet} />
     </>
