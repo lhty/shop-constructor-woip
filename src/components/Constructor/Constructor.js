@@ -384,7 +384,9 @@ const Item = () => {
   const [quantity, setQauntity] = useState(details.name === "Буква" ? 0 : 1);
 
   useEffect(() => {
-    if (details.letter !== "") setInput([details.letter]);
+    if (details.name === "Буква" && details.letter !== "")
+      setInput([details.letter]);
+    return () => setInput();
   }, [details]);
 
   function hadleInput(e) {
@@ -399,11 +401,11 @@ const Item = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    input && input.length > 0
+    input && input.length > 0 && input[0]
       ? input
           .filter(val => val !== " ")
-          .map((letter, index) => {
-            return dispatch({
+          .forEach((letter, index) => {
+            dispatch({
               type: "ADD",
               payload: { ...details, letter: letter },
               index: slotIndex + index,
