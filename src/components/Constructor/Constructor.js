@@ -55,22 +55,24 @@ const Constructor = () => {
 
   useEffect(() => {
     if (construct) {
-      setSize(construct.proportion.countmin);
-      setCompose(false);
-      dispatch({
-        type: "CREATE_BOX",
-        payload: {
-          name: `Custom bundle ${new Date().getTime() +
-            Math.floor(Math.random(construct.proportion.countmin))}`,
-          proportion: construct.proportion,
-          set: construct.set
-        }
-      });
-      if (construct.details)
-        viewDetails(
-          construct.items.find(item => item.id === construct.details)
-        );
+      setSize(0);
+      dispatch({ type: "CLEAR_BOX" });
+      setTimeout(() => {
+        setSize(construct.proportion.countmin);
+        setCompose(false);
+        dispatch({
+          type: "CREATE_BOX",
+          payload: {
+            name: `Custom bundle ${new Date().getTime() +
+              Math.floor(Math.random(construct.proportion.countmin))}`,
+            proportion: construct.proportion,
+            set: construct.set
+          }
+        });
+      }, 300);
     }
+    if (construct.details)
+      viewDetails(construct.items.find(item => item.id === construct.details));
   }, [construct]);
 
   if (loading || error) return <Spinner />;
@@ -158,40 +160,55 @@ const ProgressBar = () => {
           src={boxsvg}
           alt=""
         />
-        {custom.proportion && (
-          <div className="Constructor-stage-info">
-            <p>{custom.proportion.type}</p> <p>{custom.proportion.shape}</p>
+
+        <div className="Constructor-stage-info">
+          {!custom.set ? (
+            <p style={{ lineHeight: "30px", letterSpacing: "0" }}>
+              Собери свой набор
+            </p>
+          ) : (
+            custom.proportion && (
+              <>
+                <p>{custom.proportion.type}</p> <p>{custom.proportion.shape}</p>
+              </>
+            )
+          )}
+        </div>
+      </div>
+      {custom.set && (
+        <>
+          <div
+            className={
+              custom.set && custom.set.filter(obj => obj).length > 0
+                ? "Constructor-stage"
+                : "Constructor-stage empty"
+            }
+          >
+            <img
+              onClick={() => {
+                setslotIndex(-1);
+                setCompose(false);
+                viewDetails(false);
+              }}
+              src={sweetssvg}
+              alt=""
+            />
+            {custom.set && (
+              <p>
+                {custom.set && custom.set.filter(obj => obj).length} /{" "}
+                {custom.proportion.countmin}
+              </p>
+            )}
           </div>
-        )}
-      </div>
-      <div
-        className={
-          custom.set && custom.set.filter(obj => obj).length > 0
-            ? "Constructor-stage"
-            : "Constructor-stage empty"
-        }
-      >
-        <img
-          onClick={() => {
-            setslotIndex(-1);
-            setCompose(false);
-            viewDetails(false);
-          }}
-          src={sweetssvg}
-          alt=""
-        />
-        {custom.set && (
-          <p>
-            {custom.set && custom.set.filter(obj => obj).length} /{" "}
-            {custom.proportion.countmin}
-          </p>
-        )}
-      </div>
-      <div
-        className={compose ? "Constructor-stage" : "Constructor-stage empty"}
-      >
-        <img src={done} alt="" />
-      </div>
+          <div
+            className={
+              compose ? "Constructor-stage" : "Constructor-stage empty"
+            }
+          >
+            <img src={done} alt="" />
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -199,10 +216,9 @@ const ProgressBar = () => {
 const BoxSelector = ({ sizes }) => {
   const { setSize, dispatch } = useContext(ConstructorContext);
   return (
-    <div className="box-wrapper">
+    <div className="boxselector-wrapper">
       {sizes.map((size, i) => (
         <div
-          style={{ width: "20%", height: "100px" }}
           className="slot-wrapper"
           onClick={() => {
             let _id =

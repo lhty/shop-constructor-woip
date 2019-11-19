@@ -16,6 +16,18 @@
   font-size: 15px;
   letter-spacing: -0.08em;
 }
+.boxselector-wrapper {
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  border-radius: 25px 0px 0px 10px;
+  border-top: 1px dashed #83390447;
+  border-left: 1px dashed #83390430;
+}
 .box-wrapper {
   position: relative;
   display: flex;

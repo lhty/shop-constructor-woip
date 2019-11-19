@@ -68,7 +68,6 @@
   color: #4f2202;
 }
 .product-page-right p {
-  cursor: pointer;
   font-size: 16px;
   font-weight: normal;
   color: #431d02;
@@ -91,6 +90,7 @@
   cursor: pointer;
 }
 .product-page-inside {
+  cursor: pointer;
   position: relative;
   margin: 0 10px 25px 0;
   align-self: flex-end;

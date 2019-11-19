@@ -25,7 +25,6 @@ const ProductList = () => {
             <Route exact path="/:id/:title" component={ProductPage} />
           </Switch>
         </div>
-
         <Constructor />
       </div>
     </section>
