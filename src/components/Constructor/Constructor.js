@@ -51,6 +51,8 @@ const Constructor = () => {
   const [custom, dispatch] = useReducer(Reducer, {});
   const { data, error, loading } = useQuery(PROPORTION_QUERY);
   const [updatectx, setupdatectx] = useState(0);
+  const [edit, setEdit] = useState(false);
+
   useEffect(() => {
     if (construct) {
       setSize(construct.proportion.countmin);
@@ -88,7 +90,9 @@ const Constructor = () => {
         setCompose,
         viewDetails,
         updatectx,
-        setupdatectx
+        setupdatectx,
+        edit,
+        setEdit
       }}
     >
       <div className="Constructor-wrapper">
@@ -101,7 +105,9 @@ const Constructor = () => {
           />
         )}
         {slotIndex >= 0 ? <ItemList /> : custom.set && <Box />}
-        {custom.set && slotIndex < 0 && <Summary set={custom.set} />}
+        {custom.set && slotIndex < 0 && !details && (
+          <Summary set={custom.set} />
+        )}
       </div>
     </ConstructorContext.Provider>
   );
@@ -237,7 +243,8 @@ const Box = () => {
     setCompose,
     size = 0,
     details,
-    viewDetails
+    viewDetails,
+    edit
   } = useContext(ConstructorContext);
 
   return (
@@ -254,7 +261,11 @@ const Box = () => {
         </button>
       )}
       {compose & (custom.set.length > 0) ? (
-        <Reshuffle />
+        edit ? (
+          <Edit />
+        ) : (
+          <Reshuffle />
+        )
       ) : (
         <>
           {details ? (
@@ -361,10 +372,10 @@ const ItemList = () => {
           viewDetails(obj);
         }}
         className="slot-wrapper"
-        style={{ width: `20%`, height: "100px" }}
+        style={{ width: `20%`, height: "50px" }}
         key={obj.id}
       >
-        {obj.name}
+        <p>{obj.name}</p>
       </ul>
     ))
   );
@@ -484,7 +495,7 @@ const Item = () => {
               <form onSubmit={input ? handleSubmit : null}>
                 <input
                   required
-                  maxLength={custom.set.filter(obj => !obj).length}
+                  maxLength={input ? custom.set.filter(obj => !obj).length : 1}
                   value={input ? input.join("") : ""}
                   onChange={e => {
                     hadleInput(e);
@@ -509,7 +520,9 @@ const Item = () => {
 };
 
 const Reshuffle = () => {
-  const { custom, setCompose, dispatch } = useContext(ConstructorContext);
+  const { custom, setCompose, dispatch, edit, setEdit } = useContext(
+    ConstructorContext
+  );
   const { user, active, setActive } = useContext(UserContext);
   const [set, setSet] = useState(custom.set);
 
@@ -576,7 +589,9 @@ const Reshuffle = () => {
             <button>Не хочу расставлять</button>
             <button
               onClick={() => {
-                console.log({ ...custom, set: set });
+                user.role.id > 2
+                  ? setEdit(!edit)
+                  : console.log({ ...custom, set: set });
               }}
             >
               Готово
@@ -587,13 +602,17 @@ const Reshuffle = () => {
             className="compose-offline"
             onClick={() => setActive({ ...active, auth: !active.auth })}
           >
-            Необходимо <p>войти</p> или <p>зарегистрироваться</p>
+            <p>войти</p>/<p>зарегистрироваться</p>
           </div>
         )}
       </div>
       <SortableList set={set} setSet={setSet} />
     </>
   );
+};
+
+const Edit = () => {
+  return <div>Админка</div>;
 };
 
 export default Constructor;

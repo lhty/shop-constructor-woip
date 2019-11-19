@@ -6,54 +6,9 @@ export const PRODUCTS_QUERY = gql`
       title
       comment
       show
-      image {
-        url
-      }
-      schema
-      user {
-        username
-        id
-      }
-      proportion {
-        id
-        type
-        shape
-        price
-        proportion
-        countmin
-        countmax
-        preview {
-          url
-        }
-        x
-        y
-        z
-      }
-      items {
-        id
+      tags {
         name
-        description
-        weight
-        chocolate
-        price
-        discount
-        taste
-        letter
-        difficult
-        size_width
-        size_height
-        size_length
-        quantity
-        construct
-        image {
-          url
-        }
       }
-    }
-    products(sort: "id:desc") {
-      id
-      title
-      show
       image {
         url
       }
@@ -70,8 +25,7 @@ export const PRODUCTS_QUERY = gql`
         proportion
         countmin
         countmax
-        construct
-        preview {
+        image {
           url
         }
         x
@@ -123,6 +77,12 @@ export const PROPORTION_QUERY = gql`
       shape
       type
       price
+      tags {
+        name
+      }
+      image {
+        url
+      }
       countmin
       countmax
       construct
@@ -140,6 +100,9 @@ export const ITEM_QUERY = gql`
       price
       discount
       taste
+      tags {
+        name
+      }
       letter
       difficult
       size_width

@@ -1,0 +1,19 @@
+.gallery-container {
+  position: relative;
+  width: 100%;
+}
+.single-img {
+  box-shadow: -3px 7px 16px -16px rgba(0, 0, 0, 0.75);
+}
+.multi-img {
+  display: flex;
+  flex-flow: row wrap;
+}
+.multi-img :first-child {
+  width: 100%;
+  box-shadow: 9px -1px 16px -16px rgba(0, 0, 0, 0.75);
+}
+.multi-img :nth-child(n + 2) {
+  width: 50%;
+  box-shadow: 9px -1px 16px -16px rgba(0, 0, 0, 0.75);
+}

@@ -62,6 +62,10 @@
   text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
     0px 0px 0px rgba(46, 11, 1, 0.71);
 }
+.slot-wrapper p {
+  width: 100%;
+  word-wrap: break-word;
+}
 .slot-wrapper-del {
   position: absolute;
   right: -15px;
@@ -157,7 +161,7 @@
   font-size: 18px;
   font-weight: normal;
   margin-top: 10px;
-  padding: 10px 85px 10px 0;
+  padding: 10px 10px 10px 0;
   background: linear-gradient(90.94deg, #ffdcc900 0.04%, #f6d8c847 99.97%);
 }
 .box-overall p {
@@ -387,6 +391,7 @@
   border-bottom: 1px dashed #8339046b;
 }
 .compose-offline p {
+  font-size: 1vw;
   font-weight: bold;
   margin: 0 10px 0 10px;
 }

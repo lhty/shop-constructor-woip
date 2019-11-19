@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
       <Link to={product.id + "/" + product.title}>
         <img
           className="ProductCard-thumbnail"
-          src={ThumbnailUrl(product)}
+          src={ThumbnailUrl(product.image)}
           alt=""
         />
       </Link>

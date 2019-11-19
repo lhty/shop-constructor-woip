@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import Spinner from "../Assets/Spinner";
+import Gallery from "../Gallery/Gallery";
 import { Link } from "react-router-dom";
 import { Context } from "../Providers/Provider";
 import { useQuery } from "react-apollo-hooks";
@@ -11,7 +12,7 @@ const Product = ({ match }) => {
   const [expand, setExpand] = useState(false);
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
 
-  const { ImgUrl, MakeBundle, setConstruct } = useContext(Context);
+  const { MakeBundle, setConstruct } = useContext(Context);
   const id = match.params.id;
 
   if (loading || error) return <Spinner />;
@@ -21,19 +22,24 @@ const Product = ({ match }) => {
   return (
     <section className="product-page-container">
       <div className="product-page-nav">
-        <Link to="/">Назад</Link>
+        <Link to="/">
+          <span className="arrow left"></span>Назад
+        </Link>
         <button onClick={() => setConstruct(product)}>В конструктор</button>
       </div>
       <div className="product-page-left">
-        <img src={ImgUrl(product)} alt="" draggable="false" />
+        <Gallery image={product.image} />
       </div>
       <div className="product-page-right">
         <h1>{product.title}</h1>
         <div className="product-page-inside">
-          <span
+          <div
             className="product-page-inside-expand"
             onClick={() => setExpand(!expand)}
-          ></span>
+          >
+            <p>Состав</p>
+            <span className={expand ? "arrow up" : "arrow down"}></span>
+          </div>
           {expand &&
             product.items.map(item => (
               <p
