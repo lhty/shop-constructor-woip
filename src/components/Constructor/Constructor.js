@@ -308,17 +308,19 @@ const Box = () => {
   return (
     <>
       <div className="box-wrapper">
-        {custom.set.indexOf(false) < 0 && !compose && !details && (
-          <button
-            className="compose"
-            onClick={() => {
-              custom.proportion.countmin <=
-                custom.set.filter(obj => obj).length && setCompose(true);
-            }}
-          >
-            Расставить
-          </button>
-        )}
+        {custom.proportion.countmin <= custom.set.filter(obj => obj).length &&
+          !compose &&
+          !details && (
+            <button
+              className="compose"
+              onClick={() => {
+                custom.proportion.countmin <=
+                  custom.set.filter(obj => obj).length && setCompose(true);
+              }}
+            >
+              Расставить
+            </button>
+          )}
         {compose & (custom.set.length > 0) ? (
           edit ? (
             <Edit />
@@ -370,6 +372,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
   const slotStyle = {
     width: `${2500 / boxwidth}%`,
     minHeight: "70px",
+    margin: "10px",
     backgroundImage: `url(${item &&
       item.image.length > 0 &&
       !item.editable &&
@@ -477,7 +480,7 @@ const Item = () => {
   }, [details]);
 
   function hadleInput(e) {
-    setInput(e.target.value.toUpperCase().match(/[а-я,-.1-9 ]/gi));
+    setInput(e.target.value.toUpperCase().match(/[а-я,-.0-9 ]/gi));
     setQauntity(
       e.target.value && input
         ? e.target.value.replace(/^\s+|\s+$/g, "").replace(/(\s\s\s*)/g, " ")
@@ -610,11 +613,11 @@ const Reshuffle = () => {
   const SortableList = ({ set, setSet }) => {
     const items = set.map((item, i) => (
       <div
-        data-id={item.letter || item.id}
+        data-id={item.letter || item.name}
         className="slot-wrapper"
         style={{
           width: `${(item.size_length * 100) / custom.proportion.x}%`,
-          minHeight: "70px",
+          height: `70px`,
           backgroundImage: `url(${item &&
             item.image.length > 0 &&
             !item.editable &&
@@ -641,7 +644,7 @@ const Reshuffle = () => {
           setSet(
             order.map(val =>
               set.find(obj =>
-                parseInt(val) ? obj.id === val : obj.letter === val
+                val.length > 1 ? obj.name === val : obj.letter === val
               )
             )
           );
