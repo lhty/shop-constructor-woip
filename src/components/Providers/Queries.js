@@ -17,12 +17,14 @@ export const PRODUCTS_QUERY = gql`
         username
         id
       }
+      construct
       proportion {
         id
         type
         shape
         price
         proportion
+        construct
         countmin
         countmax
         image {
@@ -48,6 +50,7 @@ export const PRODUCTS_QUERY = gql`
         size_length
         quantity
         construct
+        editable
         image {
           url
         }
@@ -99,6 +102,8 @@ export const ITEM_QUERY = gql`
       chocolate
       price
       discount
+      construct
+      editable
       taste
       tags {
         name

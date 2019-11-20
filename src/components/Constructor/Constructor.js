@@ -37,6 +37,9 @@ const Reducer = (custom, action) => {
       return { ...custom, set: action.payload };
     case "CLEAR_BOX":
       return {};
+    case "EXPAND":
+      custom.set.push(false);
+      return custom;
     default:
       return custom;
   }
@@ -44,6 +47,7 @@ const Reducer = (custom, action) => {
 
 const Constructor = () => {
   const { construct } = useContext(Context);
+  const { user } = useContext(UserContext);
   const [size, setSize] = useState();
   const [slotIndex, setslotIndex] = useState(-1);
   const [details, viewDetails] = useState(false);
@@ -55,10 +59,10 @@ const Constructor = () => {
 
   useEffect(() => {
     if (construct) {
-      setSize(0);
+      setupdatectx("loading");
       dispatch({ type: "CLEAR_BOX" });
       setTimeout(() => {
-        setSize(construct.proportion.countmin);
+        setSize(construct.set.length);
         setCompose(false);
         dispatch({
           type: "CREATE_BOX",
@@ -69,13 +73,24 @@ const Constructor = () => {
             set: construct.set
           }
         });
-      }, 300);
+        setupdatectx(0);
+      }, 150);
     }
     if (construct.details)
       viewDetails(construct.items.find(item => item.id === construct.details));
   }, [construct]);
 
   if (loading || error) return <Spinner />;
+
+  const _permissionBasedSizes = user.online
+    ? user.role.id > 1
+      ? data.proportions.filter(size => size.countmin && size.countmax)
+      : data.proportions.filter(
+          size => size.countmin && size.countmax && size.construct
+        )
+    : data.proportions.filter(
+        size => size.countmin && size.countmax && size.construct
+      );
 
   return (
     <ConstructorContext.Provider
@@ -98,17 +113,17 @@ const Constructor = () => {
       }}
     >
       <div className="Constructor-wrapper">
-        <ProgressBar />
-        {!custom.set && (
-          <BoxSelector
-            sizes={data.proportions.filter(
-              size => size.countmin !== null && size.construct
+        {updatectx === "loading" ? (
+          <Spinner />
+        ) : (
+          <>
+            <ProgressBar size={size} />
+            {!custom.set && <BoxSelector sizes={_permissionBasedSizes} />}
+            {slotIndex >= 0 ? <ItemList /> : custom.set && <Box />}
+            {custom.set && slotIndex < 0 && !details && (
+              <Summary set={custom.set} />
             )}
-          />
-        )}
-        {slotIndex >= 0 ? <ItemList /> : custom.set && <Box />}
-        {custom.set && slotIndex < 0 && !details && (
-          <Summary set={custom.set} />
+          </>
         )}
       </div>
     </ConstructorContext.Provider>
@@ -136,7 +151,7 @@ const Summary = () => {
   );
 };
 
-const ProgressBar = () => {
+const ProgressBar = ({ size }) => {
   const {
     custom,
     viewDetails,
@@ -195,8 +210,7 @@ const ProgressBar = () => {
             />
             {custom.set && (
               <p>
-                {custom.set && custom.set.filter(obj => obj).length} /{" "}
-                {custom.proportion.countmin}
+                {custom.set && custom.set.filter(obj => obj).length} / {size}
               </p>
             )}
           </div>
@@ -258,49 +272,88 @@ const Box = () => {
     compose,
     setCompose,
     size = 0,
+    setSize,
     details,
     viewDetails,
     edit
   } = useContext(ConstructorContext);
 
+  const [expand, setExpand] = useState(
+    custom.proportion.countmax - custom.proportion.countmin
+  );
+
+  const _createBox = [...Array(size).keys()].map(
+    (_, index) =>
+      custom.set && (
+        <Slot
+          boxwidth={custom.proportion.x}
+          key={index}
+          currentitem={custom.set[index]}
+          index={index}
+        />
+      )
+  );
+  const _expandableSlots = [...Array(expand).keys()].map(
+    (_, index) =>
+      custom.set && (
+        <ExpandableSlot
+          key={index}
+          size={size}
+          setSize={setSize}
+          expand={expand}
+          setExpand={setExpand}
+        />
+      )
+  );
   return (
-    <div className="box-wrapper">
-      {custom.set.indexOf(false) < 0 && !compose && !details && (
-        <button
-          className="compose"
-          onClick={() => {
-            custom.proportion.countmin <=
-              custom.set.filter(obj => obj).length && setCompose(true);
-          }}
-        >
-          Расставить
-        </button>
-      )}
-      {compose & (custom.set.length > 0) ? (
-        edit ? (
-          <Edit />
-        ) : (
-          <Reshuffle />
-        )
-      ) : (
-        <>
-          {details ? (
-            <Item item={details} viewDetails={viewDetails} />
+    <>
+      <div className="box-wrapper">
+        {custom.set.indexOf(false) < 0 && !compose && !details && (
+          <button
+            className="compose"
+            onClick={() => {
+              custom.proportion.countmin <=
+                custom.set.filter(obj => obj).length && setCompose(true);
+            }}
+          >
+            Расставить
+          </button>
+        )}
+        {compose & (custom.set.length > 0) ? (
+          edit ? (
+            <Edit />
           ) : (
-            [...Array(size).keys()].map(
-              (_, index) =>
-                custom.set && (
-                  <Slot
-                    boxwidth={custom.proportion.x}
-                    key={index}
-                    currentitem={custom.set[index]}
-                    index={index}
-                  />
-                )
-            )
-          )}
-        </>
+            <Reshuffle />
+          )
+        ) : (
+          <>
+            {details ? (
+              <Item item={details} viewDetails={viewDetails} />
+            ) : (
+              <>{_createBox}</>
+            )}
+          </>
+        )}
+      </div>
+      {size < custom.proportion.countmax && (
+        <div className="expand-wrapper">{_expandableSlots}</div>
       )}
+    </>
+  );
+};
+
+const ExpandableSlot = ({ size, setSize, expand, setExpand }) => {
+  const { dispatch } = useContext(ConstructorContext);
+  return (
+    <div
+      className="expand-slot-wrapper"
+      onClick={() => {
+        dispatch({ type: "EXPAND" });
+        setSize(size + 1);
+        setExpand(expand - 1);
+      }}
+    >
+      +1
     </div>
   );
 };
@@ -319,7 +372,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     minHeight: "70px",
     backgroundImage: `url(${item &&
       item.image.length > 0 &&
-      item.name !== "Буква" &&
+      !item.editable &&
       API_URL + item.image[0].url})`
   };
   return (
@@ -349,7 +402,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
         >
           +
         </span>
-      ) : item.name === "Буква" ? (
+      ) : item.editable ? (
         <h1
           onClick={() =>
             item
@@ -376,13 +429,21 @@ const Slot = ({ currentitem, boxwidth, index }) => {
 };
 
 const ItemList = () => {
+  const { user } = useContext(UserContext);
   const { details, viewDetails } = useContext(ConstructorContext);
   const { data, error, loading } = useQuery(ITEM_QUERY);
   if (loading || error) return <Spinner />;
+
+  const _permissionBasedList = user.online
+    ? user.role.id > 1
+      ? data.items
+      : data.items.filter(item => item.construct)
+    : data.items.filter(item => item.construct);
+
   const items = details ? (
     <Item />
   ) : (
-    data.items.map(obj => (
+    _permissionBasedList.map(obj => (
       <ul
         onClick={() => {
           viewDetails(obj);
@@ -408,11 +469,10 @@ const Item = () => {
     dispatch
   } = useContext(ConstructorContext);
   const [input, setInput] = useState();
-  const [quantity, setQauntity] = useState(details.name === "Буква" ? 0 : 1);
+  const [quantity, setQauntity] = useState(details.editable ? 0 : 1);
 
   useEffect(() => {
-    if (details.name === "Буква" && details.letter !== "")
-      setInput([details.letter]);
+    if (details.editable && details.letter !== "") setInput([details.letter]);
     return () => setInput();
   }, [details]);
 
@@ -439,7 +499,7 @@ const Item = () => {
               quantity: 1
             });
           })
-      : details.name !== "Буква" &&
+      : !details.editable &&
         dispatch({
           type: "ADD",
           payload: details,
@@ -463,7 +523,7 @@ const Item = () => {
         {!custom.set[slotIndex] ? (
           <>
             <button onClick={handleSubmit}>Добавить</button>
-            {details.name === "Буква" || (
+            {details.editable || (
               <>
                 <button
                   onClick={() => {
@@ -504,14 +564,19 @@ const Item = () => {
           </>
         )}
       </div>
-      {details.name === "Буква"
+      {details.editable
         ? details.image[0] && (
             <>
               <img src={`${API_URL}${details.image[0].url}`} alt="" />
               <form onSubmit={input ? handleSubmit : null}>
                 <input
                   required
-                  maxLength={input ? custom.set.filter(obj => !obj).length : 1}
+                  maxLength={
+                    input
+                      ? custom.set.filter((_, index) => index >= slotIndex)
+                          .length
+                      : 1
+                  }
                   value={input ? input.join("") : ""}
                   onChange={e => {
                     hadleInput(e);
@@ -552,12 +617,12 @@ const Reshuffle = () => {
           minHeight: "70px",
           backgroundImage: `url(${item &&
             item.image.length > 0 &&
-            item.name !== "Буква" &&
+            !item.editable &&
             API_URL + item.image[0].url})`
         }}
         key={i}
       >
-        {item.name === "Буква" && <h1>{item.letter}</h1>}
+        {item.editable && <h1>{item.letter}</h1>}
       </div>
     ));
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
-import Spinner from "../Assets/Spinner";
 import { API_URL } from "../../config";
 import { useInterval } from "../Providers/Hooks/useInterval";
 import { useSpring, animated } from "react-spring";
@@ -18,7 +17,7 @@ const Promo = () => {
     if (!collapse) setIndex(index === data.promos.length - 1 ? 0 : index + 1);
   }, 35000);
 
-  if (loading || error) return <Spinner />;
+  if (loading || error) return <></>;
 
   return (
     <>
