@@ -246,9 +246,6 @@ body {
     position: absolute;
     left: 0;
   }
-  .ProductList-bundles {
-    width: 100%;
-  }
   .product-page-left {
     width: 100%;
   }
@@ -257,7 +254,6 @@ body {
   }
   .Constructor-wrapper {
     padding-top: 100px;
-    width: 100%;
   }
   .compose-offline p {
     font-size: 2vw;

@@ -1,4 +1,10 @@
-import React, { useContext, useState, useReducer } from "react";
+import React, {
+  useContext,
+  useState,
+  useReducer,
+  useEffect,
+  useCallback
+} from "react";
 import { Route, Switch } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
@@ -14,25 +20,39 @@ import prodlistsvg from "../../img/productlisttop.svg";
 import "./ProductList.css";
 
 const ProductList = () => {
+  const [size, setSize] = useState();
+  const styles = {
+    left: {
+      width: size ? "50%" : "85%"
+    },
+    right: {
+      width: size ? "50%" : "15%"
+    }
+  };
+
   return (
     <section className="ProductList-container">
       <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
       <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
       <div className="ProductList-wrapper">
-        <div className="ProductList-bundles">
-          <Switch>
-            <Route exact path="/" component={Bundles} />
-            <Route exact path="/:id/:title" component={ProductPage} />
-          </Switch>
+        <div style={styles.left}>
+          <div className="ProductList-bundles">
+            <Switch>
+              <Route exact path="/" component={Bundles} />
+              <Route exact path="/:id/:title" component={ProductPage} />
+            </Switch>
+          </div>
         </div>
-        <Constructor />
+        <div style={styles.right}>
+          <Constructor size={size} setSize={setSize} />
+        </div>
       </div>
     </section>
   );
 };
 
 const Bundles = () => {
-  const { MakeBundle } = useContext(Context);
+  const { sortstate, setSortstate, MakeBundle } = useContext(Context);
 
   function sortReducer(state, action) {
     switch (action.type) {
@@ -46,32 +66,68 @@ const Bundles = () => {
         return [
           ...action.payload.sort((a, b) =>
             sortstate.bysize
-              ? a.proportion.countmin - b.proportion.countmin
-              : b.proportion.countmin - a.proportion.countmin
+              ? b.proportion.countmin - a.proportion.countmin
+              : a.proportion.countmin - b.proportion.countmin
           )
         ];
-      default:
+      case "UPDATE":
         return action.payload;
+      default:
+        return state;
     }
   }
 
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
-  const [sortstate, setSortstate] = useState({ byprice: null, bysize: null });
-  const [productsort, sortDispatch] = useReducer(sortReducer, []);
+
+  const initalState = useCallback(
+    () =>
+      data && data.products
+        ? MakeBundle(data.products).filter(obj => obj.show)
+        : [],
+    [data, MakeBundle]
+  );
+  const [productsort, sortDispatch] = useReducer(sortReducer, initalState());
+
+  useEffect(() => {
+    !productsort.length &&
+      data &&
+      data.products &&
+      sortDispatch({
+        type: "UPDATE",
+        payload: MakeBundle(data.products).filter(obj => obj.show)
+      });
+  }, [data, productsort, MakeBundle]);
+
+  useEffect(() => {
+    if (sortstate.byprice)
+      sortDispatch({ type: "BY_PRICE", payload: productsort });
+
+    if (sortstate.bysize)
+      sortDispatch({ type: "BY_SIZE", payload: productsort });
+
+    sortDispatch({
+      type: "UPDATE",
+      payload: productsort
+    });
+  }, [sortstate, productsort]);
+
+  const _pageQuantity = Math.ceil(productsort.length / sortstate.limit);
 
   if (loading || error) return <Spinner />;
-
-  const bundles = MakeBundle(data.products.filter(obj => obj.show));
 
   return (
     <>
       <div className="ProductList-bundles-sort">
         <div
           className={
-            sortstate.byprice === null ? "sort-by inactive" : "sort-by"
+            sortstate.byprice
+              ? "sort-by"
+              : sortstate.byprice === null
+              ? "sort-by inactive"
+              : "sort-by"
           }
           onClick={() => {
-            sortDispatch({ type: "BY_PRICE", payload: bundles });
+            sortDispatch({ type: "BY_PRICE", payload: productsort });
             setSortstate({ ...sortstate, byprice: !sortstate.byprice });
           }}
         >
@@ -89,9 +145,15 @@ const Bundles = () => {
           />
         </div>
         <div
-          className={sortstate.bysize === null ? "sort-by inactive" : "sort-by"}
+          className={
+            sortstate.bysize
+              ? "sort-by"
+              : sortstate.bysize === null
+              ? "sort-by inactive"
+              : "sort-by"
+          }
           onClick={() => {
-            sortDispatch({ type: "BY_SIZE", payload: bundles });
+            sortDispatch({ type: "BY_SIZE", payload: productsort });
             setSortstate({ ...sortstate, bysize: !sortstate.bysize });
           }}
         >
@@ -109,9 +171,85 @@ const Bundles = () => {
           />
         </div>
       </div>
-      {(productsort.length === 0 ? bundles : productsort).map(product => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+      {productsort.map(
+        (product, index) =>
+          index >= sortstate.offset &&
+          index < sortstate.offset + sortstate.limit && (
+            <ProductCard key={product.id} product={product} />
+          )
+      )}
+      <div className="ProductList-bundles-pagination">
+        {sortstate.page >= 10 && (
+          <>
+            <div
+              className="lastpage"
+              onClick={() =>
+                setSortstate({
+                  ...sortstate,
+                  offset: 0,
+                  page: 0
+                })
+              }
+            >
+              1
+            </div>
+            <div
+              onClick={() =>
+                setSortstate({ ...sortstate, page: sortstate.page - 10 })
+              }
+            >
+              ...
+            </div>
+          </>
+        )}
+        {[...Array(_pageQuantity).keys()].map(
+          (_, index, arr) =>
+            index >= sortstate.page &&
+            index < sortstate.page + 10 && (
+              <div
+                className={
+                  Math.ceil(sortstate.offset / sortstate.limit) === index
+                    ? "active"
+                    : ""
+                }
+                key={index}
+                onClick={() =>
+                  setSortstate({
+                    ...sortstate,
+                    offset: sortstate.limit * index
+                  })
+                }
+              >
+                {index + 1}
+              </div>
+            )
+        )}
+        {productsort &&
+          _pageQuantity > 10 &&
+          _pageQuantity - sortstate.page > 10 && (
+            <>
+              <div
+                onClick={() =>
+                  setSortstate({ ...sortstate, page: sortstate.page + 10 })
+                }
+              >
+                ...
+              </div>
+              <div
+                className="lastpage"
+                onClick={() =>
+                  setSortstate({
+                    ...sortstate,
+                    offset: sortstate.limit * (_pageQuantity - 1),
+                    page: _pageQuantity - 10
+                  })
+                }
+              >
+                {_pageQuantity}
+              </div>
+            </>
+          )}
+      </div>
     </>
   );
 };

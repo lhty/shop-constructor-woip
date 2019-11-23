@@ -45,10 +45,9 @@ const Reducer = (custom, action) => {
   }
 };
 
-const Constructor = () => {
+const Constructor = ({ size, setSize }) => {
   const { construct } = useContext(Context);
   const { user } = useContext(UserContext);
-  const [size, setSize] = useState();
   const [slotIndex, setslotIndex] = useState(-1);
   const [details, viewDetails] = useState(false);
   const [compose, setCompose] = useState(false);
@@ -78,7 +77,7 @@ const Constructor = () => {
     }
     if (construct.details)
       viewDetails(construct.items.find(item => item.id === construct.details));
-  }, [construct]);
+  }, [construct, setSize]);
 
   if (loading || error) return <Spinner />;
 
@@ -117,7 +116,7 @@ const Constructor = () => {
           <Spinner />
         ) : (
           <>
-            <ProgressBar size={size} />
+            <ProgressBar size={size} setSize={setSize} />
             {!custom.set && <BoxSelector sizes={_permissionBasedSizes} />}
             {slotIndex >= 0 ? <ItemList /> : custom.set && <Box />}
             {custom.set && slotIndex < 0 && !details && (
@@ -151,7 +150,7 @@ const Summary = () => {
   );
 };
 
-const ProgressBar = ({ size }) => {
+const ProgressBar = ({ size, setSize }) => {
   const {
     custom,
     viewDetails,
@@ -171,6 +170,7 @@ const ProgressBar = ({ size }) => {
             setslotIndex(-1);
             viewDetails(false);
             setCompose(false);
+            setSize(0);
           }}
           src={boxsvg}
           alt=""
@@ -233,6 +233,7 @@ const BoxSelector = ({ sizes }) => {
     <div className="boxselector-wrapper">
       {sizes.map((size, i) => (
         <div
+          style={{ width: `50%`, minHeight: `100px`, margin: `10px` }}
           className="slot-wrapper"
           onClick={() => {
             let _id =
@@ -318,7 +319,7 @@ const Box = () => {
                   custom.set.filter(obj => obj).length && setCompose(true);
               }}
             >
-              Расставить
+              Продолжить
             </button>
           )}
         {compose & (custom.set.length > 0) ? (
@@ -337,7 +338,7 @@ const Box = () => {
           </>
         )}
       </div>
-      {size < custom.proportion.countmax && (
+      {size < custom.proportion.countmax && !compose && (
         <div className="expand-wrapper">{_expandableSlots}</div>
       )}
     </>
@@ -452,7 +453,7 @@ const ItemList = () => {
           viewDetails(obj);
         }}
         className="slot-wrapper"
-        style={{ width: `20%`, height: "50px" }}
+        style={{ width: `20%`, height: "50px", margin: `5px` }}
         key={obj.id}
       >
         <p>{obj.name}</p>
@@ -611,23 +612,27 @@ const Reshuffle = () => {
   const [set, setSet] = useState(custom.set);
 
   const SortableList = ({ set, setSet }) => {
-    const items = set.map((item, i) => (
-      <div
-        data-id={item.letter || item.name}
-        className="slot-wrapper"
-        style={{
-          width: `${(item.size_length * 100) / custom.proportion.x}%`,
-          height: `70px`,
-          backgroundImage: `url(${item &&
-            item.image.length > 0 &&
-            !item.editable &&
-            API_URL + item.image[0].url})`
-        }}
-        key={i}
-      >
-        {item.editable && <h1>{item.letter}</h1>}
-      </div>
-    ));
+    const items = set
+      .filter(item => item)
+      .map((item, i) => (
+        <div
+          data-id={item.letter || "$" + item.id}
+          className="slot-wrapper"
+          style={{
+            width: `${(item.size_length * 100) / custom.proportion.x}%`,
+            height: `70px`,
+            marginBottom: "2px",
+            backgroundImage: `url(${item &&
+              item.image.length > 0 &&
+              !item.editable &&
+              API_URL + item.image[0].url})`
+          }}
+          key={i}
+          draggable="false"
+        >
+          {item.editable && <h1>{item.letter}</h1>}
+        </div>
+      ));
 
     return (
       <Sortable
@@ -644,7 +649,9 @@ const Reshuffle = () => {
           setSet(
             order.map(val =>
               set.find(obj =>
-                val.length > 1 ? obj.name === val : obj.letter === val
+                val.charAt(0) === "$"
+                  ? obj.id === val.substring(1)
+                  : obj.letter === val
               )
             )
           );

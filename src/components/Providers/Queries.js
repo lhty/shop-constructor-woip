@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 export const PRODUCTS_QUERY = gql`
-  {
-    products(sort: "id:desc") {
+  query($start: Int, $limit: Int) {
+    products(sort: "id:desc", start: $start, limit: $limit) {
       id
       title
       comment

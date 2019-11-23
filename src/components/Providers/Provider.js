@@ -1,12 +1,20 @@
 import React, { useReducer, useState } from "react";
 import { ThumbnailUrl, ImgUrl } from "./ThumbnailUrls";
 import { CartReducer } from "./Reducers/CartReducers";
+import { bundlesLimit } from "../../config";
 
 export const Context = React.createContext();
 
 const Provider = props => {
   const [cart, cartDispath] = useReducer(CartReducer, []);
   const [construct, setConstruct] = useState(false);
+  const [sortstate, setSortstate] = useState({
+    byprice: null,
+    bysize: null,
+    limit: bundlesLimit,
+    offset: 0,
+    page: 0
+  });
 
   function MakeBundle(products) {
     function Set(product) {
@@ -45,6 +53,8 @@ const Provider = props => {
       value={{
         cart,
         cartDispath,
+        sortstate,
+        setSortstate,
         ThumbnailUrl,
         ImgUrl,
         MakeBundle,
