@@ -40,6 +40,9 @@
   align-self: center;
   max-height: 10vh;
 }
+.Banner-text p {
+  cursor: pointer;
+}
 .Banner-img {
   width: 50%;
   align-self: flex-end;

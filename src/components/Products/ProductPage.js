@@ -19,13 +19,29 @@ const Product = ({ match }) => {
 
   const product = MakeBundle(data.products.find(obj => obj.id === id));
 
+  const contructStyle = {
+    on: {
+      cursor: `pointer`
+    },
+    off: {
+      cursor: `normal`,
+      filter: `grayscale(100%)`,
+      opacity: `0.3`
+    }
+  };
+
   return (
     <section className="product-page-container">
       <div className="product-page-nav">
         <Link to="/">
           <span className="arrow left"></span>Назад
         </Link>
-        <button onClick={() => setConstruct(product)}>В конструктор</button>
+        <button
+          style={product.construct ? contructStyle.on : contructStyle.off}
+          onClick={() => product.construct && setConstruct(product)}
+        >
+          В конструктор
+        </button>
       </div>
       <div className="product-page-left">
         <Gallery image={product.image} />

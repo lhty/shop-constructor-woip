@@ -178,7 +178,13 @@ const ProgressBar = ({ size, setSize }) => {
 
         <div className="Constructor-stage-info">
           {!custom.set ? (
-            <p style={{ lineHeight: "30px", letterSpacing: "0" }}>
+            <p
+              style={{
+                lineHeight: "15px",
+                letterSpacing: "0",
+                textAlign: `center`
+              }}
+            >
               Собери свой набор
             </p>
           ) : (
@@ -233,7 +239,12 @@ const BoxSelector = ({ sizes }) => {
     <div className="boxselector-wrapper">
       {sizes.map((size, i) => (
         <div
-          style={{ width: `50%`, minHeight: `100px`, margin: `10px` }}
+          style={{
+            width: `100%`,
+            padding: `5px`,
+            margin: `10px`,
+            fontSize: `13px`
+          }}
           className="slot-wrapper"
           onClick={() => {
             let _id =
@@ -260,7 +271,7 @@ const BoxSelector = ({ sizes }) => {
           }}
           key={i}
         >
-          на {size.countmin} конфет
+          Коробка {size.shape} {size.countmin} шт.
         </div>
       ))}
     </div>

@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { Context } from '../Providers/Provider';
+import React, { useContext, useState } from "react";
+import { UserContext } from "../Providers/UserProvider";
 
-import './Signup.css';
+import "./Signup.css";
 
 const Signup = () => {
-  const { Register } = useContext(Context);
+  const { Register } = useContext(UserContext);
   const [inputValues, setInputValues] = useState();
   const handleOnChange = event => {
-    const { name, value = '' } = event.target;
+    const { name, value = "" } = event.target;
     setInputValues({ ...inputValues, [name]: value });
   };
   const handleSubmit = e => {

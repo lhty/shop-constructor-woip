@@ -175,6 +175,14 @@ body {
     opacity: 1;
   }
 }
+@keyframes progress {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
 @media (max-width: 1200px) {
   .header-title {
     transform: scale(0.8);
@@ -192,6 +200,9 @@ body {
   }
   .product-page-nav a {
     text-align: start;
+  }
+  .ProductList-wrapper {
+    flex-flow: column wrap;
   }
 }
 @media (max-width: 800px) {

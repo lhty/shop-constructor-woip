@@ -5,7 +5,6 @@
 }
 .ProductList-wrapper {
   display: flex;
-  flex-flow: row wrap;
   background: linear-gradient(
     270.2deg,
     #f3ebe5 0.19%,
@@ -13,7 +12,8 @@
     #f3ebe5 99.95%
   );
   padding-bottom: 50px;
-  min-height: 100vh;
+  margin-bottom: 100px;
+  /* min-height: 100vh; */
 }
 .ProductList-bundles {
   display: flex;
@@ -22,8 +22,7 @@
   border-radius: 0px 0px 25px 0px;
   border-bottom: 1px dashed #83390463;
   padding-bottom: 30px;
-  animation: 1s ease 0s 1 normal none running slideInLeft;
-  transition: 1s ease;
+  box-shadow: -3px 8px 20px -16px rgba(0, 0, 0, 0.31);
 }
 .ProductList-topsvg {
   display: block;

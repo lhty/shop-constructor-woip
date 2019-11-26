@@ -13,7 +13,6 @@ const Layout = () => {
       <UserProvider>
         <Route component={Header} />
         <Promo />
-
         <Staticinfo />
         <ProductList />
       </UserProvider>

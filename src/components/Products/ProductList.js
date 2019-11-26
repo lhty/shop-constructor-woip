@@ -14,6 +14,8 @@ import ProductCard from "./ProductCard";
 import Constructor from "../Constructor/Constructor";
 import { Context } from "../Providers/Provider";
 
+import { useSpring, animated } from "react-spring";
+
 import sortprice from "../../img/sort-byprice.svg";
 import sortsize from "../../img/sort-bypsize.svg";
 import prodlistsvg from "../../img/productlisttop.svg";
@@ -21,31 +23,40 @@ import "./ProductList.css";
 
 const ProductList = () => {
   const [size, setSize] = useState();
-  const styles = {
-    left: {
-      width: size ? "50%" : "85%"
-    },
-    right: {
-      width: size ? "50%" : "15%"
-    }
-  };
+  // const styles = {
+  //   left: {
+  //     width: size ? "50%" : "85%"
+  //   },
+  //   right: {
+  //     width: size ? "50%" : "15%"
+  //   }
+  // };
+
+  const stylePropsLeft = useSpring({
+    config: { mass: 1, tension: 120, friction: 14 },
+    width: size ? `50%` : `85%`
+  });
+  const stylePropsRight = useSpring({
+    config: { mass: 1, tension: 280, friction: 60 },
+    width: size ? `50%` : `15%`
+  });
 
   return (
     <section className="ProductList-container">
       <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
       <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
       <div className="ProductList-wrapper">
-        <div style={styles.left}>
+        <animated.div style={stylePropsLeft}>
           <div className="ProductList-bundles">
             <Switch>
               <Route exact path="/" component={Bundles} />
               <Route exact path="/:id/:title" component={ProductPage} />
             </Switch>
           </div>
-        </div>
-        <div style={styles.right}>
+        </animated.div>
+        <animated.div style={stylePropsRight}>
           <Constructor size={size} setSize={setSize} />
-        </div>
+        </animated.div>
       </div>
     </section>
   );

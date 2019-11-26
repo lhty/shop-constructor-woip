@@ -1,18 +1,18 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Cart from '../Cart/Cart';
-import CartList from '../Cart/CartList';
-import Userphoto from '../Auth/Elements/Userphoto';
-import AuthPage from '../Auth/AuthPage';
-import { UserContext } from '../Providers/UserProvider';
+import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Cart from "../Cart/Cart";
+import CartList from "../Cart/CartList";
+import Userphoto from "../Auth/Elements/Userphoto";
+import AuthPage from "../Auth/AuthPage";
+import { UserContext } from "../Providers/UserProvider";
 
-import title from '../../img/title.svg';
-import headerborder from '../../img/headerborder.svg';
-import './Header.css';
+import title from "../../img/title.svg";
+import headerborder from "../../img/headerborder.svg";
+import "./Header.css";
 
 export default function Header({ match: { url } }) {
   const { user, RetrieveLogin, setActive, active } = useContext(UserContext);
-  const token = localStorage.getItem('user');
+  const token = localStorage.getItem("user");
 
   useEffect(() => {
     token && !user.online && RetrieveLogin(token);

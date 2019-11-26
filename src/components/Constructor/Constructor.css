@@ -26,6 +26,7 @@
   border-radius: 25px 0px 0px 10px;
   border-top: 1px dashed #83390447;
   border-left: 1px dashed #83390430;
+  box-shadow: inset 4px 8px 20px -21px rgba(0, 0, 0, 0.31);
 }
 .box-wrapper {
   position: relative;
@@ -65,6 +66,7 @@
 .slot-wrapper span {
   font-size: 50px;
   font-weight: bold;
+  width: 100%;
   opacity: 0.9;
   text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
     0px 0px 0px rgba(46, 11, 1, 0.71);
@@ -176,7 +178,6 @@
 }
 .empty {
   opacity: 0.5;
-  margin-left: 10px;
   cursor: default;
   filter: grayscale(70%);
   border-radius: 25px 0 0 25px;
@@ -211,10 +212,9 @@
 }
 .Constructor-stage-info {
   height: 50px;
-  padding: 10px;
+  padding: 10px 10px 10px 0;
   font-size: 10px;
   width: 100%;
-  white-space: nowrap;
 }
 .item-container {
   position: relative;
