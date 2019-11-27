@@ -52,7 +52,7 @@
 }
 .product-page-left {
   margin: 25px 25px 0px 0px;
-  width: 45%;
+  width: 35%;
   overflow: hidden;
   border-radius: 0 10px 10px 0;
   box-shadow: 8px 17px 15px -16px rgba(129, 52, 11, 0.67);
@@ -60,9 +60,8 @@
 .product-page-right {
   display: flex;
   flex-flow: column wrap;
-  align-items: center;
   padding: 25px 0 0 0;
-  width: 50%;
+  width: 60%;
 }
 .product-page-right h1 {
   margin-bottom: 25px;
@@ -77,8 +76,8 @@
 }
 .product-page-container label {
   position: absolute;
-  bottom: -30px;
-  right: 10px;
+  bottom: -15px;
+  right: 20px;
   font-size: 40px;
   font-weight: bold;
   color: #4f2202;
@@ -117,8 +116,8 @@
 .product-page-inside-expand span {
   align-self: center;
 }
-@media only screen and (max-width: 1350px) {
+/* @media only screen and (max-width: 1350px) {
   .product-page-container {
     flex-direction: column;
   }
-}
+} */

@@ -225,13 +225,12 @@
 .item-container form {
   align-self: center;
   width: 100%;
-  margin: 10px;
 }
 .item-container input {
   border: 0.5px solid #83390446;
   box-sizing: border-box;
-  border-radius: 5px;
-  margin: 25px 0 25px 0;
+  border-radius: 0 0 5px 5px;
+  margin: 0 0 25px 0;
   height: 60px;
   width: 100%;
   padding: 5px;
@@ -248,21 +247,42 @@
   transition: 0.5s ease;
 }
 .item-container input:focus {
+  border-radius: 5px;
   transform: scale(1.02);
   border: 0.5px solid #833904;
   box-shadow: -2px 3px 20px 0px rgba(0, 0, 0, 0.08),
     -4px 3px 20px 4px rgba(255, 87, 34, 0.12);
 }
-.item-container p {
+.item-container-description {
   padding-bottom: 10px;
   border-bottom: 2px solid #83390447;
 }
-.item-container img {
+.item-container-info {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  border-right: 1px solid #f9e2d6;
+  background: linear-gradient(250deg, #ffffff63, #f2ebe4);
+  border-radius: 0 0 10px 5px;
+}
+.item-container-info-gallery {
+  width: 65%;
+}
+.item-container-info-details {
+  width: 35%;
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  padding: 10px;
+}
+.item-container-info h1 {
+}
+.item-container-info img {
   width: 100%;
   border-radius: 0 0 5px 5px;
-  box-shadow: 8px 17px 15px -16px rgba(129, 52, 11, 0.67);
+  box-shadow: 6px 12px 15px -16px rgba(0, 0, 0, 0.85);
 }
-
 .item-container-quantity {
   align-self: flex-end;
   margin-top: 25px;
@@ -280,20 +300,16 @@
   border: 0;
   padding: 0;
 }
-.item-container h1 {
+.item-container-title {
   margin: 15px 0 15px 0;
 }
 .buttons {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  background: linear-gradient(
-    89.97deg,
-    #ffbb964f 0.01%,
-    rgba(255, 220, 201, 0) 99.99%
-  );
+  background: linear-gradient(250deg, #ffffff63, #f2ebe4);
   height: 50px;
-  border-radius: 20px 5px 0 0;
+  border-radius: 20px 20px 0 0;
   transition: 1s;
   outline: none;
   white-space: nowrap;
@@ -312,7 +328,9 @@
   background: transparent;
   outline: none;
   font-size: 1rem;
-  color: #5b2600;
+  font-weight: bold;
+  letter-spacing: -0.06em;
+  color: #5b2600cf;
   cursor: pointer;
   border-right: 1px dashed #83390426;
 }

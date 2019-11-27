@@ -8,7 +8,7 @@ import { PRODUCTS_QUERY } from "../Providers/Queries";
 
 import "./ProductPage.css";
 
-const Product = ({ match }) => {
+const Product = ({ match, scroll }) => {
   const [expand, setExpand] = useState(false);
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
 
@@ -38,7 +38,7 @@ const Product = ({ match }) => {
         </Link>
         <button
           style={product.construct ? contructStyle.on : contructStyle.off}
-          onClick={() => product.construct && setConstruct(product)}
+          onClick={() => product.construct && (setConstruct(product), scroll())}
         >
           В конструктор
         </button>

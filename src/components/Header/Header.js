@@ -35,11 +35,17 @@ export default function Header({ match: { url } }) {
               }}
               src={title}
               alt=""
+              draggable="false"
             />
           </Link>
           <Cart />
         </div>
-        <img className="header-svg" src={headerborder} alt="" />
+        <img
+          className="header-svg"
+          src={headerborder}
+          alt=""
+          draggable="false"
+        />
       </section>
       {active.auth && <AuthPage user={user} />}
       {active.cart && <CartList url={url} />}

@@ -2,8 +2,9 @@ import React, { useState, useReducer, useContext, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { PROPORTION_QUERY } from "../Providers/Queries";
 import Spinner from "../Assets/Spinner";
+import Gallery from "../Gallery/Gallery";
+import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 import { ITEM_QUERY } from "../Providers/Queries";
-import { API_URL } from "../../config";
 import { Context } from "../Providers/Provider";
 import { UserContext } from "../Providers/UserProvider";
 import Sortable from "react-sortablejs";
@@ -174,6 +175,7 @@ const ProgressBar = ({ size, setSize }) => {
           }}
           src={boxsvg}
           alt=""
+          draggable="false"
         />
 
         <div className="Constructor-stage-info">
@@ -213,6 +215,7 @@ const ProgressBar = ({ size, setSize }) => {
               }}
               src={sweetssvg}
               alt=""
+              draggable="false"
             />
             {custom.set && (
               <p>
@@ -240,7 +243,6 @@ const BoxSelector = ({ sizes }) => {
       {sizes.map((size, i) => (
         <div
           style={{
-            width: `100%`,
             padding: `5px`,
             margin: `10px`,
             fontSize: `13px`
@@ -388,7 +390,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     backgroundImage: `url(${item &&
       item.image.length > 0 &&
       !item.editable &&
-      API_URL + item.image[0].url})`
+      ThumbnailUrl(item.image)})`
   };
   return (
     <div style={slotStyle} className="slot-wrapper">
@@ -494,10 +496,9 @@ const Item = () => {
   function hadleInput(e) {
     setInput(e.target.value.toUpperCase().match(/[а-я,-.0-9 ]/gi));
     setQauntity(
-      e.target.value && input
-        ? e.target.value.replace(/^\s+|\s+$/g, "").replace(/(\s\s\s*)/g, " ")
-            .length
-        : 0
+      e.target.value
+        ? e.target.value.replace(/ /g, "").length
+        : input.length && 0
     );
   }
 
@@ -579,34 +580,39 @@ const Item = () => {
           </>
         )}
       </div>
-      {details.editable
-        ? details.image[0] && (
-            <>
-              <img src={`${API_URL}${details.image[0].url}`} alt="" />
-              <form onSubmit={input ? handleSubmit : null}>
-                <input
-                  required
-                  maxLength={
-                    input
-                      ? custom.set.filter((_, index) => index >= slotIndex)
-                          .length
-                      : 1
-                  }
-                  value={input ? input.join("") : ""}
-                  onChange={e => {
-                    hadleInput(e);
-                  }}
-                ></input>
-              </form>
-            </>
-          )
-        : details.image[0] && (
-            <>
-              <img src={`${API_URL}${details.image[0].url}`} alt="" />
-              <h1>{details.name}</h1>
-              <p>{details.description}</p>
-            </>
-          )}
+      {details.editable ? (
+        <form onSubmit={input ? handleSubmit : null}>
+          <input
+            required
+            maxLength={
+              input
+                ? custom.set.filter((_, index) => index >= slotIndex).length +
+                  input.filter(char => char === " ").length
+                : 1
+            }
+            value={input ? input.join("") : ""}
+            onChange={e => {
+              hadleInput(e);
+            }}
+          ></input>
+        </form>
+      ) : (
+        <div className="item-container-info">
+          <div className="item-container-info-gallery">
+            <Gallery image={details.image} />
+          </div>
+          <div className="item-container-info-details">
+            <h1>высота:{details.size_height}</h1>
+            <h1>длинна:{details.size_length}</h1>
+            <h1>ширина:{details.size_width}</h1>
+            <h1>вкус:{details.taste}</h1>
+            <h1>вес:{details.weight}</h1>
+            <h1>шоколад:{details.chocolate}</h1>
+          </div>
+        </div>
+      )}
+      <h1 className="item-container-title">{details.name}</h1>
+      <p className="item-container-description">{details.description}</p>
       <div className="item-container-quantity">
         <p>{quantity} шт</p>
         <p>{details.price * quantity} руб</p>
@@ -636,7 +642,7 @@ const Reshuffle = () => {
             backgroundImage: `url(${item &&
               item.image.length > 0 &&
               !item.editable &&
-              API_URL + item.image[0].url})`
+              ThumbnailUrl(item.image)})`
           }}
           key={i}
           draggable="false"

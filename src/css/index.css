@@ -2,14 +2,6 @@
   font-family: Noto;
   src: url("../fonts/NotoSerif-Regular.ttf");
 }
-@font-face {
-  font-family: Notobold;
-  src: url("../fonts/NotoSerif-Bold.ttf");
-}
-@font-face {
-  font-family: Notoitalic;
-  src: url("../fonts/NotoSerif-RegularItalic.ttf");
-}
 *,
 *::before,
 *::after {
@@ -268,5 +260,9 @@ body {
   }
   .compose-offline p {
     font-size: 2vw;
+  }
+  .product-page-left {
+    margin: 0;
+    border-radius: 0;
   }
 }

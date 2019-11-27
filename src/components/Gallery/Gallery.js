@@ -47,7 +47,7 @@ const Gallery = ({ image }) => {
           <img
             style={loading ? style : {}}
             className="single-img"
-            src={ThumbnailUrl(image)}
+            src={image[0] && ThumbnailUrl(image)}
             alt=""
             draggable="false"
             onLoad={() => setLoading(false)}

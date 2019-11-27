@@ -3,7 +3,8 @@ import React, {
   useState,
   useReducer,
   useEffect,
-  useCallback
+  useCallback,
+  useRef
 } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
@@ -23,22 +24,18 @@ import "./ProductList.css";
 
 const ProductList = () => {
   const [size, setSize] = useState();
-  // const styles = {
-  //   left: {
-  //     width: size ? "50%" : "85%"
-  //   },
-  //   right: {
-  //     width: size ? "50%" : "15%"
-  //   }
-  // };
+  const _constructorref = useRef(null);
+  const constructorScroll = () =>
+    window.innerWidth < 1200 &&
+    window.scrollTo(0, _constructorref.current.offsetTop * 2);
 
   const stylePropsLeft = useSpring({
-    config: { mass: 1, tension: 120, friction: 14 },
-    width: size ? `50%` : `85%`
+    config: { mass: 1, tension: 280, friction: 40 },
+    width: window.innerWidth > 1200 ? (size ? `50%` : `85%`) : `100%`
   });
   const stylePropsRight = useSpring({
     config: { mass: 1, tension: 280, friction: 60 },
-    width: size ? `50%` : `15%`
+    width: window.innerWidth > 1200 ? (size ? `50%` : `15%`) : `100%`
   });
 
   return (
@@ -50,11 +47,17 @@ const ProductList = () => {
           <div className="ProductList-bundles">
             <Switch>
               <Route exact path="/" component={Bundles} />
-              <Route exact path="/:id/:title" component={ProductPage} />
+              <Route
+                exact
+                path="/:id/:title"
+                render={props => (
+                  <ProductPage {...props} scroll={constructorScroll} />
+                )}
+              />
             </Switch>
           </div>
         </animated.div>
-        <animated.div style={stylePropsRight}>
+        <animated.div ref={_constructorref} style={stylePropsRight}>
           <Constructor size={size} setSize={setSize} />
         </animated.div>
       </div>
