@@ -17,13 +17,18 @@
 }
 .ProductList-bundles {
   display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
+  flex-flow: column;
   border-radius: 0px 0px 25px 0px;
   border-bottom: 1px dashed #83390463;
-  padding-bottom: 30px;
   box-shadow: -3px 8px 20px -16px rgba(0, 0, 0, 0.31);
   transition: 1.5s ease;
+}
+.ProductList-bundles-list {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
 }
 .ProductList-topsvg {
   display: block;

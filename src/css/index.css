@@ -255,6 +255,9 @@ body {
   .product-page-right {
     width: 100%;
   }
+  .ProductCard-wrapper {
+    width:80%;
+  }
   .Constructor-wrapper {
     padding-top: 100px;
   }

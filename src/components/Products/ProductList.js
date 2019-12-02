@@ -46,7 +46,7 @@ const ProductList = () => {
         <animated.div style={stylePropsLeft}>
           <div className="ProductList-bundles">
             <Switch>
-              <Route exact path="/" component={Bundles} />
+              <Route exact path="/" component={Bundles} />} />
               <Route
                 exact
                 path="/:id/:title"
@@ -67,7 +67,6 @@ const ProductList = () => {
 
 const Bundles = () => {
   const { sortstate, setSortstate, MakeBundle } = useContext(Context);
-
   function sortReducer(state, action) {
     switch (action.type) {
       case "BY_PRICE":
@@ -125,10 +124,8 @@ const Bundles = () => {
     });
   }, [sortstate, productsort]);
 
-  const _pageQuantity = Math.ceil(productsort.length / sortstate.limit);
-
-  if (loading || error) return <Spinner />;
-
+  const _limit = window.innerWidth < 1200 ? 5 : sortstate.limit;
+  const _pageQuantity = Math.ceil(productsort.length / _limit);
   return (
     <>
       <div className="ProductList-bundles-sort">
@@ -185,13 +182,19 @@ const Bundles = () => {
           />
         </div>
       </div>
-      {productsort.map(
-        (product, index) =>
-          index >= sortstate.offset &&
-          index < sortstate.offset + sortstate.limit && (
-            <ProductCard key={product.id} product={product} />
+      <div className="ProductList-bundles-list">
+        {loading || error ? (
+          <Spinner />
+        ) : (
+          productsort.map(
+            (product, index) =>
+              index >= sortstate.offset &&
+              index < sortstate.offset + _limit && (
+                <ProductCard key={product.id} product={product} />
+              )
           )
-      )}
+        )}
+      </div>
       <div className="ProductList-bundles-pagination">
         {sortstate.page >= 10 && (
           <>
@@ -222,15 +225,13 @@ const Bundles = () => {
             index < sortstate.page + 10 && (
               <div
                 className={
-                  Math.ceil(sortstate.offset / sortstate.limit) === index
-                    ? "active"
-                    : ""
+                  Math.ceil(sortstate.offset / _limit) === index ? "active" : ""
                 }
                 key={index}
                 onClick={() =>
                   setSortstate({
                     ...sortstate,
-                    offset: sortstate.limit * index
+                    offset: _limit * index
                   })
                 }
               >
@@ -254,7 +255,7 @@ const Bundles = () => {
                 onClick={() =>
                   setSortstate({
                     ...sortstate,
-                    offset: sortstate.limit * (_pageQuantity - 1),
+                    offset: _limit * (_pageQuantity - 1),
                     page: _pageQuantity - 10
                   })
                 }

@@ -1,26 +1,52 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../Providers/Provider";
 import { Link } from "react-router-dom";
+import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
+
+import { useSpring, animated } from "react-spring";
 
 import "./ProductCard.css";
 
 const ProductCard = ({ product }) => {
-  const { ThumbnailUrl, cartDispath } = useContext(Context);
+  const { cartDispath } = useContext(Context);
+
   const [loading, setLoading] = useState(true);
-  const style = {
-    opacity: "0"
-  };
+
+  const loadingStyle = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: loading ? 0 : 1 }
+  });
+
+  // backgroundImage: `url(${ThumbnailUrl(product.image)})`
+
   return (
-    <div key={product.id} className="ProductCard-wrapper">
-      <p className="ProductCard-title">{product.title}</p>
+    <animated.div
+      style={loadingStyle}
+      key={product.id}
+      className="ProductCard-wrapper"
+    >
       <Link to={product.id + "/" + product.title}>
-        <img
-          style={loading ? style : {}}
+        <animated.img
+          style={loadingStyle}
           className="ProductCard-thumbnail"
           src={ThumbnailUrl(product.image)}
           alt=""
           onLoad={() => setLoading(false)}
         />
+        {/* <p className="ProductCard-title">{product.title}</p> */}
+        {/* {loading ? (
+        <svg style={{ position: "absolute" }} viewBox="0 0 100 100">
+          <rect width="100" height="100" fill="#CCC" />
+        </svg>
+      ) : null}
+      <Link to={product.id + "/" + product.title}>
+        <img
+          className="ProductCard-thumbnail"
+          src={ThumbnailUrl(product.image)}
+          alt=""
+          onLoad={() => setLoading(false)}
+        />
+      </Link> */}
       </Link>
       <div className="hover-buttons">
         <button
@@ -32,7 +58,7 @@ const ProductCard = ({ product }) => {
                 id: parseInt(product.id),
                 quantity: 1,
                 title: product.title,
-                image: ThumbnailUrl(product.image),
+                image: product.image,
                 price: product.price
               }
             });
@@ -41,7 +67,7 @@ const ProductCard = ({ product }) => {
           В корзину
         </button>
       </div>
-    </div>
+    </animated.div>
   );
 };
 

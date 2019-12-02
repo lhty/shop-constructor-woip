@@ -8,6 +8,7 @@
     "axios": "^0.19.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
+    "lodash-es": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-apollo-hooks": "^0.5.0",
@@ -15,9 +16,9 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "react-sortablejs": "^1.5.1",
-    "react-spring": "9.0.0-beta.34",
-    "react-use-gesture": "latest",
-    "sortablejs": "^1.10.1"
+    "sortablejs": "^1.10.1",
+    "react-spring": "9.0.0-beta.33",
+    "react-use-gesture": "6.0.14"
   },
   "scripts": {
     "start": "set PORT=80 && react-scripts start",

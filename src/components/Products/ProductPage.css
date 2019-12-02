@@ -76,13 +76,13 @@
 }
 .product-page-container label {
   position: absolute;
-  bottom: -15px;
+  bottom: 5px;
   right: 20px;
-  font-size: 40px;
+  font-size: 20px;
   font-weight: bold;
-  color: #4f2202;
-  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
-    0px 0px 0px rgba(46, 11, 1, 0.71);
+  color: #853a04;
+  text-shadow: 1px 2px 0px rgba(118, 62, 46, 0.32),
+    0px 0px 0px rgba(46, 11, 1, 0.29);
 }
 .product-page-back {
   position: absolute;
