@@ -10,6 +10,8 @@
   background-repeat: no-repeat;
   background-clip: content-box;
   background-size: cover;
+  width: 100%;
+  min-height: 300px;
 }
 .ProductCard-title {
   display: none;
@@ -50,4 +52,29 @@
   border-radius: 2px 2px 10px 2px;
   box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
     10px 10px 25px rgba(112, 124, 151, 0.05);
+}
+.ProductCard-placeholder {
+  position: absolute;
+  /* background: linear-gradient(90.13deg, #ffdcc8 0.04%, #f7d1bd 99.97%); */
+  background: linear-gradient(90deg, #f5ddd0e5, #ffffff71, #f7d1bd8a);
+  border: 5px solid #fdf0e63b;
+  background-size: 400% 400%;
+  height: 100%;
+  width: 100%;
+  border-radius: 2px 2px 10px 2px;
+  box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
+    10px 10px 25px rgba(112, 124, 151, 0.05);
+  z-index: 10000;
+  animation: gradientBG 3s ease infinite;
+}
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 0%;
+  }
+  80% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }

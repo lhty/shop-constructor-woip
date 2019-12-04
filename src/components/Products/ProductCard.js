@@ -20,11 +20,8 @@ const ProductCard = ({ product }) => {
   // backgroundImage: `url(${ThumbnailUrl(product.image)})`
 
   return (
-    <animated.div
-      style={loadingStyle}
-      key={product.id}
-      className="ProductCard-wrapper"
-    >
+    <div key={product.id} className="ProductCard-wrapper">
+      {(!product || loading) && <div className="ProductCard-placeholder"></div>}
       <Link to={product.id + "/" + product.title}>
         <animated.img
           style={loadingStyle}
@@ -48,26 +45,28 @@ const ProductCard = ({ product }) => {
         />
       </Link> */}
       </Link>
-      <div className="hover-buttons">
-        <button
-          className="hbutton"
-          onClick={() => {
-            cartDispath({
-              type: "CART_ADD",
-              payload: {
-                id: parseInt(product.id),
-                quantity: 1,
-                title: product.title,
-                image: product.image,
-                price: product.price
-              }
-            });
-          }}
-        >
-          В корзину
-        </button>
-      </div>
-    </animated.div>
+      {product && !loading && (
+        <div className="hover-buttons">
+          <button
+            className="hbutton"
+            onClick={() => {
+              cartDispath({
+                type: "CART_ADD",
+                payload: {
+                  id: parseInt(product.id),
+                  quantity: 1,
+                  title: product.title,
+                  image: product.image,
+                  price: product.price
+                }
+              });
+            }}
+          >
+            В корзину
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

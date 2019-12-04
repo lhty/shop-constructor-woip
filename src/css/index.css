@@ -177,8 +177,10 @@ body {
 }
 @media (max-width: 1200px) {
   .header-title {
-    transform: scale(0.8);
-    margin: 5px;
+    width: 190px;
+  }
+  .Banner-wrapper {
+    margin: 80px 0 15px 0;
   }
   .Banner-wrapper img {
     max-width: 25vw;
@@ -196,6 +198,37 @@ body {
   .ProductList-wrapper {
     flex-flow: column wrap;
   }
+  .auth-page-container {
+    top: 0;
+  }
+  .auth-page-wrapper {
+    margin: 50px 0 0 0;
+  }
+  .auth {
+    top: 5px;
+    width: 40px;
+    height: 40px;
+  }
+  .cart {
+    top: 5px;
+    width: 40px;
+    height: 40px;
+  }
+  .Promo-buttons {
+    top: 55%;
+  }
+}
+@media (min-width: 2100px) {
+  .header {
+    height: 0;
+  }
+  .header-svg {
+    top: 0;
+  }
+  .header-title {
+    top: 15px;
+    width: 290px;
+  }
 }
 @media (max-width: 800px) {
   .wrapper {
@@ -204,6 +237,10 @@ body {
   }
   .header {
     width: 100%;
+  }
+  .header-title {
+    top: 5px;
+    width: 160px;
   }
   .logo-path {
     margin-top: 0;
@@ -232,10 +269,14 @@ body {
     width: 100%;
   }
   .Banner-wrapper {
+    margin: 65px 0 15px 0;
     padding: 0 20px 0 20px;
   }
   .Banner-wrapper img {
     max-width: 40vw;
+  }
+  .Banner-text {
+    margin: 0;
   }
   .Promo-img {
     max-width: 140vw;
@@ -256,7 +297,7 @@ body {
     width: 100%;
   }
   .ProductCard-wrapper {
-    width:80%;
+    width: 80%;
   }
   .Constructor-wrapper {
     padding-top: 100px;

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
 import { API_URL } from "../../config";
+import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 import { useInterval } from "../Providers/Hooks/useInterval";
-import Spinner from "../Assets/Spinner";
 
-import { useSpring, config, animated } from "react-spring";
+import { useSpring, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
 import border from "../../img/promoborder.svg";
@@ -27,9 +27,8 @@ const Promo = () => {
   }, 35000);
 
   const [{ x, opacity, scale }, set] = useSpring(() => ({
-    opacity: 1,
-    scale: 1,
-    config: config.gentle
+    to: { opacity: 1, scale: 1 },
+    config: { duration: 250 }
   }));
   const bind = useDrag(
     ({
@@ -42,13 +41,13 @@ const Promo = () => {
       velocity,
       offset: [Xoff]
     }) => {
-      if (Xdir < 0 && distance > 250) {
+      if (Xdir < 0 && velocity > 0.99 && distance > 300) {
         setTimeout(
           () => setIndex(index < pages.length - 1 ? index + 1 : 0),
           300
         );
       }
-      if (Xdir > 0 && distance > 250) {
+      if (Xdir > 0 && velocity > 0.99 && distance > 300) {
         setTimeout(
           () => setIndex(index === 0 ? pages.length - 1 : index - 1),
           300
@@ -57,14 +56,19 @@ const Promo = () => {
       set([
         {
           x: down
-            ? mx
+            ? distance < 50
+              ? 0
+              : mx * velocity
             : set({
-                to: [
-                  { opacity: 0, scale: 1.5 },
-                  { opacity: 1, x: 0, scale: 1 }
-                ]
+                to: async next => {
+                  await next({ opacity: distance < 300 ? 1 : 0 });
+                  distance > 300 &&
+                    (await next({ x: Xdir < 0 ? 3000 : -3000 }));
+                  await next({ opacity: 1 });
+                  await next({ x: 0 });
+                }
               }),
-          scale: down ? (distance > 150 ? 0.3 : 1.2) : 1
+          scale: down ? 1.05 : 1
         }
       ]);
     }
@@ -91,17 +95,13 @@ const Promo = () => {
             ></button>
           </div>
         )}
-        {loading ? (
-          <Spinner />
-        ) : (
-          <animated.div {...bind()} style={{ x, opacity, scale }}>
-            <Banner
-              banner={pages[index]}
-              collapse={collapse}
-              setCollapse={setCollapse}
-            />
-          </animated.div>
-        )}
+        <animated.div {...bind()} style={{ x, opacity, scale }}>
+          <Banner
+            banner={pages[index]}
+            collapse={collapse}
+            setCollapse={setCollapse}
+          />
+        </animated.div>
       </section>
       <img className="Promo-bottom" src={border} alt="" />
     </>
@@ -111,11 +111,11 @@ const Promo = () => {
 const Banner = ({ banner, collapse, setCollapse }) => {
   return (
     <>
-      {banner ? (
+      {banner && (
         <div className="Banner-wrapper">
           <div className="Banner-text">
             <h1>{banner.title}</h1>
-            {/* <p onClick={() => setCollapse(!collapse)}> */}
+
             <p>
               {!collapse
                 ? banner.description.length > 200 &&
@@ -123,17 +123,13 @@ const Banner = ({ banner, collapse, setCollapse }) => {
                 : banner.description}
             </p>
           </div>
-          {collapse && banner.promo_banners[0] && (
-            <img
-              className="Banner-img"
-              src={`${API_URL}${banner.promo_banners[0].url}`}
-              alt=""
-              draggable="false"
-            ></img>
-          )}
+          {/* <img
+            className="Banner-img"
+            src={ThumbnailUrl(banner.promo_banners)}
+            alt=""
+            draggable="false"
+          ></img> */}
         </div>
-      ) : (
-        <Spinner />
       )}
     </>
   );

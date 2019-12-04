@@ -9,7 +9,6 @@ import React, {
 import { Route, Switch } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
-import Spinner from "../Assets/Spinner";
 import ProductPage from "./ProductPage";
 import ProductCard from "./ProductCard";
 import Constructor from "../Constructor/Constructor";
@@ -183,17 +182,18 @@ const Bundles = () => {
         </div>
       </div>
       <div className="ProductList-bundles-list">
-        {loading || error ? (
-          <Spinner />
-        ) : (
-          productsort.map(
-            (product, index) =>
-              index >= sortstate.offset &&
-              index < sortstate.offset + _limit && (
-                <ProductCard key={product.id} product={product} />
-              )
-          )
-        )}
+        {loading || error
+          ? [...Array(_limit).fill(false)].map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))
+          : productsort.map(
+              (product, index) =>
+                index >= sortstate.offset &&
+                index < sortstate.offset + _limit && (
+                  <ProductCard key={product.id} product={product} />
+                )
+            )}
+        {/* )} */}
       </div>
       <div className="ProductList-bundles-pagination">
         {sortstate.page >= 10 && (

@@ -51,8 +51,7 @@
   left: 0;
 }
 .product-page-left {
-  margin: 25px 25px 0px 0px;
-  width: 35%;
+  width: 50%;
   overflow: hidden;
   border-radius: 0 10px 10px 0;
   box-shadow: 8px 17px 15px -16px rgba(129, 52, 11, 0.67);
@@ -60,8 +59,8 @@
 .product-page-right {
   display: flex;
   flex-flow: column wrap;
-  padding: 25px 0 0 0;
-  width: 60%;
+  padding: 0 25px 25px 25px;
+  width: 50%;
 }
 .product-page-right h1 {
   margin-bottom: 25px;

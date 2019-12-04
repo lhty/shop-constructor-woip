@@ -6,6 +6,8 @@ import Userphoto from "../Auth/Elements/Userphoto";
 import AuthPage from "../Auth/AuthPage";
 import { UserContext } from "../Providers/UserProvider";
 
+// import { useSpring, animated } from "react-spring";
+
 import title from "../../img/title.svg";
 import "./Header.css";
 
@@ -16,6 +18,8 @@ export default function Header({ match: { url } }) {
   useEffect(() => {
     token && !user.online && RetrieveLogin(token);
   }, [user, token, RetrieveLogin]);
+
+  // const props = useSpring({ x: 1000, from: { x: 0 } });
 
   return (
     <>
@@ -39,9 +43,16 @@ export default function Header({ match: { url } }) {
           </Link>
           <Cart />
         </div>
-        {/* <svg viewBox="0 0 1920 99" preserveAspectRatio="none">
+        <svg
+          className="header-svg"
+          viewBox="0 0 1920 99"
+          preserveAspectRatio="none"
+        >
           <g filter="url(#filter0_d)">
-<path className="header-svg" d="M1920 0H0V63.2565C0 63.2565 304.074 18.3832 499.5 26.5C667.167 33.4639 757.224 83.0336 925 86.5C1121.62 90.5624 1228.38 30.8171 1425 26.5C1618.8 22.2449 1920 63.2565 1920 63.2565V0Z" fill="url(#paint0_linear)"/>
+            <path
+              d="M1920 0H0V63.2565C0 63.2565 304.074 18.3832 499.5 26.5C667.167 33.4639 757.224 83.0336 925 86.5C1121.62 90.5624 1228.38 30.8171 1425 26.5C1618.8 22.2449 1920 63.2565 1920 63.2565V0Z"
+              fill="url(#paint0_linear)"
+            />
           </g>
           <defs>
             <filter
@@ -89,7 +100,7 @@ export default function Header({ match: { url } }) {
               <stop offset="0.907011" stopColor="#F2EBE4" />
             </linearGradient>
           </defs>
-        </svg> */}
+        </svg>
       </section>
       {active.auth && <AuthPage user={user} />}
       {active.cart && <CartList url={url} />}
