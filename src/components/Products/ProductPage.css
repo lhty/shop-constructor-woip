@@ -54,7 +54,6 @@
   width: 50%;
   overflow: hidden;
   border-radius: 0 10px 10px 0;
-  box-shadow: 8px 17px 15px -16px rgba(129, 52, 11, 0.67);
 }
 .product-page-right {
   display: flex;

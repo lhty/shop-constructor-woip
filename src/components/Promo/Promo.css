@@ -29,8 +29,8 @@
   opacity: 0.5;
 }
 .Banner-text {
-  margin-left: 70px;
-  width: 50%;
+  margin: 0 50px 0 50px;
+  /* width: 50%; */
   align-self: center;
   background-color: #ffc19f3b;
   border-radius: 15px;

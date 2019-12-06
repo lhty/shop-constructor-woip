@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Context } from '../Providers/Provider';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { Context } from "../Providers/Provider";
+import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 
-import './CartList.css';
+import "./CartList.css";
 
 const CartList = ({ url }) => {
   const { cartDispath, cart } = useContext(Context);
@@ -14,7 +15,11 @@ const CartList = ({ url }) => {
           className="cart-element-description"
           to={{ pathname: `${url}${item.id}/${item.title}` }}
         >
-          <img className="cart-element-img" src={item.image} alt=""></img>
+          <img
+            className="cart-element-img"
+            src={ThumbnailUrl(item.image)}
+            alt=""
+          ></img>
           <p>{item.title}</p>
         </Link>
         <label className="cart-element-quantity">
@@ -22,7 +27,7 @@ const CartList = ({ url }) => {
             className="action remove"
             onClick={() => {
               cartDispath({
-                type: 'CART_REMOVE',
+                type: "CART_REMOVE",
                 id: item.id,
                 quantity: item.quantity
               });
@@ -35,7 +40,7 @@ const CartList = ({ url }) => {
             className="action add"
             onClick={() => {
               cartDispath({
-                type: 'CART_ADD',
+                type: "CART_ADD",
                 payload: {
                   id: item.id,
                   quantity: item.quantity,
@@ -59,7 +64,7 @@ const CartList = ({ url }) => {
         <div className="cart-list-checkout">
           <button className="cart-list-proceed">Продолжить</button>
           <h1 className="cart-list-overallprice">
-            {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}{' '}
+            {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}{" "}
             руб
           </h1>
         </div>

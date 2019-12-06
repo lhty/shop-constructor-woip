@@ -5,11 +5,11 @@
   color: #4f2202;
   overflow: hidden;
   border: 5px solid #fdf0e63b;
-  max-width: 400px;
   box-shadow: -14px 16px 25px -13px rgb(154, 121, 93);
   background-repeat: no-repeat;
   background-clip: content-box;
   background-size: cover;
+  max-width: 400px;
   width: 100%;
   min-height: 300px;
 }

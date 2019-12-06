@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header/Header";
 import Staticinfo from "./StaticInfo/StaticInfo";
 import Promo from "./Promo/Promo";
@@ -8,13 +8,23 @@ import ProductList from "./Products/ProductList";
 import UserProvider from "./Providers/UserProvider";
 
 const Layout = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [width, setWidth]);
   return (
     <div className="wrapper">
       <UserProvider>
         <Route component={Header} />
-        <Promo />
-        <Staticinfo />
-        <ProductList />
+        <Promo ScreenWidth={width} />
+        {width > 1200 && <Staticinfo />}
+        <ProductList ScreenWidth={width} />
       </UserProvider>
       <Footer />
     </div>

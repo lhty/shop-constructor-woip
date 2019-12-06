@@ -11,7 +11,7 @@ import { useDrag } from "react-use-gesture";
 import border from "../../img/promoborder.svg";
 import "./Promo.css";
 
-const Promo = () => {
+const Promo = ({ ScreenWidth }) => {
   const { data, error, loading } = useQuery(PROMO_QUERY);
   const [pages, setPages] = useState([]);
   const [index, setIndex] = useState(0);
@@ -23,54 +23,42 @@ const Promo = () => {
   const [collapse, setCollapse] = useState(false);
 
   useInterval(() => {
-    if (!collapse) setIndex(index === pages.length - 1 ? 0 : index + 1);
+    if (!collapse) {
+      set({
+        to: [
+          { scale: 0.5, opacity: 0 },
+          { scale: 1, opacity: 1 }
+        ]
+      });
+      setIndex(index === pages.length - 1 ? 0 : index + 1);
+    }
   }, 35000);
 
   const [{ x, opacity, scale }, set] = useSpring(() => ({
-    to: { opacity: 1, scale: 1 },
-    config: { duration: 250 }
+    from: { x: ScreenWidth, opacity: 0, scale: 0.95 },
+    opacity: 1,
+    x: 0,
+    config: { mass: 1, tension: 300, friction: 20 }
   }));
   const bind = useDrag(
     ({
+      reverse,
+      reset,
+      cancel,
       down,
       movement: [mx],
-      opacity,
-      scale,
-      distance,
+      delta: [dx, dy],
       direction: [Xdir],
-      velocity,
       offset: [Xoff]
     }) => {
-      if (Xdir < 0 && velocity > 0.99 && distance > 300) {
-        setTimeout(
-          () => setIndex(index < pages.length - 1 ? index + 1 : 0),
-          300
-        );
-      }
-      if (Xdir > 0 && velocity > 0.99 && distance > 300) {
-        setTimeout(
-          () => setIndex(index === 0 ? pages.length - 1 : index - 1),
-          300
-        );
-      }
-      set([
-        {
-          x: down
-            ? distance < 50
-              ? 0
-              : mx * velocity
-            : set({
-                to: async next => {
-                  await next({ opacity: distance < 300 ? 1 : 0 });
-                  distance > 300 &&
-                    (await next({ x: Xdir < 0 ? 3000 : -3000 }));
-                  await next({ opacity: 1 });
-                  await next({ x: 0 });
-                }
-              }),
-          scale: down ? 1.05 : 1
-        }
-      ]);
+      down && Math.abs(mx) > ScreenWidth / 10
+        ? Xdir > 0
+          ? cancel(setIndex(index === 0 ? pages.length - 1 : index - 1))
+          : cancel(setIndex(index < pages.length - 1 ? index + 1 : 0))
+        : set({
+            opacity: down && Math.abs(mx) > ScreenWidth / 5 ? 0 : 1,
+            scale: down ? 1.05 : 1
+          });
     }
   );
 
@@ -82,16 +70,28 @@ const Promo = () => {
             <button
               className="Promo-button prev"
               type="button"
-              onClick={() =>
-                setIndex(index === 0 ? pages.length - 1 : index - 1)
-              }
+              onClick={() => {
+                set({
+                  to: [
+                    { scale: 0.5, opacity: 0 },
+                    { scale: 1, opacity: 1 }
+                  ]
+                });
+                setIndex(index === 0 ? pages.length - 1 : index - 1);
+              }}
             ></button>
             <button
               className="Promo-button"
               type="button"
-              onClick={() =>
-                setIndex(index === pages.length - 1 ? 0 : index + 1)
-              }
+              onClick={() => {
+                set({
+                  to: [
+                    { scale: 0.5, opacity: 0 },
+                    { scale: 1, opacity: 1 }
+                  ]
+                });
+                setIndex(index === pages.length - 1 ? 0 : index + 1);
+              }}
             ></button>
           </div>
         )}

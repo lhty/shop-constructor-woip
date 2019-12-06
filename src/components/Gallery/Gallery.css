@@ -4,6 +4,7 @@
   width: 100%;
 }
 .single-img {
+  width: 100%;
   box-shadow: -3px 7px 16px -16px rgba(0, 0, 0, 0.75);
 }
 .multi-img {

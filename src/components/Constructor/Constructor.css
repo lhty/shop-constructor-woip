@@ -22,7 +22,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 25px;
+  padding: 25px 0 25px 25px;
   border-radius: 25px 0px 0px 10px;
   border-top: 1px dashed #83390447;
   border-left: 1px dashed #83390430;
@@ -47,6 +47,25 @@
   width: 100%;
   height: 100%;
   justify-content: center;
+}
+.boxselector-slot {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  padding: 5px 15px 5px 50px;
+  color: #87807d;
+  box-shadow: -5px 3px 35px rgba(255, 190, 155, 0.03),
+    -7px 4px 25px rgba(255, 206, 180, 0.04);
+  background: linear-gradient(
+    89.97deg,
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
+  );
+  white-space: pre;
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+  letter-spacing: -0.5px;
+  overflow: hidden;
 }
 .slot-wrapper {
   position: relative;
@@ -117,6 +136,7 @@
   align-items: center;
   transition: 0.4s ease;
   font-size: 30px;
+  max-width: 100px;
   text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
     0px 0px 0px rgba(46, 11, 1, 0.71);
 }
@@ -169,8 +189,8 @@
   border-radius: 25px 0 0 25px;
   background: linear-gradient(
     89.97deg,
-    #ffbb964f 0.01%,
-    rgba(255, 220, 201, 0) 99.99%
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
   );
 }
 .Constructor-stage img {
@@ -217,7 +237,7 @@
 .Constructor-stage-info {
   height: 50px;
   padding: 10px 10px 10px 0;
-  font-size: 10px;
+  font-size: 1rem;
   width: 100%;
 }
 .item-container {

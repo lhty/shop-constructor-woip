@@ -21,20 +21,34 @@ import sortsize from "../../img/sort-bypsize.svg";
 import prodlistsvg from "../../img/productlisttop.svg";
 import "./ProductList.css";
 
-const ProductList = () => {
+const ProductList = ({ ScreenWidth }) => {
   const [size, setSize] = useState();
   const _constructorref = useRef(null);
   const constructorScroll = () =>
-    window.innerWidth < 1200 &&
+    ScreenWidth < 1200 &&
     window.scrollTo(0, _constructorref.current.offsetTop * 2);
 
   const stylePropsLeft = useSpring({
     config: { mass: 1, tension: 280, friction: 40 },
-    width: window.innerWidth > 1200 ? (size ? `50%` : `85%`) : `100%`
+    width:
+      ScreenWidth > 1200
+        ? size
+          ? `50%`
+          : ScreenWidth > 1700
+          ? `85%`
+          : `80%`
+        : `100%`
   });
   const stylePropsRight = useSpring({
     config: { mass: 1, tension: 280, friction: 60 },
-    width: window.innerWidth > 1200 ? (size ? `50%` : `15%`) : `100%`
+    width:
+      ScreenWidth > 1200
+        ? size
+          ? `50%`
+          : ScreenWidth > 1700
+          ? `15%`
+          : `20%`
+        : `100%`
   });
 
   return (
@@ -45,7 +59,16 @@ const ProductList = () => {
         <animated.div style={stylePropsLeft}>
           <div className="ProductList-bundles">
             <Switch>
-              <Route exact path="/" component={Bundles} />} />
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <Bundles
+                    {...props}
+                    ScreenWidth={size ? ScreenWidth / 2 : (ScreenWidth * 3) / 4}
+                  />
+                )}
+              />
               <Route
                 exact
                 path="/:id/:title"
@@ -64,7 +87,7 @@ const ProductList = () => {
   );
 };
 
-const Bundles = () => {
+const Bundles = ({ ScreenWidth }) => {
   const { sortstate, setSortstate, MakeBundle } = useContext(Context);
   function sortReducer(state, action) {
     switch (action.type) {
@@ -123,7 +146,15 @@ const Bundles = () => {
     });
   }, [sortstate, productsort]);
 
-  const _limit = window.innerWidth < 1200 ? 5 : sortstate.limit;
+  const _limit =
+    ScreenWidth <= 1200
+      ? 4
+      : ScreenWidth <= 1600
+      ? 9
+      : ScreenWidth <= 1920
+      ? 8
+      : 15;
+
   const _pageQuantity = Math.ceil(productsort.length / _limit);
   return (
     <>
@@ -183,14 +214,22 @@ const Bundles = () => {
       </div>
       <div className="ProductList-bundles-list">
         {loading || error
-          ? [...Array(_limit).fill(false)].map((product, index) => (
-              <ProductCard key={index} product={product} />
+          ? [...Array(9).fill(false)].map((product, index) => (
+              <ProductCard
+                ScreenWidth={ScreenWidth}
+                key={index}
+                product={product}
+              />
             ))
           : productsort.map(
               (product, index) =>
                 index >= sortstate.offset &&
                 index < sortstate.offset + _limit && (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    ScreenWidth={ScreenWidth}
+                  />
                 )
             )}
         {/* )} */}

@@ -1,7 +1,6 @@
 import React, { useReducer, useState } from "react";
 import { ThumbnailUrl, ImgUrl } from "./ThumbnailUrls";
 import { CartReducer } from "./Reducers/CartReducers";
-import { bundlesLimit } from "../../config";
 
 export const Context = React.createContext();
 
@@ -11,7 +10,6 @@ const Provider = props => {
   const [sortstate, setSortstate] = useState({
     byprice: null,
     bysize: null,
-    limit: bundlesLimit,
     offset: 0,
     page: 0
   });

@@ -242,12 +242,7 @@ const BoxSelector = ({ sizes }) => {
     <div className="boxselector-wrapper">
       {sizes.map((size, i) => (
         <div
-          style={{
-            padding: `5px`,
-            margin: `10px`,
-            fontSize: `13px`
-          }}
-          className="slot-wrapper"
+          className="boxselector-slot"
           onClick={() => {
             let _id =
               new Date().getTime() + Math.floor(Math.random(size.countmin));
@@ -273,7 +268,10 @@ const BoxSelector = ({ sizes }) => {
           }}
           key={i}
         >
-          Коробка {size.shape} {size.countmin} шт.
+          {console.log(size)}
+          <p>Форма : {size.shape}</p>
+          <p>Вместимость : {size.countmin} шт.</p>
+          <p>Тип : {size.type}</p>
         </div>
       ))}
     </div>
@@ -351,7 +349,7 @@ const Box = () => {
           </>
         )}
       </div>
-      {size < custom.proportion.countmax && !compose && (
+      {!details && size < custom.proportion.countmax && !compose && (
         <div className="expand-wrapper">{_expandableSlots}</div>
       )}
     </>

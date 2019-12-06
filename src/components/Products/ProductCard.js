@@ -7,7 +7,7 @@ import { useSpring, animated } from "react-spring";
 
 import "./ProductCard.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, ScreenWidth }) => {
   const { cartDispath } = useContext(Context);
 
   const [loading, setLoading] = useState(true);
