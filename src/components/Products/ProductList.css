@@ -12,7 +12,6 @@
     #f3ebe5 99.95%
   );
   padding-bottom: 50px;
-  margin-bottom: 100px;
   min-height: 100vh;
 }
 .ProductList-bundles {
@@ -93,7 +92,7 @@
   position: relative;
   font-size: 15px;
   line-height: 46px;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.04em;
 }
 .sort-by :first-child {
   margin-left: 3px;

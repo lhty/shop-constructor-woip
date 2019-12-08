@@ -25,13 +25,13 @@ const ProductList = ({ ScreenWidth }) => {
   const [size, setSize] = useState();
   const _constructorref = useRef(null);
   const constructorScroll = () =>
-    ScreenWidth < 1200 &&
+    ScreenWidth < 1320 &&
     window.scrollTo(0, _constructorref.current.offsetTop * 2);
 
   const stylePropsLeft = useSpring({
     config: { mass: 1, tension: 280, friction: 40 },
     width:
-      ScreenWidth > 1200
+      ScreenWidth > 1320
         ? size
           ? `50%`
           : ScreenWidth > 1700
@@ -42,7 +42,7 @@ const ProductList = ({ ScreenWidth }) => {
   const stylePropsRight = useSpring({
     config: { mass: 1, tension: 280, friction: 60 },
     width:
-      ScreenWidth > 1200
+      ScreenWidth > 1320
         ? size
           ? `50%`
           : ScreenWidth > 1700

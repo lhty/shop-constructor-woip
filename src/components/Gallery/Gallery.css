@@ -10,6 +10,7 @@
 .multi-img {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 }
 .multi-img :first-child {
   width: 100%;

@@ -135,9 +135,6 @@ body {
     transform: none;
   }
 }
-.bubble {
-  animation: pulse 0.3s 0.5s ease-out;
-}
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -175,12 +172,12 @@ body {
     transform: translate3d(100%, 0, 0);
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1320px) {
   .header-title {
     width: 190px;
   }
   .Banner-wrapper {
-    margin: 80px 0 15px 0;
+    padding: 75px 25px 0px 25px;
   }
   .Banner-wrapper img {
     max-width: 25vw;
@@ -216,9 +213,6 @@ body {
     top: 5px;
     width: 40px;
     height: 40px;
-  }
-  .Promo-buttons {
-    top: 55%;
   }
   .Constructor-wrapper {
     padding-top: 100px;
@@ -281,14 +275,17 @@ body {
     width: 100%;
   }
   .Banner-wrapper {
-    margin: 65px 0 15px 0;
-    padding: 0 20px 0 20px;
+    padding: 65px 25px 0px 25px;
   }
   .Banner-wrapper img {
     max-width: 40vw;
   }
   .Banner-text {
     margin: 0;
+    width: 100%;
+  }
+  .Promo-content {
+    padding: 60px 25px 0px 25px;
   }
   .Promo-img {
     max-width: 140vw;

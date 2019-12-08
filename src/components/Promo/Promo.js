@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
-import { API_URL } from "../../config";
-import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 import { useInterval } from "../Providers/Hooks/useInterval";
+import Gallery from "../Gallery/Gallery";
+import Spinner from "../Assets/Spinner";
 
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, to } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
 import border from "../../img/promoborder.svg";
@@ -34,102 +34,137 @@ const Promo = ({ ScreenWidth }) => {
     }
   }, 35000);
 
-  const [{ x, opacity, scale }, set] = useSpring(() => ({
-    from: { x: ScreenWidth, opacity: 0, scale: 0.95 },
+  const [{ offsetY }] = useSpring(() => ({
+    from: { offsetY: -200 },
+    offsetY: 0,
+    config: { mass: 1, tension: 180, friction: 12 }
+  }));
+
+  const [{ x, y, opacity }, set] = useSpring(() => ({
     opacity: 1,
+    y: 0,
     x: 0,
-    config: { mass: 1, tension: 300, friction: 20 }
+    config: { mass: 1, tension: 50, friction: 12 }
   }));
   const bind = useDrag(
     ({
-      reverse,
-      reset,
       cancel,
       down,
-      movement: [mx],
-      delta: [dx, dy],
-      direction: [Xdir],
-      offset: [Xoff]
+      direction: [Xdir, Ydir],
+      movement: [mx, my],
+      vxvy: [vx, vy]
     }) => {
-      down && Math.abs(mx) > ScreenWidth / 10
-        ? Xdir > 0
-          ? cancel(setIndex(index === 0 ? pages.length - 1 : index - 1))
-          : cancel(setIndex(index < pages.length - 1 ? index + 1 : 0))
-        : set({
-            opacity: down && Math.abs(mx) > ScreenWidth / 5 ? 0 : 1,
-            scale: down ? 1.05 : 1
-          });
+      set({
+        x:
+          my < 10 && down
+            ? Math.abs(mx) > ScreenWidth / 6
+              ? Xdir > 0
+                ? ScreenWidth
+                : -ScreenWidth
+              : mx + vx
+            : 0,
+        y: mx < 5 && down && my > 0 ? my : 0
+      });
+      if (Math.abs(mx) > ScreenWidth / 6)
+        cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
+      if (Math.abs(my) > ScreenWidth / 20) cancel(setCollapse(!collapse));
     }
   );
 
+  const handleChange = direction => {
+    set({
+      opacity: 0
+    });
+    setTimeout(() => {
+      set({ x: 0, opacity: 1 });
+      setIndex(
+        direction
+          ? index === pages.length - 1
+            ? 0
+            : index + 1
+          : index === 0
+          ? pages.length - 1
+          : index - 1
+      );
+    }, 1200);
+  };
+
   return (
-    <>
+    <animated.div
+      style={{
+        transform: to(offsetY, off => `translateY(${off}px)`),
+        position: `relative`
+      }}
+    >
       <section className="Promo-container">
         {!collapse && (
           <div className="Promo-buttons">
             <button
               className="Promo-button prev"
               type="button"
-              onClick={() => {
-                set({
-                  to: [
-                    { scale: 0.5, opacity: 0 },
-                    { scale: 1, opacity: 1 }
-                  ]
-                });
-                setIndex(index === 0 ? pages.length - 1 : index - 1);
-              }}
+              onClick={() => handleChange(false)}
             ></button>
             <button
               className="Promo-button"
               type="button"
-              onClick={() => {
-                set({
-                  to: [
-                    { scale: 0.5, opacity: 0 },
-                    { scale: 1, opacity: 1 }
-                  ]
-                });
-                setIndex(index === pages.length - 1 ? 0 : index + 1);
-              }}
+              onClick={() => handleChange(true)}
             ></button>
           </div>
         )}
-        <animated.div {...bind()} style={{ x, opacity, scale }}>
+        {!collapse ? (
+          <animated.div
+            className="Promo-content"
+            {...bind()}
+            style={{ x, y, opacity }}
+          >
+            {!pages[index] ? (
+              <Spinner />
+            ) : (
+              <div className="Banner-text">
+                <h1>{pages[index].title}</h1>
+                <p>
+                  {pages[index].description.length > 200 &&
+                    pages[index].description.substring(0, 200) + " ..."}
+                </p>
+              </div>
+            )}
+          </animated.div>
+        ) : (
           <Banner
             banner={pages[index]}
             collapse={collapse}
             setCollapse={setCollapse}
           />
-        </animated.div>
+        )}
       </section>
-      <img className="Promo-bottom" src={border} alt="" />
-    </>
+      <button
+        className="Promo-expand"
+        style={{ transform: `rotate(${collapse ? `-90` : `90`}deg)` }}
+        type="button"
+        onClick={() => {
+          setCollapse(!collapse);
+        }}
+      ></button>
+      <img src={border} alt="" />
+    </animated.div>
   );
 };
 
-const Banner = ({ banner, collapse, setCollapse }) => {
+const Banner = ({ banner, collapse }) => {
+  const props = useSpring({
+    from: { opacity: 0, scale: 0.95 },
+    opacity: 1,
+    scale: 1
+  });
+
   return (
     <>
       {banner && (
-        <div className="Banner-wrapper">
-          <div className="Banner-text">
-            <h1>{banner.title}</h1>
-
-            <p>
-              {!collapse
-                ? banner.description.length > 200 &&
-                  banner.description.substring(0, 200) + " ..."
-                : banner.description}
-            </p>
-          </div>
-          {/* <img
-            className="Banner-img"
-            src={ThumbnailUrl(banner.promo_banners)}
-            alt=""
-            draggable="false"
-          ></img> */}
-        </div>
+        <animated.div style={props} className="Banner-wrapper">
+          <h1>{banner.title}</h1>
+          <p>{banner.description}</p>
+          <Gallery image={banner.promo_banners} />
+        </animated.div>
       )}
     </>
   );

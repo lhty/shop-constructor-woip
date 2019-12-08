@@ -1,7 +1,7 @@
-const CART_ADD = 'CART_ADD';
-const CART_REMOVE = 'CART_REMOVE';
-const CART_RETRIVE = 'CART_RETRIVE';
-const CART_CLEAR = 'CART_CLEAR';
+const CART_ADD = "CART_ADD";
+const CART_REMOVE = "CART_REMOVE";
+const CART_RETRIVE = "CART_RETRIVE";
+const CART_CLEAR = "CART_CLEAR";
 
 export const CartReducer = (cart, action) => {
   switch (action.type) {
@@ -20,7 +20,6 @@ export const CartReducer = (cart, action) => {
           index !== cart.findIndex(obj => obj.id === action.payload.id)
       );
     case CART_REMOVE:
-      localStorage.setItem('cart', JSON.stringify(cart));
       return cart
         .map(obj =>
           obj.id === action.id ? { ...obj, quantity: obj.quantity - 1 } : obj
@@ -29,7 +28,7 @@ export const CartReducer = (cart, action) => {
     case CART_CLEAR:
       return [];
     case CART_RETRIVE:
-      return JSON.parse(localStorage.getItem('cart'));
+      return JSON.parse(localStorage.getItem("cart"));
     default:
       return cart;
   }

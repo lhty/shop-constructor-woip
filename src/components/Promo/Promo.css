@@ -1,11 +1,11 @@
 .Promo-container {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
   overflow: hidden;
-  animation: 1s ease 0s 1 normal none running bounceInDown;
-}
-.Promo-bottom {
-  animation: 1s ease 0s 1 normal none running bounceInDown;
+  min-height: 190px;
 }
 .Promo-banner {
   padding-top: 100px;
@@ -14,28 +14,41 @@
 }
 .Banner-wrapper {
   position: relative;
-  margin: 120px 0 15px 0;
+  padding: 125px 25px 0px 25px;
+
+  background: linear-gradient(
+    179.98deg,
+    #fbf9f85c 0.02%,
+    rgba(255, 255, 255, 0) 60.7%
+  );
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+.Banner-wrapper h1 {
+  margin-bottom: 15px;
+}
+.Banner-wrapper p {
+  margin-bottom: 15px;
+  width: 70%;
 }
 .Banner-wrapper img {
   align-self: center;
   max-width: 18vw;
 }
-.expand {
-  position: absolute;
-  bottom: 0;
-  transform: rotate(90deg);
-}
-.expand label:hover {
-  opacity: 0.5;
-}
 .Banner-text {
-  margin: 0 50px 0 50px;
-  /* width: 50%; */
+  margin: 0 auto;
+  width: 80%;
   align-self: center;
-  background-color: #ffc19f3b;
   border-radius: 15px;
   padding: 15px;
   overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  background-color: #ffc19f3b;
+  border-right: 1px dashed #8339041f;
+  border-left: 1px dashed #83390430;
 }
 .Banner-text p {
   cursor: pointer;
@@ -44,34 +57,22 @@
   width: 50%;
   align-self: flex-end;
 }
-@keyframes animationName {
-  0% {
-    opacity: 0;
-  }
-  5% {
-    opacity: 1;
-  }
-  95% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 .Promo-svg-label {
   width: 100%;
 }
+.Promo-content {
+  cursor: grab;
+  align-self: flex-end;
+  z-index: 10;
+}
 .Promo-buttons {
   position: absolute;
+  top: 125px;
   width: 100%;
-  top: 65%;
+  align-self: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-.Promo-buttons :hover {
-  opacity: 0.5;
 }
 .Promo-button {
   margin: 0 5px 0 0;
@@ -83,9 +84,32 @@
   cursor: pointer;
   background-repeat: no-repeat;
   background-position: center center;
-  z-index: 1;
+  z-index: 11;
   opacity: 0.15;
   transition: 1s ease;
+}
+.Promo-expand {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin: 0 5px 0 0;
+  min-width: 15px;
+  height: 35px;
+  background: url(../../img/arrow.svg);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: 11;
+  opacity: 0.15;
+  transition: 1s ease;
+  position: absolute;
+  left: 50%;
+  transform: rotate(90deg);
+}
+.Promo-buttons :hover {
+  opacity: 1;
 }
 .prev {
   margin: 0 0 0 5px;

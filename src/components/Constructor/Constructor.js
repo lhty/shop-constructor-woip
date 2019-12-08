@@ -268,7 +268,6 @@ const BoxSelector = ({ sizes }) => {
           }}
           key={i}
         >
-          {console.log(size)}
           <p>Форма : {size.shape}</p>
           <p>Вместимость : {size.countmin} шт.</p>
           <p>Тип : {size.type}</p>
