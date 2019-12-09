@@ -56,14 +56,14 @@ const Promo = ({ ScreenWidth }) => {
     }) => {
       set({
         x:
-          my < 10 && down
+          my < 1 && down
             ? Math.abs(mx) > ScreenWidth / 6
               ? Xdir > 0
                 ? ScreenWidth
                 : -ScreenWidth
               : mx + vx
             : 0,
-        y: mx < 5 && down && my > 0 ? my : 0
+        y: mx < 1 && down && my > 0 ? my : 0
       });
       if (Math.abs(mx) > ScreenWidth / 6)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));

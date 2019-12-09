@@ -20,7 +20,7 @@ body {
   font-family: Noto;
   scroll-behavior: smooth;
   background: #f4eae1;
-  background-image: url(../img/splash.svg);
+  /* background-image: url(../img/splash.svg); */
   height: 100%;
   margin-bottom: 1px;
   color: #763e2e;
@@ -46,131 +46,6 @@ body {
 }
 .up {
   transform: rotate(-135deg);
-}
-@keyframes bounceInDown {
-  0% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -3000px, 0);
-  }
-  60% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    opacity: 1;
-    transform: translate3d(0, 25px, 0);
-  }
-  75% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: translate3d(0, -10px, 0);
-  }
-  90% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: translate3d(0, 5px, 0);
-  }
-  100% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: none;
-  }
-}
-@keyframes fadeOutDown {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-  }
-}
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-/* animation: 1s ease 0s 1 normal none running bounceRight; */
-@keyframes bounceRight {
-  0% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  0% {
-    opacity: 0;
-    transform: translate3d(3000px, 0, 0);
-  }
-
-  60% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    opacity: 1;
-    transform: translate3d(-25px, 0, 0);
-  }
-
-  75% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: translate3d(10px, 0, 0);
-  }
-
-  90% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: translate3d(-5px, 0, 0);
-  }
-
-  100% {
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transform: none;
-  }
-}
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.08);
-  }
-  50% {
-    transform: scale(0.98);
-  }
-  55% {
-    transform: scale(1.02);
-  }
-  60% {
-    transform: scale(0.98);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes progress {
-  0% {
-    transform: translate3d(-100%, 0, 0);
-  }
-  100% {
-    transform: translate3d(100%, 0, 0);
-  }
 }
 @media (max-width: 1320px) {
   .header-title {
@@ -242,11 +117,17 @@ body {
     margin: 0 auto;
   }
   .header {
+    border-radius: 0 0 5px 5px;
+    background: #f2ebe4;
     width: 100%;
+    height: 50px;
   }
   .header-title {
     top: 5px;
     width: 160px;
+  }
+  .header-svg {
+    display: none;
   }
   .logo-path {
     margin-top: 0;
@@ -267,12 +148,18 @@ body {
     width: 100%;
     left: 0;
   }
+  .Promo-container {
+    border-radius: 0 0 5px 5px;
+  }
   .Promo-button {
     display: none;
   }
   .Promo-banner {
     padding-top: 50px;
     width: 100%;
+  }
+  #root > div > div > img {
+    display: none;
   }
   .Banner-wrapper {
     padding: 65px 25px 0px 25px;
@@ -283,6 +170,8 @@ body {
   .Banner-text {
     margin: 0;
     width: 100%;
+    border: none;
+    background: none;
   }
   .Promo-content {
     padding: 60px 25px 0px 25px;
@@ -299,16 +188,17 @@ body {
     position: absolute;
     left: 0;
   }
+  .Promo-expand {
+    display: none;
+  }
   .product-page-left {
     width: 100%;
   }
   .product-page-right {
     width: 100%;
   }
-  .ProductCard-wrapper {
-    width: 80%;
-    max-width: 100%;
-    max-height: 100%;
+  .ProductList-bundles-sort {
+    margin: 0;
   }
   .compose-offline p {
     font-size: 2vw;
@@ -316,6 +206,13 @@ body {
   .product-page-left {
     margin: 0;
     border-radius: 0;
+  }
+  .ProductList-topsvg {
+    display: none;
+  }
+  .ProductCard-wrapper {
+    width: 50%;
+    min-height: 200px;
   }
   .boxselector-wrapper {
     flex-flow: column wrap;

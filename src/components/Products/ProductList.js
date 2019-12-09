@@ -214,7 +214,7 @@ const Bundles = ({ ScreenWidth }) => {
       </div>
       <div className="ProductList-bundles-list">
         {loading || error
-          ? [...Array(9).fill(false)].map((product, index) => (
+          ? [...Array(_limit).fill(false)].map((product, index) => (
               <ProductCard
                 ScreenWidth={ScreenWidth}
                 key={index}

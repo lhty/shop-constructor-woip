@@ -10,7 +10,7 @@ import { UserContext } from "../Providers/UserProvider";
 import Sortable from "react-sortablejs";
 import boxsvg from "../../img/constructorBox.svg";
 import sweetssvg from "../../img/constructorSweets.svg";
-import done from "../../img/constructorDone.svg";
+// import done from "../../img/constructorDone.svg";
 import "./Constructor.css";
 
 const ConstructorContext = React.createContext();
@@ -155,7 +155,6 @@ const ProgressBar = ({ size, setSize }) => {
   const {
     custom,
     viewDetails,
-    compose,
     setCompose,
     setslotIndex,
     dispatch
@@ -163,21 +162,16 @@ const ProgressBar = ({ size, setSize }) => {
   return (
     <div className="Constructor-progress">
       <div
+        onClick={() => {
+          dispatch({ type: "CLEAR_BOX" });
+          setslotIndex(-1);
+          viewDetails(false);
+          setCompose(false);
+          setSize(0);
+        }}
         className={custom.set ? "Constructor-stage" : "Constructor-stage empty"}
       >
-        <img
-          onClick={() => {
-            dispatch({ type: "CLEAR_BOX" });
-            setslotIndex(-1);
-            viewDetails(false);
-            setCompose(false);
-            setSize(0);
-          }}
-          src={boxsvg}
-          alt=""
-          draggable="false"
-        />
-
+        <img src={boxsvg} alt="" draggable="false" />
         <div className="Constructor-stage-info">
           {!custom.set ? (
             <p
@@ -201,35 +195,31 @@ const ProgressBar = ({ size, setSize }) => {
       {custom.set && (
         <>
           <div
+            onClick={() => {
+              setslotIndex(-1);
+              setCompose(false);
+              viewDetails(false);
+            }}
             className={
               custom.set && custom.set.filter(obj => obj).length > 0
                 ? "Constructor-stage"
                 : "Constructor-stage empty"
             }
           >
-            <img
-              onClick={() => {
-                setslotIndex(-1);
-                setCompose(false);
-                viewDetails(false);
-              }}
-              src={sweetssvg}
-              alt=""
-              draggable="false"
-            />
+            <img src={sweetssvg} alt="" draggable="false" />
             {custom.set && (
               <p>
                 {custom.set && custom.set.filter(obj => obj).length} / {size}
               </p>
             )}
           </div>
-          <div
+          {/* <div
             className={
               compose ? "Constructor-stage" : "Constructor-stage empty"
             }
           >
             <img src={done} alt="" />
-          </div>
+          </div> */}
         </>
       )}
     </div>
