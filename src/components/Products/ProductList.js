@@ -215,21 +215,13 @@ const Bundles = ({ ScreenWidth }) => {
       <div className="ProductList-bundles-list">
         {loading || error
           ? [...Array(_limit).fill(false)].map((product, index) => (
-              <ProductCard
-                ScreenWidth={ScreenWidth}
-                key={index}
-                product={product}
-              />
+              <ProductCard key={index} product={product} />
             ))
           : productsort.map(
               (product, index) =>
                 index >= sortstate.offset &&
                 index < sortstate.offset + _limit && (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    ScreenWidth={ScreenWidth}
-                  />
+                  <ProductCard key={product.id} product={product} />
                 )
             )}
         {/* )} */}

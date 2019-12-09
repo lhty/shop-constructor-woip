@@ -5,7 +5,7 @@ import { useInterval } from "../Providers/Hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
 import Spinner from "../Assets/Spinner";
 
-import { useSpring, animated, to } from "react-spring";
+import { useSpring, useTransition, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
 import border from "../../img/promoborder.svg";
@@ -34,11 +34,17 @@ const Promo = ({ ScreenWidth }) => {
     }
   }, 35000);
 
-  const [{ offsetY }] = useSpring(() => ({
-    from: { offsetY: -200 },
-    offsetY: 0,
-    config: { mass: 1, tension: 180, friction: 12 }
-  }));
+  const container = useSpring({
+    from: { y: -500 },
+    y: 0,
+    config: { mass: 1, tension: 300, friction: 40 }
+  });
+
+  const transitions = useTransition(collapse, null, {
+    from: { opacity: 0, y: -500, display: `none` },
+    enter: { opacity: 1, y: 0, display: `block` },
+    leave: { opacity: 0, y: -500, display: `none` }
+  });
 
   const [{ x, y, opacity }, set] = useSpring(() => ({
     opacity: 1,
@@ -46,13 +52,34 @@ const Promo = ({ ScreenWidth }) => {
     x: 0,
     config: { mass: 1, tension: 50, friction: 12 }
   }));
+
+  const [prev, setPrev] = useSpring(() => ({
+    transform: `scaleX(-1)`,
+    opacity: 0.15,
+    top: `60%`,
+    left: 0,
+    x: 0
+  }));
+  const [next, setNext] = useSpring(() => ({
+    opacity: 0.15,
+    top: `60%`,
+    right: 0,
+    x: 0
+  }));
+  const [expand, setExpand] = useSpring(() => ({
+    transform: `rotate(90deg)`,
+    opacity: 0.15,
+    right: `50%`,
+    y: 20
+  }));
+
   const bind = useDrag(
     ({
       cancel,
       down,
       direction: [Xdir, Ydir],
       movement: [mx, my],
-      vxvy: [vx, vy]
+      vxvy: [vx]
     }) => {
       set({
         x:
@@ -63,11 +90,40 @@ const Promo = ({ ScreenWidth }) => {
                 : -ScreenWidth
               : mx + vx
             : 0,
-        y: mx < 1 && down && my > 0 ? my : 0
+        y: mx < 1 && down && Ydir > 0 ? my : 0
       });
+      if (down) {
+        return Xdir < 0 && mx < -10
+          ? setPrev({
+              to: [
+                { x: 50, opacity: 1 },
+                { x: 0, opacity: 0.15 }
+              ]
+            })
+          : Xdir > 0 && mx > 10
+          ? setNext({
+              to: [
+                { x: -50, opacity: 1 },
+                { x: 0, opacity: 0.15 }
+              ]
+            })
+          : Ydir > 0 && my > 10
+          ? setExpand({
+              to: [
+                { y: -20, opacity: 1 },
+                {
+                  y: 20,
+                  opacity: 0.15,
+                  transform: `rotate(${collapse ? `90deg` : `-90deg`})`
+                }
+              ]
+            })
+          : null;
+      }
       if (Math.abs(mx) > ScreenWidth / 6)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
-      if (Math.abs(my) > ScreenWidth / 20) cancel(setCollapse(!collapse));
+      if (Math.abs(my) > ScreenWidth / 30 && Ydir > 0)
+        cancel(setCollapse(!collapse));
     }
   );
 
@@ -88,85 +144,58 @@ const Promo = ({ ScreenWidth }) => {
       );
     }, 1200);
   };
-
   return (
-    <animated.div
-      style={{
-        transform: to(offsetY, off => `translateY(${off}px)`),
-        position: `relative`
-      }}
-    >
+    <animated.div style={container}>
       <section className="Promo-container">
-        {!collapse && (
-          <div className="Promo-buttons">
-            <button
-              className="Promo-button prev"
-              type="button"
-              onClick={() => handleChange(false)}
-            ></button>
-            <button
-              className="Promo-button"
-              type="button"
-              onClick={() => handleChange(true)}
-            ></button>
-          </div>
-        )}
-        {!collapse ? (
-          <animated.div
-            className="Promo-content"
-            {...bind()}
-            style={{ x, y, opacity }}
-          >
-            {!pages[index] ? (
-              <Spinner />
-            ) : (
-              <div className="Banner-text">
-                <h1>{pages[index].title}</h1>
-                <p>
-                  {pages[index].description.length > 200 &&
-                    pages[index].description.substring(0, 200) + " ..."}
-                </p>
-              </div>
-            )}
-          </animated.div>
-        ) : (
-          <Banner
-            banner={pages[index]}
-            collapse={collapse}
-            setCollapse={setCollapse}
-          />
-        )}
+        <animated.div
+          style={prev}
+          className="Promo-button"
+          onClick={() => handleChange(false)}
+        />
+        <animated.div
+          className="Promo-content"
+          {...bind()}
+          style={{ x, y, opacity }}
+        >
+          {!pages[index] ? (
+            <Spinner />
+          ) : (
+            transitions.map(({ item, key, props }) =>
+              item ? (
+                <animated.div key={key} style={{ ...props }}>
+                  <div className="Banner-wrapper">
+                    <h1>{pages[index].title}</h1>
+                    <p>{pages[index].description}</p>
+                    <Gallery image={pages[index].promo_banners} />
+                  </div>
+                </animated.div>
+              ) : (
+                <animated.div key={key} style={props} className="Banner-text">
+                  <h1>{pages[index].title}</h1>
+                  <p>
+                    {pages[index].description.length > 200 &&
+                      pages[index].description.substring(0, 200) + " ..."}
+                  </p>
+                </animated.div>
+              )
+            )
+          )}
+        </animated.div>
+        <animated.div
+          style={next}
+          className="Promo-button"
+          onClick={() => handleChange(true)}
+        ></animated.div>
       </section>
-      <button
-        className="Promo-expand"
-        style={{ transform: `rotate(${collapse ? `-90` : `90`}deg)` }}
-        type="button"
+      <animated.div
+        className="Promo-button"
+        style={expand}
         onClick={() => {
           setCollapse(!collapse);
         }}
-      ></button>
+      ></animated.div>
       <img src={border} alt="" />
     </animated.div>
-  );
-};
-
-const Banner = ({ banner, collapse }) => {
-  const props = useSpring({
-    from: { opacity: 0, scale: 0.95 },
-    opacity: 1,
-    scale: 1
-  });
-
-  return (
-    <>
-      {banner && (
-        <animated.div style={props} className="Banner-wrapper">
-          <h1>{banner.title}</h1>
-          <p>{banner.description}</p>
-          <Gallery image={banner.promo_banners} />
-        </animated.div>
-      )}
-    </>
   );
 };
 

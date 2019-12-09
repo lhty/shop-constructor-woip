@@ -6,6 +6,7 @@
   background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
   overflow: hidden;
   min-height: 190px;
+  transition: 2s ease-in-out;
 }
 .Promo-banner {
   padding-top: 100px;
@@ -15,7 +16,6 @@
 .Banner-wrapper {
   position: relative;
   padding: 125px 25px 0px 25px;
-
   background: linear-gradient(
     179.98deg,
     #fbf9f85c 0.02%,
@@ -42,6 +42,7 @@
   width: 80%;
   align-self: center;
   border-radius: 15px;
+  margin-top: 90px;
   padding: 15px;
   overflow: hidden;
   user-select: none;
@@ -62,21 +63,11 @@
 }
 .Promo-content {
   cursor: grab;
-  align-self: flex-end;
   z-index: 10;
 }
-.Promo-buttons {
-  position: absolute;
-  top: 125px;
-  width: 100%;
-  align-self: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 .Promo-button {
-  margin: 0 5px 0 0;
-  min-width: 15px;
+  position: absolute;
+  width: 35px;
   height: 35px;
   background: url(../../img/arrow.svg);
   border: none;
@@ -85,33 +76,10 @@
   background-repeat: no-repeat;
   background-position: center center;
   z-index: 11;
-  opacity: 0.15;
-  transition: 1s ease;
 }
-.Promo-expand {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  margin: 0 5px 0 0;
-  min-width: 15px;
-  height: 35px;
-  background: url(../../img/arrow.svg);
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center center;
-  z-index: 11;
-  opacity: 0.15;
-  transition: 1s ease;
-  position: absolute;
-  left: 50%;
+.expand {
   transform: rotate(90deg);
 }
-.Promo-buttons :hover {
-  opacity: 1;
-}
 .prev {
-  margin: 0 0 0 5px;
   transform: rotate(180deg);
 }

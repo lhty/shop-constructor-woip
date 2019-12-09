@@ -172,7 +172,6 @@
   flex-direction: row;
   padding: 5px 0px 10px 0px;
   justify-content: space-around;
-  animation: 1s ease 0s 1 normal none running slideInLeft;
 }
 .svgicon {
   cursor: pointer;

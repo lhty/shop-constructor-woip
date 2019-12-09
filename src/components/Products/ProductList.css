@@ -1,7 +1,6 @@
 .ProductList-container {
   position: relative;
   z-index: 0;
-  animation: 1.5s ease 0s 1 none running fadeInDown;
 }
 .ProductList-wrapper {
   display: flex;
