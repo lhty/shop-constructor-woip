@@ -47,9 +47,7 @@
   overflow: hidden;
   user-select: none;
   pointer-events: none;
-  background-color: #ffc19f3b;
-  border-right: 1px dashed #8339041f;
-  border-left: 1px dashed #83390430;
+  background: linear-gradient(903deg, #f9cdb570 99.97%, #ffdcc9 0.04%);
 }
 .Banner-text p {
   cursor: pointer;

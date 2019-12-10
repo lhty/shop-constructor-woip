@@ -7,7 +7,7 @@ import { useSpring, animated } from "react-spring";
 
 import "./ProductCard.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, ScreenWidth }) => {
   const { cartDispath } = useContext(Context);
 
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
         <animated.img
           style={loadingStyle}
           className="ProductCard-thumbnail"
-          src={ThumbnailUrl(product.image)}
+          src={ThumbnailUrl(product.image, ScreenWidth < 800 && "sm")}
           alt=""
           onLoad={() => setLoading(false)}
         />

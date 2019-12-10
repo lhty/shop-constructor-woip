@@ -2,7 +2,8 @@
   animation: rotate 2s linear infinite;
   z-index: 2;
   width: 100px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  margin-top: 100%;
   opacity: 0.6;
 }
 .path {

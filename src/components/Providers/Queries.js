@@ -43,6 +43,7 @@ export const PRODUCTS_QUERY = gql`
         price
         discount
         taste
+        shelflife
         letter
         difficult
         size_width
@@ -102,6 +103,7 @@ export const ITEM_QUERY = gql`
       chocolate
       price
       discount
+      shelflife
       construct
       editable
       taste

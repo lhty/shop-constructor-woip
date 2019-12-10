@@ -168,13 +168,14 @@ body {
     max-width: 40vw;
   }
   .Banner-text {
+    padding-top: 70px;
     margin: 0;
     width: 100%;
     border: none;
     background: none;
   }
   .Promo-content {
-    padding: 60px 25px 0px 25px;
+    padding: 0px 0px 25px 0px;
   }
   .Promo-img {
     max-width: 140vw;

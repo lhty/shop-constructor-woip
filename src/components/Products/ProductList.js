@@ -221,7 +221,11 @@ const Bundles = ({ ScreenWidth }) => {
               (product, index) =>
                 index >= sortstate.offset &&
                 index < sortstate.offset + _limit && (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    ScreenWidth={ScreenWidth}
+                  />
                 )
             )}
         {/* )} */}

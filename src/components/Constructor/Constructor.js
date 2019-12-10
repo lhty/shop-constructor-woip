@@ -522,12 +522,17 @@ const Item = () => {
   }
   return (
     <div className="item-container">
-      <div className="buttons">
+      <div className="item-container-buttons">
         {!custom.set[slotIndex] ? (
           <>
-            <button onClick={handleSubmit}>Добавить</button>
+            <button
+              className="item-container-buttons-back"
+              onClick={() => viewDetails(false)}
+            >
+              Назад
+            </button>
             {details.editable || (
-              <>
+              <div className="item-container-buttons-control">
                 <button
                   onClick={() => {
                     setQauntity(quantity === 1 ? 1 : quantity - 1);
@@ -548,8 +553,14 @@ const Item = () => {
                 >
                   +
                 </button>
-              </>
+              </div>
             )}
+            <button
+              className="item-container-buttons-add"
+              onClick={handleSubmit}
+            >
+              Добавить
+            </button>
           </>
         ) : (
           <>
@@ -561,9 +572,7 @@ const Item = () => {
             >
               Назад
             </button>
-            <button className="buttons-remove" onClick={handleRemove}>
-              Удалить
-            </button>
+            <button onClick={handleRemove}>Удалить</button>
           </>
         )}
       </div>
@@ -589,12 +598,16 @@ const Item = () => {
             <Gallery image={details.image} />
           </div>
           <div className="item-container-info-details">
-            <h1>высота:{details.size_height}</h1>
-            <h1>длинна:{details.size_length}</h1>
-            <h1>ширина:{details.size_width}</h1>
-            <h1>вкус:{details.taste}</h1>
-            <h1>вес:{details.weight}</h1>
-            <h1>шоколад:{details.chocolate}</h1>
+            <div className="item-container-info-details-size">
+              <h1>высота : {details.size_height} мм</h1>
+              <h1>длинна : {details.size_length} мм</h1>
+              <h1>ширина : {details.size_width} мм</h1>
+              <h1>вес : {details.weight} грамм</h1>
+            </div>
+            <div className="item-container-info-details-specs">
+              <h1>вкус : {details.taste}</h1>
+              <h1>шоколад : {details.chocolate}</h1>
+            </div>
           </div>
         </div>
       )}
