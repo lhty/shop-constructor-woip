@@ -21,15 +21,15 @@ const ProductCard = ({ product, ScreenWidth }) => {
 
   return (
     <div key={product.id} className="ProductCard-wrapper">
-      {(!product || loading) && <div className="ProductCard-placeholder"></div>}
+      {/* {(!product || loading) && <div className="ProductCard-placeholder"></div>} */}
       <Link to={product.id + "/" + product.title}>
-        <animated.img
-          style={loadingStyle}
+        {/* <animated.img
+          // style={loadingStyle}
           className="ProductCard-thumbnail"
           src={ThumbnailUrl(product.image, ScreenWidth < 800 && "sm")}
           alt=""
-          onLoad={() => setLoading(false)}
-        />
+          // onLoad={() => setLoading(false)}
+        /> */}
         {/* <p className="ProductCard-title">{product.title}</p> */}
         {/* {loading ? (
         <svg style={{ position: "absolute" }} viewBox="0 0 100 100">
@@ -44,6 +44,7 @@ const ProductCard = ({ product, ScreenWidth }) => {
           onLoad={() => setLoading(false)}
         />
       </Link> */}
+        {product.title}
       </Link>
       {product && !loading && (
         <div className="hover-buttons">

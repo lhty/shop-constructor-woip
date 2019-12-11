@@ -63,6 +63,9 @@
   cursor: grab;
   z-index: 10;
 }
+.Promo-container :active {
+  cursor: grabbing;
+}
 .Promo-button {
   position: absolute;
   width: 35px;

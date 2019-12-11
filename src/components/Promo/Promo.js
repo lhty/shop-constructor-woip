@@ -51,7 +51,8 @@ const Promo = ({ ScreenWidth }) => {
     leave: { opacity: 0, y: -500, display: `none` }
   });
 
-  const [{ x, y, opacity }, set] = useSpring(() => ({
+  const [{ x, y, opacity, filter }, set] = useSpring(() => ({
+    filter: `brightness(1)`,
     opacity: 1,
     y: 0,
     x: 0,
@@ -98,7 +99,8 @@ const Promo = ({ ScreenWidth }) => {
                 : -ScreenWidth
               : mx + vx
             : 0,
-        y: mx < 1 && down && Ydir > 0 ? my : 0
+        y: Math.abs(mx) < 5 && down && Ydir > 0 ? my : 0,
+        filter: down ? `brightness(1.05)` : `brightness(1)`
       });
       if (down) {
         setPrev({
@@ -148,9 +150,9 @@ const Promo = ({ ScreenWidth }) => {
       }
       if (Math.abs(mx) > ScreenWidth / 20)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
-      if (Math.abs(my) > ScreenWidth / 30 && Ydir > 0)
-        cancel(setCollapse(!collapse));
-    }
+      if (Math.abs(my) > 50 && Ydir > 0) cancel(setCollapse(!collapse));
+    },
+    { dragDelay: 500 }
   );
 
   const handleChange = direction => {
@@ -193,7 +195,7 @@ const Promo = ({ ScreenWidth }) => {
         <animated.div
           className="Promo-content"
           {...bind()}
-          style={{ x, y, opacity }}
+          style={{ x, y, opacity, filter }}
         >
           {!pages[index] ? (
             <Spinner />

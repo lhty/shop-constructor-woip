@@ -67,6 +67,9 @@
   letter-spacing: -0.5px;
   overflow: hidden;
 }
+.boxselector-wrapper :first-child {
+  border-radius: 25px 0px 0px 0px;
+}
 .slot-wrapper {
   position: relative;
   cursor: pointer;
