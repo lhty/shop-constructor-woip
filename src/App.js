@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo-hooks";
+import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
+import { onError } from "apollo-link-error";
+import { ApolloLink } from "apollo-link";
+import { ApolloProvider } from "react-apollo-hooks";
 import { API_URL } from "./config";
 import Provider from "./components/Providers/Provider";
 import Layout from "./components/Layout";
@@ -14,13 +17,22 @@ function App() {
   const [online, setOnline] = useState(true);
 
   const client = new ApolloClient({
-    uri: `${API_URL}graphql`,
-    cache: new InMemoryCache({
-      addTypename: true
-    }),
-    onError: () => {
-      setOnline(false);
-    }
+    link: ApolloLink.from([
+      onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors)
+          graphQLErrors.forEach(({ message, locations, path }) =>
+            console.log(
+              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            )
+          );
+        if (networkError) setOnline(false);
+      }),
+      new HttpLink({
+        uri: `${API_URL}graphql`,
+        credentials: "same-origin"
+      })
+    ]),
+    cache: new InMemoryCache()
   });
 
   return online ? (

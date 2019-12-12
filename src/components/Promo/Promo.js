@@ -152,7 +152,7 @@ const Promo = ({ ScreenWidth }) => {
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
       if (Math.abs(my) > 50 && Ydir > 0) cancel(setCollapse(!collapse));
     },
-    { dragDelay: 500 }
+    { dragDelay: 300 }
   );
 
   const handleChange = direction => {

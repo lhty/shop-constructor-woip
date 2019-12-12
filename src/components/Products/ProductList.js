@@ -148,9 +148,9 @@ const Bundles = ({ ScreenWidth }) => {
 
   const _limit =
     ScreenWidth <= 1200
-      ? 4
+      ? 8
       : ScreenWidth <= 1600
-      ? 9
+      ? 8
       : ScreenWidth <= 1920
       ? 8
       : 15;
@@ -214,11 +214,10 @@ const Bundles = ({ ScreenWidth }) => {
       </div>
       <div className="ProductList-bundles-list">
         {loading || error
-          ? null
-          : // ? [...Array(_limit).fill(false)].map((product, index) => (
-            //     <ProductCard key={index} product={product} />
-            //   ))
-            productsort.map(
+          ? [...Array(_limit).fill(false)].map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))
+          : productsort.map(
               (product, index) =>
                 index >= sortstate.offset &&
                 index < sortstate.offset + _limit && (
@@ -229,7 +228,6 @@ const Bundles = ({ ScreenWidth }) => {
                   />
                 )
             )}
-        {/* )} */}
       </div>
       <div className="ProductList-bundles-pagination">
         {sortstate.page >= 10 && (
