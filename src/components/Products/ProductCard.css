@@ -6,7 +6,6 @@
   flex-flow: column wrap;
   align-items: center;
   width: calc(100% / 4 - 10px);
-  height: 15vh;
   margin-bottom: 10px;
   border-radius: 3px 25px 3px 3px;
   text-decoration: none;
@@ -19,17 +18,6 @@
   width: 100%;
   border-radius: 3px 25px 0px 0px;
 }
-.ProductCard-placeholder {
-  /* position: absolute; */
-  border: 5px solid #fdf0e63b;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #f4ede7, #f0e5df, #f0e6df, #f4ede7);
-  background-size: 400% 400%;
-  animation: gradientBG 3s ease infinite;
-  z-index: 10;
-}
 .ProductCard-title {
   display: none;
   position: absolute;
@@ -41,27 +29,38 @@
 }
 .ProductCard-price {
   position: absolute;
+  padding: 5px 5px 0px 5px;
+  background: linear-gradient(180deg, #ffda90 10%, #e9bc64 100%);
+  box-shadow: 1px 5px 9px 2px rgba(0, 0, 0, 0.41);
+  top: 0px;
+  left: 0px;
+}
+.ProductCard-price p {
   color: #5b2600;
+  background-color: #e9bc64;
   font-weight: bold;
   font-size: 0.7rem;
   padding: 5px;
-  border-top: 5px solid #f1d294;
-  border-left: 5px solid #f1d294;
-  border-right: 5px solid #f1d294;
-  background-color: #e9bc64;
-  top: 0px;
-  left: 0px;
 }
 .ProductCard-price:after {
   content: "";
   position: absolute;
-  left: -5px;
+  left: 0;
   bottom: -15px;
   width: 0;
   height: 0;
   border-bottom: 15px solid #eee0;
-  border-left: 20px solid #e9bc64;
-  border-right: 20px solid #e9bc64;
+  border-left: 25px solid #e9bc64;
+}
+.ProductCard-price:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -15px;
+  width: 0;
+  height: 0;
+  border-bottom: 15px solid #eee0;
+  border-right: 25px solid #e9bc64;
 }
 .ProductCard-addbutton {
   cursor: pointer;

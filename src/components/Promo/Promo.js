@@ -3,7 +3,6 @@ import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
 import { useInterval } from "../Providers/Hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
-import Spinner from "../Assets/Spinner";
 
 import { useSpring, useTransition, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
@@ -40,7 +39,8 @@ const Promo = ({ ScreenWidth }) => {
   );
 
   const container = useSpring({
-    from: { y: -500 },
+    from: { y: -500, opacity: 0 },
+    opacity: 1,
     y: 0,
     config: { mass: 1, tension: 300, friction: 40 }
   });
@@ -78,8 +78,8 @@ const Promo = ({ ScreenWidth }) => {
     transform: `rotate(90deg)`,
     scale: 1,
     opacity: 0.15,
-    right: `50%`,
-    y: 0
+    right: ScreenWidth > 800 ? `50%` : `1%`,
+    y: ScreenWidth > 800 ? 0 : -40
   }));
 
   const bind = useDrag(
@@ -99,7 +99,12 @@ const Promo = ({ ScreenWidth }) => {
                 : -ScreenWidth
               : mx + vx
             : 0,
-        y: Math.abs(mx) < 5 && down && Ydir > 0 ? my : 0,
+        y:
+          ScreenWidth > 800
+            ? Math.abs(mx) < 5 && down && Ydir > 0
+              ? my
+              : 0
+            : 0,
         filter: down ? `brightness(1.05)` : `brightness(1)`
       });
       if (down) {
@@ -117,8 +122,8 @@ const Promo = ({ ScreenWidth }) => {
         });
         setExpand({
           to: [
-            { y: -5, scale: 1.5, opacity: 0.75 },
-            { y: 0, scale: 1, opacity: 0.1 }
+            { y: ScreenWidth > 800 ? -5 : -40, scale: 1.5, opacity: 0.75 },
+            { y: ScreenWidth > 800 ? 0 : -40, scale: 1, opacity: 0.1 }
           ]
         });
         return Xdir < 0 && mx < -10
@@ -135,7 +140,7 @@ const Promo = ({ ScreenWidth }) => {
                 { x: 0, opacity: 0.15 }
               ]
             })
-          : Ydir > 0 && my > 10
+          : Ydir > 0 && my > 10 && ScreenWidth > 800
           ? setExpand({
               to: [
                 { y: -20, opacity: 1 },
@@ -150,7 +155,8 @@ const Promo = ({ ScreenWidth }) => {
       }
       if (Math.abs(mx) > ScreenWidth / 20)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
-      if (Math.abs(my) > 50 && Ydir > 0) cancel(setCollapse(!collapse));
+      if (Math.abs(my) > 50 && Ydir > 0 && ScreenWidth > 800)
+        cancel(setCollapse(!collapse));
     },
     { dragDelay: 300 }
   );
@@ -197,9 +203,7 @@ const Promo = ({ ScreenWidth }) => {
           {...bind()}
           style={{ x, y, opacity, filter }}
         >
-          {!pages[index] ? (
-            <Spinner />
-          ) : (
+          {pages[index] &&
             transitions.map(({ item, key, props }) =>
               item ? (
                 <animated.div key={key} style={{ ...props }}>
@@ -218,8 +222,7 @@ const Promo = ({ ScreenWidth }) => {
                   </p>
                 </animated.div>
               )
-            )
-          )}
+            )}
         </animated.div>
         <animated.div
           style={next}

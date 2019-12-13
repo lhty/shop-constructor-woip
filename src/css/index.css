@@ -161,6 +161,9 @@ body {
   .Promo-button {
     display: none;
   }
+  .Promo-button:nth-child(2) {
+    display: block;
+  }
   .Promo-banner {
     padding-top: 50px;
     width: 100%;
@@ -205,6 +208,10 @@ body {
   .product-page-right {
     width: 100%;
   }
+  .item-container-info-details-specs,
+  .item-container-info-details-size {
+    font-size: 0.5rem;
+  }
   .ProductList-bundles-sort {
     margin: 0;
   }
@@ -213,6 +220,9 @@ body {
   }
   .compose-offline p {
     font-size: 2vw;
+  }
+  .slot-wrapper span {
+    font-size: 35px;
   }
   .product-page-left {
     margin: 0;
@@ -225,14 +235,21 @@ body {
     padding: 15px;
   }
   .ProductCard-wrapper {
+    margin: 0;
     border-radius: 2px;
-    min-height: 150px;
+    width: 25%;
+    height: 100px;
   }
   .ProductCard-wrapper img {
     border-radius: 2px;
   }
   .ProductCard-placeholder {
     min-height: 150px;
+  }
+  .ProductCard-price {
+    transform: scale(0.8);
+    top: -3px;
+    left: -4px;
   }
   .boxselector-wrapper {
     flex-flow: column wrap;
@@ -255,5 +272,8 @@ body {
     transform: scale(0.7);
     left: 0;
     top: 0;
+  }
+  .ProductCard-wrapper {
+    height: 90px;
   }
 }

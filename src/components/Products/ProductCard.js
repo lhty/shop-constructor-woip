@@ -13,13 +13,15 @@ const ProductCard = ({ product, ScreenWidth }) => {
   const history = useHistory();
 
   const loadingStyle = useSpring({
-    from: { opacity: 0 },
-    opacity: 1
+    opacity: loading ? 0 : 1
   });
 
   return (
-    <div key={product.id} className="ProductCard-wrapper">
-      {(loading || !product) && <div className="ProductCard-placeholder" />}
+    <animated.div
+      style={loadingStyle}
+      key={product.id}
+      className="ProductCard-wrapper"
+    >
       <animated.img
         style={loadingStyle}
         src={ThumbnailUrl(product.image, ScreenWidth < 800 && "sm")}
@@ -27,7 +29,9 @@ const ProductCard = ({ product, ScreenWidth }) => {
         onLoad={() => setLoading(false)}
         onClick={() => history.push(`${product.id}/${product.title}`)}
       />
-      <div className="ProductCard-price">{product.price}</div>
+      <div className="ProductCard-price">
+        <p>{product.price}</p>
+      </div>
       <button
         className="ProductCard-addbutton"
         onClick={() => {
@@ -45,7 +49,7 @@ const ProductCard = ({ product, ScreenWidth }) => {
       >
         В корзину
       </button>
-    </div>
+    </animated.div>
   );
 };
 

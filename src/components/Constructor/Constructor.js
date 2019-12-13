@@ -10,6 +10,7 @@ import { UserContext } from "../Providers/UserProvider";
 import Sortable from "react-sortablejs";
 import boxsvg from "../../img/constructorBox.svg";
 import sweetssvg from "../../img/constructorSweets.svg";
+import { useSpring, animated } from "react-spring";
 // import done from "../../img/constructorDone.svg";
 import "./Constructor.css";
 
@@ -370,17 +371,24 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     setupdatectx
   } = useContext(ConstructorContext);
   const [item, setItem] = useState(currentitem);
-  const slotStyle = {
+  const slotStyle = useSpring({
+    from: { opacity: 0, width: `${2500 / boxwidth}%` },
+    opacity: 1,
     width: `${2500 / boxwidth}%`,
-    minHeight: "70px",
-    margin: "10px",
-    backgroundImage: `url(${item &&
-      item.image.length > 0 &&
-      !item.editable &&
-      ThumbnailUrl(item.image)})`
-  };
+    minHeight: "50px",
+    margin: "10px"
+  });
   return (
-    <div style={slotStyle} className="slot-wrapper">
+    <animated.div
+      style={{
+        ...slotStyle,
+        backgroundImage: `url(${item &&
+          item.image.length > 0 &&
+          !item.editable &&
+          ThumbnailUrl(item.image)})`
+      }}
+      className="slot-wrapper"
+    >
       {item && (
         <div
           className="slot-wrapper-del"
@@ -428,7 +436,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
       ) : (
         item.image.length < 1 && <p>{item.name}</p>
       )}
-    </div>
+    </animated.div>
   );
 };
 
