@@ -258,7 +258,7 @@ const Promo = ({ ScreenWidth }) => {
           });
         }}
       ></animated.div>
-      <img src={border} alt="" />
+      <img src={border} alt="" draggable="false" />
     </animated.div>
   );
 };

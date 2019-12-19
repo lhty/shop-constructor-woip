@@ -28,6 +28,7 @@ const ProductCard = ({ product, ScreenWidth }) => {
         alt=""
         onLoad={() => setLoading(false)}
         onClick={() => history.push(`${product.id}/${product.title}`)}
+        draggable="false"
       />
       <div className="ProductCard-price">
         <p>{product.price}</p>
@@ -47,7 +48,7 @@ const ProductCard = ({ product, ScreenWidth }) => {
           });
         }}
       >
-        В корзину
+        <p>{ScreenWidth <= 800 ? `___+___` : `в корзину`}</p>
       </button>
     </animated.div>
   );

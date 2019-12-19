@@ -60,7 +60,7 @@ body {
   .Banner-wrapper {
     padding: 75px 25px 0px 25px;
   }
-  .Banner-wrapper img {
+  .Banner-wrapper > img {
     max-width: 25vw;
   }
   .cart-list-wrapper {
@@ -174,7 +174,7 @@ body {
   .Banner-wrapper {
     padding: 65px 25px 0px 25px;
   }
-  .Banner-wrapper img {
+  .Banner-wrapper > img {
     max-width: 40vw;
   }
   .Banner-text {
@@ -203,10 +203,16 @@ body {
     display: none;
   }
   .product-page-left {
-    width: 100%;
+    width: 85%;
+    margin: 0 auto;
+    border-radius: 15px;
   }
   .product-page-right {
     width: 100%;
+  }
+  .product-page-right h1 {
+    padding: 30px 0 0 0;
+    margin: 0 auto;
   }
   .item-container-info-details-specs,
   .item-container-info-details-size {
@@ -223,10 +229,6 @@ body {
   }
   .slot-wrapper span {
     font-size: 35px;
-  }
-  .product-page-left {
-    margin: 0;
-    border-radius: 0;
   }
   .ProductList-topsvg {
     display: none;
@@ -250,12 +252,23 @@ body {
     transform: scale(0.8);
     top: -3px;
     left: -4px;
+    opacity: 0.9;
+  }
+  .ProductCard-addbutton {
+    transform: scale(0.8);
+    bottom: -3px;
+    right: -7px;
+    opacity: 0.9;
   }
   .boxselector-wrapper {
     flex-flow: column wrap;
+    padding-top: 20px;
   }
   .boxselector-slot {
     width: 80%;
+  }
+  .fullscreen > img {
+    width: 100%;
   }
 }
 @media (max-width: 500px) {

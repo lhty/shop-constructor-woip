@@ -159,6 +159,7 @@ const Bundles = ({ ScreenWidth }) => {
   return (
     <>
       <div className="ProductList-bundles-sort">
+        <div className="sort-by">Ключевые слова</div>
         <div
           className={
             sortstate.byprice

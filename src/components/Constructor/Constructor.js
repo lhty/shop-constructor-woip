@@ -259,8 +259,19 @@ const BoxSelector = ({ sizes }) => {
           }}
           key={i}
         >
+          <animated.span
+            style={{ position: `absolute`, left: `16px`, top: `23px` }}
+          >
+            {size.shape === `Квадрат`
+              ? `⬜️`
+              : size.shape === `Сердце`
+              ? `❤️`
+              : `⬛️`}
+          </animated.span>
           <p>Форма : {size.shape}</p>
-          <p>Вместимость : {size.countmin} шт.</p>
+          <p>
+            Вместимость : {size.countmin}-{size.countmax} шт.
+          </p>
           <p>Тип : {size.type}</p>
         </div>
       ))}
@@ -375,8 +386,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     from: { opacity: 0, width: `${2500 / boxwidth}%` },
     opacity: 1,
     width: `${2500 / boxwidth}%`,
-    minHeight: "50px",
-    margin: "10px"
+    minHeight: "50px"
   });
   return (
     <animated.div

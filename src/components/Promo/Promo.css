@@ -33,9 +33,14 @@
   margin-bottom: 15px;
   width: 70%;
 }
-.Banner-wrapper img {
+.Banner-wrapper > img {
   align-self: center;
   max-width: 18vw;
+  border-radius: 10px;
+  box-shadow: -2px 15px 16px -16px rgba(0, 0, 0, 0.75);
+}
+.Banner-wrapper .gallery-container {
+  max-width: 50%;
 }
 .Banner-text {
   margin: 0 auto;
@@ -61,7 +66,6 @@
 }
 .Promo-content {
   cursor: grab;
-  z-index: 10;
 }
 .Promo-container :active {
   cursor: grabbing;

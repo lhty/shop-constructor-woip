@@ -67,13 +67,29 @@
   position: absolute;
   border: none;
   outline: none;
-  font-size: 1rem;
-  color: #5b2600;
-  background-color: #e9bc64;
+  border-radius: 0 0 5px 0;
+  background: linear-gradient(20deg, #ffda90 10%, #e9bc64 100%);
   bottom: 0px;
   right: 0px;
-  padding: 5px;
-  /* box-shadow: 12px 2px 20px -13px rgba(0, 0, 0, 0.75); */
+  padding: 5px 0px 5px 5px;
+  box-shadow: 12px 2px 20px -13px rgba(0, 0, 0, 0.75);
+}
+.ProductCard-addbutton p {
+  padding-right: 3px;
+  color: #5b2600;
+  background: linear-gradient(135deg, #fada9a 10%, #d49f38 100%);
+  font-size: 0.85rem;
+  letter-spacing: -0.04em;
+}
+.ProductCard-addbutton:after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  bottom: 25px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid #eee0;
+  border-left: 5px solid #b18126;
 }
 @keyframes gradientBG {
   0% {
