@@ -2,11 +2,11 @@ import React, { useState, useContext } from "react";
 import { Context } from "../Providers/Provider";
 import { API_URL } from "../../config";
 
-import { useSpring, useTransition, animated } from "react-spring";
+import { useSpring, animated } from "react-spring";
 
 import "./Gallery.css";
 
-const Gallery = ({ image }) => {
+const Gallery = ({ image, isPromo }) => {
   const { ThumbnailUrl } = useContext(Context);
   const [selected, setSelected] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -14,14 +14,17 @@ const Gallery = ({ image }) => {
   const style = useSpring({
     opacity: loading ? 0 : 1
   });
-  const transitions = useTransition(fullscreen, null, {
+
+  const fullscreenstyle = useSpring({
     from: { opacity: 0, x: -100, backgroundColor: `#ffffff00` },
-    enter: { opacity: 1, x: 0, backgroundColor: `#ffffffd1` },
-    leave: { opacity: 0, x: 100, backgroundColor: `#ffffff00` }
+    opacity: 1,
+    x: 0,
+    backgroundColor: isPromo ? `#ffffff00` : `#ffffffd1`
   });
+
   const imagelist = image.map(
     (obj, i) =>
-      i !== selected && (
+      i !== (isPromo ? null : selected) && (
         <animated.img
           style={style}
           key={i}
@@ -31,6 +34,7 @@ const Gallery = ({ image }) => {
           alt=""
           onClick={() => {
             setSelected(i);
+            if (isPromo) setFullscreen(true);
           }}
           onLoad={() => setLoading(false)}
           draggable="false"
@@ -40,40 +44,46 @@ const Gallery = ({ image }) => {
 
   return (
     <>
-      {transitions.map(
-        ({ _, key, props }) =>
-          fullscreen && (
-            <animated.div
-              key={key}
-              style={{ ...props }}
-              className="fullscreen"
-              onClick={() => {
-                setFullscreen(false);
-              }}
-            >
-              <animated.img
-                style={style}
-                src={API_URL + image[selected].url}
-                alt=""
-                onLoad={() => setLoading(false)}
-                draggable="false"
-              />
-            </animated.div>
-          )
+      {image[selected] && fullscreen && (
+        <animated.div
+          style={fullscreenstyle}
+          className={isPromo ? `fullscreenpromo` : `fullscreen`}
+          onClick={() => {
+            setFullscreen(false);
+          }}
+        >
+          <animated.img
+            style={style}
+            src={API_URL + image[selected].url}
+            alt=""
+            onLoad={() => setLoading(false)}
+            draggable="false"
+          />
+        </animated.div>
       )}
       <div className="gallery-container">
         {image ? (
-          <div className={image.length > 1 ? `multi-img` : `single-img`}>
-            <animated.img
-              style={style}
-              src={image[selected] && ThumbnailUrl(image[selected])}
-              alt=""
-              onClick={() => {
-                setFullscreen(true);
-              }}
-              onLoad={() => setLoading(false)}
-              draggable="false"
-            />
+          <div
+            className={
+              image.length > 1
+                ? isPromo
+                  ? `promo`
+                  : `multi-img`
+                : `single-img`
+            }
+          >
+            {!isPromo && (
+              <animated.img
+                style={style}
+                src={image[selected] && ThumbnailUrl(image[selected])}
+                alt=""
+                onClick={() => {
+                  setFullscreen(true);
+                }}
+                onLoad={() => setLoading(false)}
+                draggable="false"
+              />
+            )}
             {image.length > 1 && imagelist}
           </div>
         ) : (

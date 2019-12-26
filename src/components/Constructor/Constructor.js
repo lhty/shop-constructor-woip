@@ -259,20 +259,22 @@ const BoxSelector = ({ sizes }) => {
           }}
           key={i}
         >
-          <animated.span
-            style={{ position: `absolute`, left: `16px`, top: `23px` }}
-          >
-            {size.shape === `Квадрат`
-              ? `⬜️`
-              : size.shape === `Сердце`
-              ? `❤️`
-              : `⬛️`}
-          </animated.span>
-          <p>Форма : {size.shape}</p>
-          <p>
-            Вместимость : {size.countmin}-{size.countmax} шт.
-          </p>
-          <p>Тип : {size.type}</p>
+          <div
+            className={
+              size.shape === "Сердце"
+                ? `box-shape heart`
+                : size.shape === "Квадрат"
+                ? `box-shape square`
+                : `box-shape rectangle`
+            }
+          />
+          <div className="boxselector-slot-info">
+            {/* <p>Форма : {size.shape}</p> */}
+            <p>
+              Вместимость : {size.countmin}-{size.countmax} шт.
+            </p>
+            <p>Тип : {size.type}</p>
+          </div>
         </div>
       ))}
     </div>

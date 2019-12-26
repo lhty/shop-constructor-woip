@@ -5,15 +5,16 @@ import { Link } from "react-router-dom";
 import { Context } from "../Providers/Provider";
 import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
+import { useParams } from "react-router-dom";
 
 import "./ProductPage.css";
 
-const Product = ({ match, scroll }) => {
+const Product = ({ scroll }) => {
   const [expand, setExpand] = useState(false);
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
 
   const { MakeBundle, setConstruct } = useContext(Context);
-  const id = match.params.id;
+  const id = useParams().id;
 
   if (loading || error) return <Spinner />;
 

@@ -210,7 +210,10 @@ const Promo = ({ ScreenWidth }) => {
                   <div className="Banner-wrapper">
                     <h1>{pages[index].title}</h1>
                     <p>{pages[index].description}</p>
-                    <Gallery image={pages[index].promo_banners} />
+                    <Gallery
+                      image={pages[index].promo_banners}
+                      isPromo={true}
+                    />
                   </div>
                 </animated.div>
               ) : (

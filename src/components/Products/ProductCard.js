@@ -32,24 +32,27 @@ const ProductCard = ({ product, ScreenWidth }) => {
       />
       <div className="ProductCard-price">
         <p>{product.price}</p>
+        <p>₽</p>
       </div>
-      <button
-        className="ProductCard-addbutton"
-        onClick={() => {
-          cartDispath({
-            type: "CART_ADD",
-            payload: {
-              id: parseInt(product.id),
-              quantity: 1,
-              title: product.title,
-              image: product.image,
-              price: product.price
-            }
-          });
-        }}
-      >
-        <p>{ScreenWidth <= 800 ? `___+___` : `в корзину`}</p>
-      </button>
+      {ScreenWidth >= 800 && (
+        <button
+          className="ProductCard-addbutton"
+          onClick={() => {
+            cartDispath({
+              type: "CART_ADD",
+              payload: {
+                id: parseInt(product.id),
+                quantity: 1,
+                title: product.title,
+                image: product.image,
+                price: product.price
+              }
+            });
+          }}
+        >
+          <p>в корзину</p>
+        </button>
+      )}
     </animated.div>
   );
 };

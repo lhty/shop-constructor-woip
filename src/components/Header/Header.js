@@ -6,9 +6,6 @@ import Userphoto from "../Auth/Elements/Userphoto";
 import AuthPage from "../Auth/AuthPage";
 import { UserContext } from "../Providers/UserProvider";
 
-// import { useSpring, animated } from "react-spring";
-// import { useScroll } from "react-use-gesture";
-
 import title from "../../img/title.svg";
 import "./Header.css";
 
@@ -20,21 +17,9 @@ export default function Header({ match: { url } }) {
     token && !user.online && RetrieveLogin(token);
   }, [user, token, RetrieveLogin]);
 
-  // const [{ scale }, set] = useSpring(() => ({
-  //   scale: 1,
-  //   config: { mass: 1, tension: 210, friction: 20 }
-  // }));
-  // const bind = useScroll(
-  //   ({ offset: [, y] }) => {
-  //     y === 100 && set({ to: [{ scale: 1.05 }, { scale: 1 }] });
-  //   },
-  //   { domTarget: window }
-  // );
-
   return (
     <>
       <section className="header">
-        {/* <section className="header" {...bind()} style={{ scale }}> */}
         <div className="header-nav">
           <span onClick={() => setActive({ ...active, auth: !active.auth })}>
             <Userphoto user={user.online && user} />
@@ -113,7 +98,6 @@ export default function Header({ match: { url } }) {
           </defs>
         </svg>
       </section>
-      {/* </animated.section> */}
       {active.auth && <AuthPage user={user} />}
       {active.cart && <CartList url={url} />}
     </>

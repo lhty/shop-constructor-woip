@@ -2,9 +2,9 @@
   position: relative;
   display: flex;
   align-items: center;
+  overflow: hidden;
   justify-content: center;
   background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
-  overflow: hidden;
   min-height: 200px;
   transition: 2s ease-in-out;
 }
@@ -38,9 +38,6 @@
   max-width: 18vw;
   border-radius: 10px;
   box-shadow: -2px 15px 16px -16px rgba(0, 0, 0, 0.75);
-}
-.Banner-wrapper .gallery-container {
-  max-width: 50%;
 }
 .Banner-text {
   margin: 0 auto;
