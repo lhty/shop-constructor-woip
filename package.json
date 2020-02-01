@@ -24,9 +24,9 @@
     "sortablejs": "^1.10.1"
   },
   "scripts": {
-    "start": "set PORT=8080 && react-scripts start",
-    "startnix": "PORT=8080 react-scripts start",
-    "build": "react-scripts build",
+    "start": "set PORT=8080  &&  react-scripts start",
+    "startnix": "PORT=8080  &&  react-scripts start",
+    "build": "PORT=8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

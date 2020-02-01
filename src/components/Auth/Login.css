@@ -26,10 +26,19 @@
   height: 35px;
   padding: 5px;
   background-color: #f6e0cd;
+}
+.auth-page-login button:disabled {
+  filter: grayscale(0.8);
+  opacity: 0.6;
+}
+.auth-page-login button:hover:enabled {
+  background-color: #f3cdac;
   cursor: pointer;
 }
-.auth-page-login button:hover {
-  background-color: #f3cdac;
+.auth-social {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5%;
 }
 .auth-page-vk {
   cursor: pointer;
@@ -37,7 +46,13 @@
   height: 35px;
   background: url(../../img/vk.svg);
   background-repeat: no-repeat;
-  margin-top: 5%;
+}
+.auth-page-fb {
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  background: url(../../img/fb.svg);
+  background-repeat: no-repeat;
 }
 .auth-page-login-400 {
   position: absolute;

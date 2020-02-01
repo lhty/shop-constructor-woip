@@ -22,29 +22,31 @@ const Gallery = ({ image, isPromo }) => {
     backgroundColor: isPromo ? `#ffffff00` : `#ffffffd1`
   });
 
-  const imagelist = image.map(
-    (obj, i) =>
-      i !== (isPromo ? null : selected) && (
-        <animated.img
-          style={style}
-          key={i}
-          src={
-            API_URL + obj.url.slice(1, 9) + "thumbnail/sm-" + obj.url.slice(9)
-          }
-          alt=""
-          onClick={() => {
-            setSelected(i);
-            if (isPromo) setFullscreen(true);
-          }}
-          onLoad={() => setLoading(false)}
-          draggable="false"
-        />
-      )
-  );
+  const imagelist =
+    image &&
+    image.map(
+      (obj, i) =>
+        i !== (isPromo ? null : selected) && (
+          <animated.img
+            style={style}
+            key={i}
+            src={
+              API_URL + obj.url.slice(1, 9) + "thumbnail/sm-" + obj.url.slice(9)
+            }
+            alt=""
+            onClick={() => {
+              setSelected(i);
+              if (isPromo) setFullscreen(true);
+            }}
+            onLoad={() => setLoading(false)}
+            draggable="false"
+          />
+        )
+    );
 
   return (
     <>
-      {image[selected] && fullscreen && (
+      {image && image[selected] && fullscreen && (
         <animated.div
           style={fullscreenstyle}
           className={isPromo ? `fullscreenpromo` : `fullscreen`}

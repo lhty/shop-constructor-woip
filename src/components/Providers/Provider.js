@@ -17,7 +17,7 @@ const Provider = props => {
   function MakeBundle(products) {
     function Set(product) {
       const _set = [];
-      const _schema = product.schema && product.schema.split(",");
+      const _schema = product && product.schema && product.schema.split(",");
       _schema &&
         _schema.forEach(id =>
           _set.push(
@@ -35,13 +35,14 @@ const Provider = props => {
         ...product,
         set: _set,
         price:
-          product.proportion.price +
-          (_set.length > 0
-            ? _set.map(obj => obj.price).reduce((a, b) => a + b)
-            : 0)
+          _set.length > 0
+            ? _set
+                .map(obj => obj.price)
+                .reduce((a, b) => a + b, product.proportion.price || 0)
+            : 0
       };
     }
-    return products.length > 1
+    return products && products.length > 1
       ? products.map(product => Set(product))
       : Set(products);
   }

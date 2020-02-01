@@ -1,7 +1,6 @@
 import React, { useState, useReducer, useContext, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { PROPORTION_QUERY } from "../Providers/Queries";
-import Spinner from "../Assets/Spinner";
 import Gallery from "../Gallery/Gallery";
 import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 import { ITEM_QUERY } from "../Providers/Queries";
@@ -11,7 +10,6 @@ import Sortable from "react-sortablejs";
 import boxsvg from "../../img/constructorBox.svg";
 import sweetssvg from "../../img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
-// import done from "../../img/constructorDone.svg";
 import "./Constructor.css";
 
 const ConstructorContext = React.createContext();
@@ -81,7 +79,7 @@ const Constructor = ({ size, setSize }) => {
       viewDetails(construct.items.find(item => item.id === construct.details));
   }, [construct, setSize]);
 
-  if (loading || error) return <Spinner />;
+  if (loading || error) return <></>;
 
   const _permissionBasedSizes = user.online
     ? user.role.id > 1
@@ -115,7 +113,7 @@ const Constructor = ({ size, setSize }) => {
     >
       <div className="Constructor-wrapper">
         {updatectx === "loading" ? (
-          <Spinner />
+          <></>
         ) : (
           <>
             <ProgressBar size={size} setSize={setSize} />
@@ -456,7 +454,7 @@ const ItemList = () => {
   const { user } = useContext(UserContext);
   const { details, viewDetails } = useContext(ConstructorContext);
   const { data, error, loading } = useQuery(ITEM_QUERY);
-  if (loading || error) return <Spinner />;
+  if (loading || error) return <></>;
 
   const _permissionBasedList = user.online
     ? user.role.id > 1

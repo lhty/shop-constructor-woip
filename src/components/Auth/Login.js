@@ -5,8 +5,21 @@ import { UserContext } from "../Providers/UserProvider";
 import "./Login.css";
 
 const Login = () => {
+  async function FB() {
+    const endpoint = "https://backend.sweetdreams.ru.com/connect/facebook";
+
+    const res = await fetch(endpoint, {
+      method: "GET",
+      mode: "no-cors"
+    }).catch(error => error);
+    console.log(res);
+  }
+
   const { Login, Vklogin, setActive, active } = useContext(UserContext);
-  const [inputValues, setInputValues] = useState();
+  const [inputValues, setInputValues] = useState({
+    name: null,
+    password: null
+  });
 
   const handleOnChange = event => {
     const { name, value } = event.target;
@@ -34,15 +47,28 @@ const Login = () => {
           onChange={handleOnChange}
           required
         ></input>
-        <button type="submit">Войти</button>
+        <button
+          type="submit"
+          disabled={!inputValues.name || !inputValues.password}
+        >
+          Войти
+        </button>
       </form>
-      <label
-        className="auth-page-vk"
-        onClick={() => {
-          Vklogin();
-          setActive({ ...active, auth: !active.auth });
-        }}
-      ></label>
+      <div className="auth-social">
+        <label
+          className="auth-page-vk"
+          onClick={() => {
+            Vklogin();
+            setActive({ ...active, auth: !active.auth });
+          }}
+        ></label>
+        <label
+          className="auth-page-fb"
+          onClick={() => {
+            FB();
+          }}
+        ></label>
+      </div>
     </>
   );
 };

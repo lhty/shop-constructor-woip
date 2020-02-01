@@ -36,8 +36,9 @@
 .promo > img {
   vertical-align: middle;
   cursor: zoom-in;
-  margin: 5px;
-  border-radius: 10px;
+  border-radius: 5px 5px 15px 5px;
+  margin: 0 5px 25px 0;
+  box-shadow: 6px 4px 22px rgba(0, 0, 0, 0.14);
 }
 .fullscreen {
   position: fixed;
@@ -60,7 +61,9 @@
 .fullscreenpromo > img {
   cursor: zoom-out;
   width: 100%;
+  margin-bottom: 5px;
   border-radius: 10px;
+  box-shadow: 6px 4px 22px rgba(0, 0, 0, 0.14);
 }
 .fullscreen > img {
   cursor: zoom-out;

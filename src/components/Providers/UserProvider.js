@@ -39,10 +39,10 @@ const UserProvider = props => {
     axios
       .post(`${API_URL}auth/local/register`, {
         username: name,
-        password: password,
-        email: email,
-        phone: phone,
-        photo: photo
+        password,
+        email,
+        phone,
+        photo
       })
       .then(response => {
         localStorage.setItem("user", response.data.jwt);
@@ -55,6 +55,10 @@ const UserProvider = props => {
         if (error) {
         }
       });
+  }
+
+  function Fblogin() {
+    return console.log("Fb");
   }
 
   function Vklogin() {
@@ -135,6 +139,7 @@ const UserProvider = props => {
         userDispatch,
         Register,
         Login,
+        Fblogin,
         Vklogin,
         RetrieveLogin,
         active,

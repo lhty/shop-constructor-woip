@@ -5,9 +5,14 @@ import "./Signup.css";
 
 const Signup = () => {
   const { Register } = useContext(UserContext);
-  const [inputValues, setInputValues] = useState();
+  const [inputValues, setInputValues] = useState({
+    name: null,
+    password: null,
+    email: null,
+    phone: null
+  });
   const handleOnChange = event => {
-    const { name, value = "" } = event.target;
+    const { name, value } = event.target;
     setInputValues({ ...inputValues, [name]: value });
   };
   const handleSubmit = e => {
@@ -40,7 +45,17 @@ const Signup = () => {
         placeholder="Номер телефона"
         onChange={handleOnChange}
       ></input>
-      <button type="submit">Зарегистрироваться</button>
+      <button
+        type="submit"
+        disabled={
+          !inputValues.name ||
+          !inputValues.password ||
+          !inputValues.email ||
+          !inputValues.phone
+        }
+      >
+        Зарегистрироваться
+      </button>
     </form>
   );
 };

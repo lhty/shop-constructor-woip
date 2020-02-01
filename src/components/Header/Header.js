@@ -44,52 +44,17 @@ export default function Header({ match: { url } }) {
           viewBox="0 0 1920 99"
           preserveAspectRatio="none"
         >
-          <g filter="url(#filter0_d)">
-            <path
-              d="M1920 0H0V63.2565C0 63.2565 304.074 18.3832 499.5 26.5C667.167 33.4639 757.224 83.0336 925 86.5C1121.62 90.5624 1228.38 30.8171 1425 26.5C1618.8 22.2449 1920 63.2565 1920 63.2565V0Z"
-              fill="url(#paint0_linear)"
-            />
-          </g>
+          <path
+            d="M1920 0H0V41.7565C0 41.7565 304.074 -3.11682 499.5 4.99995C667.167 11.9638 757.224 61.5335 925 65C1121.62 69.0623 1228.38 9.31701 1425 4.99995C1618.8 0.744829 1920 41.7565 1920 41.7565V0Z"
+            fill="url(#paint0_linear)"
+          />
           <defs>
-            <filter
-              id="filter0_d"
-              x="-9"
-              y="-5"
-              width="1938"
-              height="96.698"
-              filterUnits="userSpaceOnUse"
-              colorInterpolationFilters="sRGB"
-            >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feColorMatrix
-                in="SourceAlpha"
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-              />
-              <feOffset dy="3" />
-              <feGaussianBlur stdDeviation="4.5" />
-              <feColorMatrix
-                type="matrix"
-                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
-              />
-              <feBlend
-                mode="normal"
-                in2="BackgroundImageFix"
-                result="effect1_dropShadow"
-              />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="effect1_dropShadow"
-                result="shape"
-              />
-            </filter>
             <linearGradient
               id="paint0_linear"
               x1="2017.5"
-              y1="16.4838"
-              x2="21.5007"
-              y2="18.002"
+              y1="12.8277"
+              x2="21.5013"
+              y2="14.6602"
               gradientUnits="userSpaceOnUse"
             >
               <stop stopColor="#F9F3EE" />

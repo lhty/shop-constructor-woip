@@ -51,10 +51,10 @@ const Promo = ({ ScreenWidth }) => {
     leave: { opacity: 0, y: -500, display: `none` }
   });
 
-  const [{ x, y, opacity, filter }, set] = useSpring(() => ({
+  const [{ x, opacity, filter }, set] = useSpring(() => ({
     filter: `brightness(1)`,
     opacity: 1,
-    y: 0,
+
     x: 0,
     config: { mass: 1, tension: 50, friction: 12 }
   }));
@@ -83,28 +83,16 @@ const Promo = ({ ScreenWidth }) => {
   }));
 
   const bind = useDrag(
-    ({
-      cancel,
-      down,
-      direction: [Xdir, Ydir],
-      movement: [mx, my],
-      vxvy: [vx]
-    }) => {
+    ({ cancel, down, direction: [Xdir], movement: [mx], vxvy: [vx] }) => {
       set({
-        x:
-          my < 1 && down
-            ? Math.abs(mx) > ScreenWidth / 6
-              ? Xdir > 0
-                ? ScreenWidth
-                : -ScreenWidth
-              : mx + vx
-            : 0,
-        y:
-          ScreenWidth > 800
-            ? Math.abs(mx) < 5 && down && Ydir > 0
-              ? my
-              : 0
-            : 0,
+        x: down
+          ? Math.abs(mx) > ScreenWidth / 6
+            ? Xdir > 0
+              ? ScreenWidth
+              : -ScreenWidth
+            : mx + vx
+          : 0,
+
         filter: down ? `brightness(1.05)` : `brightness(1)`
       });
       if (down) {
@@ -118,12 +106,6 @@ const Promo = ({ ScreenWidth }) => {
           to: [
             { x: -10, scale: 1.5, opacity: 0.75 },
             { x: 0, scale: 1, opacity: 0.15 }
-          ]
-        });
-        setExpand({
-          to: [
-            { y: ScreenWidth > 800 ? -5 : -40, scale: 1.5, opacity: 0.75 },
-            { y: ScreenWidth > 800 ? 0 : -40, scale: 1, opacity: 0.1 }
           ]
         });
         return Xdir < 0 && mx < -10
@@ -140,25 +122,12 @@ const Promo = ({ ScreenWidth }) => {
                 { x: 0, opacity: 0.15 }
               ]
             })
-          : Ydir > 0 && my > 10 && ScreenWidth > 800
-          ? setExpand({
-              to: [
-                { y: -20, opacity: 1 },
-                {
-                  y: 0,
-                  opacity: 0.1,
-                  transform: `rotate(${collapse ? `90deg` : `-90deg`})`
-                }
-              ]
-            })
           : null;
       }
       if (Math.abs(mx) > ScreenWidth / 20)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
-      if (Math.abs(my) > 50 && Ydir > 0 && ScreenWidth > 800)
-        cancel(setCollapse(!collapse));
     },
-    { dragDelay: 300 }
+    { dragDelay: 100 }
   );
 
   const handleChange = direction => {
@@ -178,6 +147,20 @@ const Promo = ({ ScreenWidth }) => {
       );
     }, 1200);
     setReset(!reset);
+  };
+
+  const hadleExpand = () => {
+    setCollapse(!collapse);
+    setExpand({
+      to: [
+        { opacity: 0.75, scale: 1.5 },
+        {
+          opacity: 0.15,
+          scale: 1,
+          transform: `rotate(${collapse ? `90deg` : `-90deg`})`
+        }
+      ]
+    });
   };
   return (
     <animated.div style={container}>
@@ -201,7 +184,7 @@ const Promo = ({ ScreenWidth }) => {
         <animated.div
           className="Promo-content"
           {...bind()}
-          style={{ x, y, opacity, filter }}
+          style={{ x, opacity, filter }}
         >
           {pages[index] &&
             transitions.map(({ item, key, props }) =>
@@ -245,23 +228,17 @@ const Promo = ({ ScreenWidth }) => {
         ></animated.div>
       </section>
       <animated.div
+        onClick={hadleExpand}
         className="Promo-button"
         style={expand}
-        onClick={() => {
-          setCollapse(!collapse);
-          setExpand({
-            to: [
-              { opacity: 0.75, scale: 1.5 },
-              {
-                opacity: 0.15,
-                scale: 1,
-                transform: `rotate(${collapse ? `90deg` : `-90deg`})`
-              }
-            ]
-          });
-        }}
       ></animated.div>
-      <img src={border} alt="" draggable="false" />
+      <img
+        style={{ cursor: `pointer` }}
+        onClick={hadleExpand}
+        src={border}
+        alt=""
+        draggable="false"
+      />
     </animated.div>
   );
 };

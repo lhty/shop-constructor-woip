@@ -106,12 +106,6 @@ body {
   }
 }
 @media (min-width: 2100px) {
-  .header {
-    height: 0;
-  }
-  .header-svg {
-    top: 0;
-  }
   .header-title {
     top: 15px;
     width: 290px;
@@ -244,7 +238,6 @@ body {
   }
   .Constructor-progress {
     padding: 10px 0px 10px 0px;
-    justify-content: center;
   }
   .compose-offline p {
     font-size: 2vw;
@@ -260,7 +253,7 @@ body {
     margin: 0 auto;
     border: 5px solid #efe3dbc4;
     border-radius: 25px;
-    width: 40%;
+    width: 80%;
   }
   .ProductList-topsvg {
     display: none;

@@ -1,25 +1,30 @@
 .StaticInfo-container {
   z-index: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   width: 100%;
   animation: 1s ease 0s 1 normal none running fadeInDown;
 }
 .StaticInfo-card {
-  border-radius: 15px 10px 15px 10px;
-  box-sizing: border-box;
-  box-shadow: 15px 15px 35px rgba(112, 124, 151, 0.05),
-    10px 10px 25px rgba(112, 124, 151, 0.05);
-  width: 30%;
-  background: linear-gradient(
-    270.2deg,
-    #f3ebe5 0.19%,
-    #f8f2ed 53.05%,
-    #f3ebe5 99.95%
-  );
+  display: flex;
+  width: 40%;
   margin-bottom: 25px;
 }
+.StaticInfo-card > img {
+  width: 40%;
+  object-fit: scale-down;
+}
 .StaticInfo-card p {
+  border-radius: 15px 10px 15px 10px;
+  box-shadow: -13px 6px 35px #707c970d, -11px 11px 25px #707c970d;
+  background: linear-gradient(
+    90deg,
+    #f3ebe5 23.44%,
+    rgba(243, 235, 229, 0) 100%
+  );
+  width: 70%;
   padding: 15px;
+  font-size: 0.9em;
+  align-self: center;
 }

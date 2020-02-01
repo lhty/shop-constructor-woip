@@ -85,6 +85,7 @@
   color: #ffffff;
 }
 .sort-by {
+  cursor: pointer;
   position: relative;
   font-size: 15px;
   line-height: 46px;
