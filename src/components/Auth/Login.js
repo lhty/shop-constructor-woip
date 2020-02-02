@@ -1,25 +1,42 @@
-import React, { useContext, useState } from "react";
-
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Providers/UserProvider";
+import { API_URL } from "../../config";
 
 import "./Login.css";
 
 const Login = () => {
-  async function FB() {
-    const endpoint = "https://backend.sweetdreams.ru.com/connect/facebook";
-
-    const res = await fetch(endpoint, {
-      method: "GET",
-      mode: "no-cors"
-    }).catch(error => error);
-    console.log(res);
-  }
-
-  const { Login, Vklogin, setActive, active } = useContext(UserContext);
+  const { Login, Vklogin, setActive, active, userDispatch } = useContext(
+    UserContext
+  );
   const [inputValues, setInputValues] = useState({
     name: null,
     password: null
   });
+
+  useEffect(() => {
+    let access_token = new URLSearchParams(window.location.search).get(
+      "access_token"
+    );
+    let access_provider = window.location.pathname;
+
+    if (access_token) {
+      (async () => {
+        const endpoint = `${API_URL}auth${access_provider}callback?access_token=${access_token}`;
+        const res = await fetch(endpoint, {
+          method: "GET"
+        });
+        res.json().then(({ jwt, user }) => {
+          if (!localStorage.getItem("user")) {
+            localStorage.setItem("user", jwt);
+          }
+          userDispatch({
+            type: "LOG_IN",
+            payload: user
+          });
+        });
+      })();
+    }
+  }, [userDispatch]);
 
   const handleOnChange = event => {
     const { name, value } = event.target;
@@ -62,12 +79,12 @@ const Login = () => {
             setActive({ ...active, auth: !active.auth });
           }}
         ></label>
-        <label
+        <a
           className="auth-page-fb"
-          onClick={() => {
-            FB();
-          }}
-        ></label>
+          href={`${API_URL}connect/facebook?callback=${window.location.href}`}
+        >
+          {null}
+        </a>
       </div>
     </>
   );
