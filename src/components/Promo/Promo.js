@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
-import { useInterval } from "../Providers/Hooks/useInterval";
+import { useInterval } from "../Hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
 
 import { useSpring, useTransition, animated } from "react-spring";
@@ -163,8 +163,8 @@ const Promo = ({ ScreenWidth }) => {
     });
   };
   return (
-    <animated.div style={container}>
-      <section className="Promo-container">
+    <animated.aside style={container}>
+      <aside className="Promo-container">
         <animated.div
           style={prev}
           className="Promo-button"
@@ -226,7 +226,7 @@ const Promo = ({ ScreenWidth }) => {
             });
           }}
         ></animated.div>
-      </section>
+      </aside>
       <animated.div
         onClick={hadleExpand}
         className="Promo-button"
@@ -239,7 +239,7 @@ const Promo = ({ ScreenWidth }) => {
         alt=""
         draggable="false"
       />
-    </animated.div>
+    </animated.aside>
   );
 };
 

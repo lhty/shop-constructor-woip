@@ -16,11 +16,6 @@
 .Banner-wrapper {
   position: relative;
   padding: 125px 25px 0px 25px;
-  background: linear-gradient(
-    179.98deg,
-    #fbf9f85c 0.02%,
-    rgba(255, 255, 255, 0) 60.7%
-  );
   display: flex;
   flex-flow: column wrap;
   justify-content: center;

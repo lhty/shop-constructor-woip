@@ -4,7 +4,7 @@ import { PROPORTION_QUERY } from "../Providers/Queries";
 import Gallery from "../Gallery/Gallery";
 import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 import { ITEM_QUERY } from "../Providers/Queries";
-import { Context } from "../Providers/Provider";
+import { Context } from "../Providers/DataProvider";
 import { UserContext } from "../Providers/UserProvider";
 import Sortable from "react-sortablejs";
 import boxsvg from "../../img/constructorBox.svg";
@@ -81,7 +81,7 @@ const Constructor = ({ size, setSize }) => {
 
   if (loading || error) return <></>;
 
-  const _permissionBasedSizes = user.online
+  const _permissionBasedSizes = user
     ? user.role.id > 1
       ? data.proportions.filter(size => size.countmin && size.countmax)
       : data.proportions.filter(

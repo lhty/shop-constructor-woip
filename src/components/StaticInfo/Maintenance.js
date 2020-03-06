@@ -1,11 +1,11 @@
-import React from 'react';
-import './Maintenance.css';
+import React from "react";
+import "./Maintenance.css";
 
 const Maintenance = () => {
   return (
-    <section className="Maintenance-container">
+    <main className="Maintenance-container">
       <div className="Maintenance-logo"></div>
-    </section>
+    </main>
   );
 };
 

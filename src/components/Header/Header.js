@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Cart from "../Cart/Cart";
 import CartList from "../Cart/CartList";
@@ -10,19 +10,44 @@ import title from "../../img/title.svg";
 import "./Header.css";
 
 export default function Header({ match: { url } }) {
-  const { user, RetrieveLogin, setActive, active } = useContext(UserContext);
-  const token = localStorage.getItem("user");
+  const { user, setActive, active } = useContext(UserContext);
+  const AuthRef = useRef();
+  const HeaderRef = useRef();
 
   useEffect(() => {
-    token && !user.online && RetrieveLogin(token);
-  }, [user, token, RetrieveLogin]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+  function handleClickOutside(e) {
+    if (
+      AuthRef.current &&
+      !AuthRef.current.contains(e.target) &&
+      HeaderRef.current &&
+      !HeaderRef.current.contains(e.target)
+    ) {
+      setActive({
+        ...active,
+        auth: false
+      });
+    }
+  }
 
   return (
     <>
-      <section className="header">
+      <header ref={HeaderRef} className="header">
         <div className="header-nav">
-          <span onClick={() => setActive({ ...active, auth: !active.auth })}>
-            <Userphoto user={user.online && user} />
+          <span
+            onClick={() =>
+              setActive({
+                ...active,
+                auth: !active.auth
+              })
+            }
+          >
+            <Userphoto user={user} />
           </span>
           <Link to="/">
             <img
@@ -39,31 +64,12 @@ export default function Header({ match: { url } }) {
           </Link>
           <Cart />
         </div>
-        <svg
-          className="header-svg"
-          viewBox="0 0 1920 99"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M1920 0H0V41.7565C0 41.7565 304.074 -3.11682 499.5 4.99995C667.167 11.9638 757.224 61.5335 925 65C1121.62 69.0623 1228.38 9.31701 1425 4.99995C1618.8 0.744829 1920 41.7565 1920 41.7565V0Z"
-            fill="url(#paint0_linear)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear"
-              x1="2017.5"
-              y1="12.8277"
-              x2="21.5013"
-              y2="14.6602"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#F9F3EE" />
-              <stop offset="0.907011" stopColor="#F2EBE4" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </section>
-      {active.auth && <AuthPage user={user} />}
+      </header>
+      {active.auth && (
+        <div ref={AuthRef}>
+          <AuthPage user={user} />
+        </div>
+      )}
       {active.cart && <CartList url={url} />}
     </>
   );

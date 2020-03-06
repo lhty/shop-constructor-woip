@@ -6,7 +6,7 @@ import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo-hooks";
 import { API_URL } from "./config";
-import Provider from "./components/Providers/Provider";
+import Provider from "./components/Providers/DataProvider";
 import Layout from "./components/Layout";
 import Maintenance from "./components/StaticInfo/Maintenance";
 import { BrowserRouter as Router } from "react-router-dom";

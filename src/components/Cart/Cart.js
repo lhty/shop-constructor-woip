@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Context } from "../Providers/Provider";
+import { Context } from "../Providers/DataProvider";
 import { UserContext } from "../Providers/UserProvider";
 
 import { useSpring, animated } from "react-spring";
@@ -39,11 +39,16 @@ export default Cart;
 const Bucket = ({ cart }) => {
   const [{ scale }, set] = useSpring(() => ({
     scale: 1,
-    config: { mass: 1, tension: 180, friction: 12 }
+    config: { mass: 1, tension: 120, friction: 5 }
   }));
 
+  let bundleQuantity = cart.reduce(
+    (total, { quantity }) => total + quantity,
+    0
+  );
+
   useEffect(() => {
-    set({ to: [{ scale: 1.2 }, { scale: 1 }] });
+    set({ to: [{ scale: 1.05 }, { scale: 1 }] });
   }, [cart, set]);
   return (
     <>
@@ -58,12 +63,10 @@ const Bucket = ({ cart }) => {
           fill={`${cart.length === 0 ? "#DEDEDE" : "#E4BFA0"}`}
         />
       </animated.svg>
-      {cart.length === 0 ? null : (
-        <div className="cart-counter">
-          {cart.reduce((a, b) => a + (b.quantity || 0), 0) > 99
-            ? 99
-            : cart.reduce((a, b) => a + (b.quantity || 0), 0)}
-        </div>
+      {cart.length > 0 && (
+        <animated.div style={{ scale }} className="cart-counter">
+          {bundleQuantity > 99 ? 99 : bundleQuantity}
+        </animated.div>
       )}
     </>
   );

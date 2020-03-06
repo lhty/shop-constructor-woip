@@ -5,9 +5,9 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <section className="footer">
+    <footer className="footer">
       <img className="footer-border" src={border} alt="" />
-    </section>
+    </footer>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../Providers/Provider";
+import { Context } from "../Providers/DataProvider";
 import { useHistory } from "react-router-dom";
 import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 

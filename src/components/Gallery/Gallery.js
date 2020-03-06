@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../Providers/Provider";
+import { Context } from "../Providers/DataProvider";
 import { API_URL } from "../../config";
 
 import { useSpring, animated } from "react-spring";
@@ -16,7 +16,7 @@ const Gallery = ({ image, isPromo }) => {
   });
 
   const fullscreenstyle = useSpring({
-    from: { opacity: 0, x: -100, backgroundColor: `#ffffff00` },
+    from: { opacity: 0, x: 0, backgroundColor: `#ffffff00` },
     opacity: 1,
     x: 0,
     backgroundColor: isPromo ? `#ffffff00` : `#ffffffd1`

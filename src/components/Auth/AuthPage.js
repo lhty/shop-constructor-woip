@@ -11,19 +11,19 @@ const AuthPage = ({ user }) => {
   return (
     <div className="auth-page-container">
       <div className="auth-page-wrapper">
-        {user.online ? (
+        {user ? (
           <Profile user={user} />
         ) : (
           <>
             <h1
               className={active ? "auth-page auth-active" : "auth-page"}
-              onClick={() => setActive(!active)}
+              onClick={() => !active && setActive(!active)}
             >
               Вход
             </h1>
             <h1
-              className={!active ? "auth-page auth-active" : "auth-page"}
-              onClick={() => setActive(!active)}
+              className={active ? "auth-page" : "auth-page auth-active"}
+              onClick={() => active && setActive(!active)}
             >
               Регистрация
             </h1>

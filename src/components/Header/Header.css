@@ -2,7 +2,8 @@
   position: fixed;
   top: 0;
   background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
-  height: 31px;
+  height: 60px;
+  border-radius: 0 0 15px 15px;
   width: 85%;
   z-index: 10000;
 }
@@ -20,12 +21,8 @@
 }
 .header-title {
   position: absolute;
-  top: 10px;
+  top: 5px;
   transform: translateX(-50%);
   width: 260px;
   z-index: 10000;
-}
-.header-svg {
-  position: absolute;
-  top: 30px;
 }

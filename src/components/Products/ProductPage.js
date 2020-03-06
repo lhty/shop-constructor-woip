@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Spinner from "../Assets/Spinner";
 import Gallery from "../Gallery/Gallery";
 import { Link } from "react-router-dom";
-import { Context } from "../Providers/Provider";
+import { Context } from "../Providers/DataProvider";
 import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
 import { useParams } from "react-router-dom";
@@ -32,7 +32,7 @@ const Product = ({ scroll }) => {
   };
 
   return (
-    <section className="product-page-container">
+    <main className="product-page-container">
       <div className="product-page-nav">
         <Link to="/">
           <span className="arrow left"></span>Назад
@@ -75,7 +75,7 @@ const Product = ({ scroll }) => {
         <p className="product-page-desc">{product.comment}</p>
       </div>
       <label>{product.price} руб</label>
-    </section>
+    </main>
   );
 };
 

@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
+import { useSpring, animated } from "react-spring";
+import Spinner from "../Assets/Spinner";
 import { UserContext } from "../Providers/UserProvider";
 
 import "./Signup.css";
 
 const Signup = () => {
-  const { Register } = useContext(UserContext);
+  const { signUp, loading, error, clearError } = useContext(UserContext);
   const [inputValues, setInputValues] = useState({
     name: null,
     password: null,
@@ -13,38 +15,49 @@ const Signup = () => {
   });
   const handleOnChange = event => {
     const { name, value } = event.target;
+    clearError();
     setInputValues({ ...inputValues, [name]: value });
   };
   const handleSubmit = e => {
     e.preventDefault();
-    Register(inputValues);
+    signUp(inputValues);
   };
+
+  const inputStyle = useSpring({
+    background: error ? "#ffcece75" : "#f4eae1"
+  });
 
   return (
     <form className="auth-page-signup" onSubmit={handleSubmit}>
-      <input
+      <animated.input
+        style={inputStyle}
+        autoComplete="off"
         name="name"
-        placeholder="Как к вам обращатсья ?"
+        placeholder="Имя"
         onChange={handleOnChange}
         required
-      ></input>
-      <input
+      ></animated.input>
+      <animated.input
+        style={inputStyle}
+        autoComplete="off"
         name="password"
         placeholder="Пароль"
         onChange={handleOnChange}
         required
-      ></input>
-      <input
+      ></animated.input>
+      <animated.input
+        style={inputStyle}
         name="email"
         placeholder="Почта"
         onChange={handleOnChange}
         required
-      ></input>
-      <input
+      ></animated.input>
+      <animated.input
+        style={inputStyle}
         name="phone"
         placeholder="Номер телефона"
         onChange={handleOnChange}
-      ></input>
+      ></animated.input>
       <button
         type="submit"
         disabled={
@@ -54,7 +67,7 @@ const Signup = () => {
           !inputValues.phone
         }
       >
-        Зарегистрироваться
+        {loading ? <Spinner /> : "Зарегистрироваться"}
       </button>
     </form>
   );

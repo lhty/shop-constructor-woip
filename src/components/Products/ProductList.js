@@ -12,7 +12,7 @@ import { PRODUCTS_QUERY } from "../Providers/Queries";
 import ProductPage from "./ProductPage";
 import ProductCard from "./ProductCard";
 import Constructor from "../Constructor/Constructor";
-import { Context } from "../Providers/Provider";
+import { Context } from "../Providers/DataProvider";
 
 import { useSpring, animated } from "react-spring";
 
@@ -52,7 +52,7 @@ const ProductList = ({ ScreenWidth }) => {
   });
 
   return (
-    <section className="ProductList-container">
+    <main className="ProductList-container">
       <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
       <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
       <div className="ProductList-wrapper">
@@ -83,7 +83,7 @@ const ProductList = ({ ScreenWidth }) => {
           <Constructor size={size} setSize={setSize} />
         </animated.div>
       </div>
-    </section>
+    </main>
   );
 };
 

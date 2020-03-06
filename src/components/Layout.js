@@ -19,7 +19,7 @@ const Layout = () => {
     };
   }, [width, setWidth]);
   return (
-    <div className="wrapper">
+    <>
       <UserProvider>
         <Route component={Header} />
         <Promo ScreenWidth={width} />
@@ -27,7 +27,7 @@ const Layout = () => {
         <ProductList ScreenWidth={width} />
       </UserProvider>
       <Footer />
-    </div>
+    </>
   );
 };
 
