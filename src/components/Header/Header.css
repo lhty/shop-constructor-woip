@@ -2,8 +2,7 @@
   position: fixed;
   top: 0;
   background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
-  height: 60px;
-  border-radius: 0 0 15px 15px;
+  height: 65px;
   width: 85%;
   z-index: 10000;
 }
@@ -23,6 +22,6 @@
   position: absolute;
   top: 5px;
   transform: translateX(-50%);
-  width: 260px;
+  width: 215px;
   z-index: 10000;
 }

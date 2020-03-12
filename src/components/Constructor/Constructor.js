@@ -386,7 +386,8 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     from: { opacity: 0, width: `${2500 / boxwidth}%` },
     opacity: 1,
     width: `${2500 / boxwidth}%`,
-    minHeight: "50px"
+    minHeight: "50px",
+    delay: 1000
   });
   return (
     <animated.div
@@ -454,6 +455,7 @@ const ItemList = () => {
   const { user } = useContext(UserContext);
   const { details, viewDetails } = useContext(ConstructorContext);
   const { data, error, loading } = useQuery(ITEM_QUERY);
+
   if (loading || error) return <></>;
 
   const _permissionBasedList = user.online

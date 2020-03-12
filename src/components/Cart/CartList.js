@@ -64,8 +64,7 @@ const CartList = ({ url }) => {
         <div className="cart-list-checkout">
           <button className="cart-list-proceed">Продолжить</button>
           <h1 className="cart-list-overallprice">
-            {cart.map(obj => obj.price * obj.quantity).reduce((a, b) => a + b)}{" "}
-            руб
+            {cart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0)} руб
           </h1>
         </div>
       </div>

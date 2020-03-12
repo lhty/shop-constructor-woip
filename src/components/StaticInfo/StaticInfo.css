@@ -9,7 +9,7 @@
 .StaticInfo-card {
   display: flex;
   width: 40%;
-  margin-bottom: 25px;
+  margin: 25px;
 }
 .StaticInfo-card > img {
   width: 40%;

@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useCallback } from "react";
 import { ThumbnailUrl, ImgUrl } from "./ThumbnailUrls";
 import { CartReducer } from "./Reducers/CartReducers";
 
@@ -10,11 +10,12 @@ const Provider = props => {
   const [sortstate, setSortstate] = useState({
     byprice: null,
     bysize: null,
+    tags: [],
     offset: 0,
     page: 0
   });
 
-  function MakeBundle(products) {
+  const MakeBundle = useCallback(products => {
     function Set(product) {
       const _set = [];
       const _schema = product && product.schema && product.schema.split(",");
@@ -31,21 +32,24 @@ const Provider = props => {
               : false
           )
         );
+      console.log("mixer called");
+
       return {
         ...product,
         set: _set,
         price:
           _set.length > 0
-            ? _set
-                .map(obj => obj.price)
-                .reduce((a, b) => a + b, product.proportion.price || 0)
+            ? _set.reduce(
+                (acc, el) => acc + el.price,
+                product.proportion.price || 0
+              )
             : 0
       };
     }
     return products && products.length > 1
       ? products.map(product => Set(product))
       : Set(products);
-  }
+  }, []);
 
   return (
     <Context.Provider

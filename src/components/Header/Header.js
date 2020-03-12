@@ -10,7 +10,7 @@ import title from "../../img/title.svg";
 import "./Header.css";
 
 export default function Header({ match: { url } }) {
-  const { user, setActive, active } = useContext(UserContext);
+  const { user, loading, setActive, active } = useContext(UserContext);
   const AuthRef = useRef();
   const HeaderRef = useRef();
 
@@ -47,7 +47,7 @@ export default function Header({ match: { url } }) {
               })
             }
           >
-            <Userphoto user={user} />
+            <Userphoto user={user} loading={loading} />
           </span>
           <Link to="/">
             <img

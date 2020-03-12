@@ -72,9 +72,6 @@ body {
   .header-title {
     width: 180px;
   }
-  .Banner-wrapper {
-    padding: 75px 25px 0px 25px;
-  }
   .Banner-wrapper > img {
     max-width: 25vw;
   }
@@ -160,6 +157,9 @@ body {
   .Promo-container {
     border-radius: 0 0 5px 5px;
   }
+  .Promo-content {
+    padding: 70px 10px 20px 10px;
+  }
   .Promo-button {
     display: none;
   }
@@ -173,14 +173,10 @@ body {
   #root > div > div > img {
     display: none;
   }
-  .Banner-wrapper {
-    padding: 65px 25px 0px 25px;
-  }
   .Banner-wrapper > img {
     max-width: 40vw;
   }
   .Banner-text {
-    padding-top: 70px;
     margin: 0;
     width: 100%;
     border: none;
@@ -188,9 +184,6 @@ body {
   }
   .Banner-wrapper p {
     width: 100%;
-  }
-  .Promo-content {
-    padding: 0px 0px 25px 0px;
   }
   .Promo-img {
     max-width: 140vw;
@@ -256,9 +249,8 @@ body {
   .boxselector-wrapper {
     flex-flow: column wrap;
     margin: 0 auto;
-    border: 5px solid #efe3dbc4;
-    border-radius: 25px;
-    width: 80%;
+    border: none;
+    border-radius: none;
   }
   .ProductList-topsvg {
     display: none;

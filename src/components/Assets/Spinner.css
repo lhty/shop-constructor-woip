@@ -5,7 +5,7 @@
   height: 100%;
 }
 .path {
-  stroke: rgb(138, 55, 1);
+  stroke: #c999858a;
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
 }

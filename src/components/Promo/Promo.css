@@ -2,20 +2,12 @@
   position: relative;
   display: flex;
   align-items: center;
-  overflow: hidden;
   justify-content: center;
+  overflow: hidden;
   background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
-  min-height: 200px;
-  transition: 2s ease-in-out;
-}
-.Promo-banner {
-  padding-top: 100px;
-  width: 100%;
-  margin: 0 auto;
 }
 .Banner-wrapper {
   position: relative;
-  padding: 125px 25px 0px 25px;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -39,7 +31,6 @@
   width: 80%;
   align-self: center;
   border-radius: 15px;
-  margin-top: 90px;
   padding: 15px;
   overflow: hidden;
   user-select: none;
@@ -57,6 +48,7 @@
   width: 100%;
 }
 .Promo-content {
+  padding: 75px 0 30px 0;
   cursor: grab;
 }
 .Promo-container :active {
@@ -64,8 +56,9 @@
 }
 .Promo-button {
   position: absolute;
-  width: 35px;
-  height: 35px;
+  bottom: 0;
+  width: 25px;
+  height: 30px;
   background: url(../../img/arrow.svg);
   border: none;
   outline: none;

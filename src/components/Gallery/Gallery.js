@@ -11,13 +11,23 @@ const Gallery = ({ image, isPromo }) => {
   const [selected, setSelected] = useState(0);
   const [loading, setLoading] = useState(true);
   const [fullscreen, setFullscreen] = useState(false);
+
   const style = useSpring({
+    from: { opacity: 0, scale: isPromo ? 0 : 1 },
+    scale: 1,
+    opacity: 1
+  });
+
+  const zoomIn = useSpring({
+    from: { opacity: 0, scale: isPromo ? 0 : 1 },
+    scale: loading ? 0 : 1,
     opacity: loading ? 0 : 1
   });
 
-  const fullscreenstyle = useSpring({
-    from: { opacity: 0, x: 0, backgroundColor: `#ffffff00` },
-    opacity: 1,
+  const fullscreenContainer = useSpring({
+    from: { opacity: 0, x: 0, backgroundColor: `#ffffff00`, scale: 0 },
+    scale: 1,
+    opacity: loading ? 0 : 1,
     x: 0,
     backgroundColor: isPromo ? `#ffffff00` : `#ffffffd1`
   });
@@ -35,10 +45,10 @@ const Gallery = ({ image, isPromo }) => {
             }
             alt=""
             onClick={() => {
+              selected === i ? setFullscreen(false) : setLoading(true);
               setSelected(i);
               if (isPromo) setFullscreen(true);
             }}
-            onLoad={() => setLoading(false)}
             draggable="false"
           />
         )
@@ -48,14 +58,14 @@ const Gallery = ({ image, isPromo }) => {
     <>
       {image && image[selected] && fullscreen && (
         <animated.div
-          style={fullscreenstyle}
+          style={fullscreenContainer}
           className={isPromo ? `fullscreenpromo` : `fullscreen`}
           onClick={() => {
             setFullscreen(false);
           }}
         >
           <animated.img
-            style={style}
+            style={zoomIn}
             src={API_URL + image[selected].url}
             alt=""
             onLoad={() => setLoading(false)}
@@ -80,9 +90,9 @@ const Gallery = ({ image, isPromo }) => {
                 src={image[selected] && ThumbnailUrl(image[selected])}
                 alt=""
                 onClick={() => {
+                  setLoading(true);
                   setFullscreen(true);
                 }}
-                onLoad={() => setLoading(false)}
                 draggable="false"
               />
             )}

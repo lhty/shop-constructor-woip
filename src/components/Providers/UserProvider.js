@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { useFetch } from "../Hooks/useFetch";
 import { API_URL } from "../../config";
 
@@ -11,6 +12,8 @@ const UserProvider = props => {
   const [active, setActive] = useState({ auth: false, cart: false });
 
   const { loading, request, error, clearError } = useFetch();
+
+  const history = useHistory();
 
   useEffect(() => {
     if (token && token !== localStorage.getItem(StorageName))
@@ -36,47 +39,41 @@ const UserProvider = props => {
     email = null,
     phone = null
   }) => {
-    try {
-      let data = await request(`${API_URL}auth/local/register`, "POST", {
-        username: name,
-        password,
-        email,
-        phone,
-        photo
-      });
+    let data = await request(`${API_URL}auth/local/register`, "POST", {
+      username: name,
+      password,
+      email,
+      phone,
+      photo
+    });
 
-      setToken(data.jwt);
-      setUser(data.user);
-      login({ name, password });
-    } catch (e) {}
+    setToken(data.jwt);
+    setUser(data.user);
+    login({ name, password });
   };
 
   const getUser = useCallback(
     async token => {
-      try {
-        let user = await request(`${API_URL}users/me`, "GET", null, {
-          Authorization: `Bearer ${token}`
-        });
+      let user = await request(`${API_URL}users/me`, "GET", null, {
+        Authorization: `Bearer ${token}`
+      });
 
-        setUser(user);
-      } catch (e) {}
+      setUser(user);
     },
     [request]
   );
 
   const socialLogin = useCallback(
     async (provider, access_token) => {
-      try {
-        const response = await request(
-          `${API_URL}auth${provider}callback?access_token=${access_token}`,
-          "GET"
-        );
-        const { user, jwt } = await response.json();
-        console.log(user);
-        setToken(jwt);
-      } catch (e) {}
+      const { jwt } = await request(
+        `${API_URL}auth${provider}callback${access_token}`,
+        "GET"
+      );
+      setToken(jwt);
+      getUser(jwt);
+      history.replace("/");
     },
-    [request]
+    [request, history, getUser]
   );
 
   useEffect(() => {
@@ -85,12 +82,15 @@ const UserProvider = props => {
   }, [getUser]);
 
   useEffect(() => {
-    let social_access_token = new URLSearchParams(window.location.search).get(
-      "access_token"
-    );
+    const providers = ["vk", "facebook"];
+
+    let social_access_token = window.location.search;
     let social_access_provider = window.location.pathname;
 
-    if (social_access_token) {
+    if (
+      providers.includes(social_access_provider.replace(/\W/g, "")) &&
+      social_access_token
+    ) {
       socialLogin(social_access_provider, social_access_token);
     }
   }, [socialLogin]);
@@ -106,7 +106,8 @@ const UserProvider = props => {
         login,
         signUp,
         active,
-        setActive
+        setActive,
+        token
       }}
     >
       {props.children}

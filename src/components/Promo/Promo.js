@@ -3,11 +3,12 @@ import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
 import { useInterval } from "../Hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
+import useResizeAware from "react-resize-aware";
 
 import { useSpring, useTransition, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
-import border from "../../img/promoborder.svg";
+// import border from "../../img/promoborder.svg";
 import "./Promo.css";
 
 const Promo = ({ ScreenWidth }) => {
@@ -15,6 +16,8 @@ const Promo = ({ ScreenWidth }) => {
   const [pages, setPages] = useState([]);
   const [index, setIndex] = useState(0);
   const [reset, setReset] = useState(false);
+
+  const [resizeListener, sizes] = useResizeAware();
 
   useEffect(() => {
     setPages(loading || error ? [] : data.promos);
@@ -39,8 +42,8 @@ const Promo = ({ ScreenWidth }) => {
   );
 
   const container = useSpring({
-    from: { y: -500, opacity: 0 },
-    opacity: 1,
+    from: { y: -500, height: 200 },
+    height: collapse ? sizes.height : 200,
     y: 0,
     config: { mass: 1, tension: 300, friction: 40 }
   });
@@ -54,7 +57,6 @@ const Promo = ({ ScreenWidth }) => {
   const [{ x, opacity, filter }, set] = useSpring(() => ({
     filter: `brightness(1)`,
     opacity: 1,
-
     x: 0,
     config: { mass: 1, tension: 50, friction: 12 }
   }));
@@ -63,14 +65,14 @@ const Promo = ({ ScreenWidth }) => {
     transform: `scaleX(-1)`,
     scale: 1,
     opacity: 0.15,
-    top: `60%`,
+    top: `50%`,
     left: 0,
     x: 0
   }));
   const [next, setNext] = useSpring(() => ({
     opacity: 0.15,
     scale: 1,
-    top: `60%`,
+    top: `50%`,
     right: 0,
     x: 0
   }));
@@ -136,6 +138,7 @@ const Promo = ({ ScreenWidth }) => {
     });
     setTimeout(() => {
       set({ x: 0, opacity: 1 });
+      collapse && hadleExpand();
       setIndex(
         direction
           ? index === pages.length - 1
@@ -146,6 +149,7 @@ const Promo = ({ ScreenWidth }) => {
           : index - 1
       );
     }, 1200);
+
     setReset(!reset);
   };
 
@@ -163,81 +167,70 @@ const Promo = ({ ScreenWidth }) => {
     });
   };
   return (
-    <animated.aside style={container}>
-      <aside className="Promo-container">
-        <animated.div
-          style={prev}
-          className="Promo-button"
-          onClick={() => {
-            handleChange(false);
-            setPrev({
-              to: [
-                { opacity: 0.75, scale: 1.5 },
-                {
-                  opacity: 0.15,
-                  scale: 1
-                }
-              ]
-            });
-          }}
-        />
-        <animated.div
-          className="Promo-content"
-          {...bind()}
-          style={{ x, opacity, filter }}
-        >
-          {pages[index] &&
-            transitions.map(({ item, key, props }) =>
-              item ? (
-                <animated.div key={key} style={{ ...props }}>
-                  <div className="Banner-wrapper">
-                    <h1>{pages[index].title}</h1>
-                    <p>{pages[index].description}</p>
-                    <Gallery
-                      image={pages[index].promo_banners}
-                      isPromo={true}
-                    />
-                  </div>
-                </animated.div>
-              ) : (
-                <animated.div key={key} style={props} className="Banner-text">
-                  <h1>{pages[index].title}</h1>
-                  <p>
-                    {pages[index].description.length > 200 &&
-                      pages[index].description.substring(0, 200) + " ..."}
-                  </p>
-                </animated.div>
-              )
-            )}
-        </animated.div>
-        <animated.div
-          style={next}
-          className="Promo-button"
-          onClick={() => {
-            handleChange(true);
-            setNext({
-              to: [
-                { opacity: 0.75, scale: 1.5 },
-                {
-                  opacity: 0.15,
-                  scale: 1
-                }
-              ]
-            });
-          }}
-        ></animated.div>
-      </aside>
+    <animated.aside style={container} className="Promo-container">
+      <animated.span
+        style={prev}
+        className="Promo-button"
+        onClick={() => {
+          handleChange(false);
+          setPrev({
+            to: [
+              { opacity: 0.75, scale: 1.5 },
+              {
+                opacity: 0.15,
+                scale: 1
+              }
+            ]
+          });
+        }}
+      />
       <animated.div
+        className="Promo-content"
+        {...bind()}
+        style={{ x, opacity, filter }}
+      >
+        {resizeListener}
+        {pages[index] &&
+          transitions.map(({ item, key, props }) =>
+            item ? (
+              <animated.div key={key} style={{ ...props }}>
+                <div className="Banner-wrapper">
+                  <h1>{pages[index].title}</h1>
+                  <p>{pages[index].description}</p>
+                  <Gallery image={pages[index].promo_banners} isPromo={true} />
+                </div>
+              </animated.div>
+            ) : (
+              <animated.div key={key} style={props} className="Banner-text">
+                <h1>{pages[index].title}</h1>
+                <p>
+                  {pages[index].description.length > 200 &&
+                    pages[index].description.substring(0, 200) + " ..."}
+                </p>
+              </animated.div>
+            )
+          )}
+      </animated.div>
+      <animated.span
+        style={next}
+        className="Promo-button"
+        onClick={() => {
+          handleChange(true);
+          setNext({
+            to: [
+              { opacity: 0.75, scale: 1.5 },
+              {
+                opacity: 0.15,
+                scale: 1
+              }
+            ]
+          });
+        }}
+      />
+      <animated.span
         onClick={hadleExpand}
         className="Promo-button"
         style={expand}
-      ></animated.div>
-      <img
-        style={{ cursor: `pointer` }}
-        onClick={hadleExpand}
-        src={border}
-        alt=""
-        draggable="false"
       />
     </animated.aside>
   );

@@ -1,11 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  useReducer,
-  useEffect,
-  useCallback,
-  useRef
-} from "react";
+import React, { useContext, useState, useRef, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
@@ -16,6 +9,7 @@ import { Context } from "../Providers/DataProvider";
 
 import { useSpring, animated } from "react-spring";
 
+import useSort from "../Hooks/useSort";
 import sortprice from "../../img/sort-byprice.svg";
 import sortsize from "../../img/sort-bypsize.svg";
 import prodlistsvg from "../../img/productlisttop.svg";
@@ -39,6 +33,7 @@ const ProductList = ({ ScreenWidth }) => {
           : `80%`
         : `100%`
   });
+
   const stylePropsRight = useSpring({
     config: { mass: 1, tension: 280, friction: 60 },
     width:
@@ -89,62 +84,65 @@ const ProductList = ({ ScreenWidth }) => {
 
 const Bundles = ({ ScreenWidth }) => {
   const { sortstate, setSortstate, MakeBundle } = useContext(Context);
-  function sortReducer(state, action) {
-    switch (action.type) {
-      case "BY_PRICE":
-        return [
-          ...action.payload.sort((a, b) =>
-            sortstate.byprice ? a.price - b.price : b.price - a.price
-          )
-        ];
-      case "BY_SIZE":
-        return [
-          ...action.payload.sort((a, b) =>
-            sortstate.bysize
-              ? b.proportion.countmin - a.proportion.countmin
-              : a.proportion.countmin - b.proportion.countmin
-          )
-        ];
-      case "UPDATE":
-        return action.payload;
-      default:
-        return state;
-    }
-  }
+
+  // function sortReducer(state, action) {
+  //   switch (action.type) {
+  //     case "BY_PRICE":
+  //       return [
+  //         ...action.payload.sort((a, b) =>
+  //           sortstate.byprice ? a.price - b.price : b.price - a.price
+  //         )
+  //       ];
+  //     case "BY_SIZE":
+  //       return [
+  //         ...action.payload.sort((a, b) =>
+  //           sortstate.bysize
+  //             ? b.proportion.countmin - a.proportion.countmin
+  //             : a.proportion.countmin - b.proportion.countmin
+  //         )
+  //       ];
+  //     case "UPDATE":
+  //       return action.payload;
+  //     default:
+  //       return state;
+  //   }
+  // }
 
   const { data, error, loading } = useQuery(PRODUCTS_QUERY);
 
-  const initalState = useCallback(
-    () =>
-      data && data.products
-        ? MakeBundle(data.products).filter(obj => obj.show)
-        : [],
-    [data, MakeBundle]
-  );
-  const [productsort, sortDispatch] = useReducer(sortReducer, initalState());
+  const [output, dispatch] = useSort();
 
-  useEffect(() => {
-    !productsort.length &&
-      data &&
-      data.products &&
-      sortDispatch({
-        type: "UPDATE",
-        payload: MakeBundle(data.products).filter(obj => obj.show)
-      });
-  }, [data, productsort, MakeBundle]);
+  // const initalState = useCallback(
+  //   () =>
+  //     data && data.products
+  //       ? MakeBundle(data.products).filter(obj => obj.show)
+  //       : [],
+  //   [data, MakeBundle]
+  // );
+  // const [productsort, sortDispatch] = useReducer(sortReducer, initalState());
 
-  useEffect(() => {
-    if (sortstate.byprice)
-      sortDispatch({ type: "BY_PRICE", payload: productsort });
+  // useEffect(() => {
+  //   !productsort.length &&
+  //     data &&
+  //     data.products &&
+  //     sortDispatch({
+  //       type: "UPDATE",
+  //       payload: MakeBundle(data.products).filter(obj => obj.show)
+  //     });
+  // }, [data, productsort, MakeBundle]);
 
-    if (sortstate.bysize)
-      sortDispatch({ type: "BY_SIZE", payload: productsort });
+  // useEffect(() => {
+  //   if (sortstate.byprice)
+  //     sortDispatch({ type: "BY_PRICE", payload: productsort });
 
-    sortDispatch({
-      type: "UPDATE",
-      payload: productsort
-    });
-  }, [sortstate, productsort]);
+  //   if (sortstate.bysize)
+  //     sortDispatch({ type: "BY_SIZE", payload: productsort });
+
+  //   sortDispatch({
+  //     type: "UPDATE",
+  //     payload: productsort
+  //   });
+  // }, [sortstate, productsort]);
 
   const _limit =
     ScreenWidth <= 1200
@@ -155,9 +153,14 @@ const Bundles = ({ ScreenWidth }) => {
       ? 8
       : 15;
 
-  const _pageQuantity = Math.ceil(productsort.length / _limit);
+  if (loading) return null;
+
+  const _pageQuantity = Math.ceil(data.products.length / _limit);
+  const _products = MakeBundle(data.products);
+
   return (
     <>
+      {console.log(_products)}
       <div className="ProductList-bundles-sort">
         <div className="sort-by">Ключевые слова</div>
         <div
@@ -168,10 +171,10 @@ const Bundles = ({ ScreenWidth }) => {
               ? "sort-by inactive"
               : "sort-by"
           }
-          onClick={() => {
-            sortDispatch({ type: "BY_PRICE", payload: productsort });
-            setSortstate({ ...sortstate, byprice: !sortstate.byprice });
-          }}
+          // onClick={() => {
+          //   sortDispatch({ type: "BY_PRICE", payload: productsort });
+          //   setSortstate({ ...sortstate, byprice: !sortstate.byprice });
+          // }}
         >
           по цене
           <img
@@ -194,10 +197,10 @@ const Bundles = ({ ScreenWidth }) => {
               ? "sort-by inactive"
               : "sort-by"
           }
-          onClick={() => {
-            sortDispatch({ type: "BY_SIZE", payload: productsort });
-            setSortstate({ ...sortstate, bysize: !sortstate.bysize });
-          }}
+          // onClick={() => {
+          //   sortDispatch({ type: "BY_SIZE", payload: productsort });
+          //   setSortstate({ ...sortstate, bysize: !sortstate.bysize });
+          // }}
         >
           по размеру
           <img
@@ -214,19 +217,17 @@ const Bundles = ({ ScreenWidth }) => {
         </div>
       </div>
       <div className="ProductList-bundles-list">
-        {!loading &&
-          !error &&
-          productsort.map(
-            (product, index) =>
-              index >= sortstate.offset &&
-              index < sortstate.offset + _limit && (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  ScreenWidth={ScreenWidth}
-                />
-              )
-          )}
+        {_products.map(
+          (product, index) =>
+            index >= sortstate.offset &&
+            index < sortstate.offset + _limit && (
+              <ProductCard
+                key={product.id}
+                product={product}
+                ScreenWidth={ScreenWidth}
+              />
+            )
+        )}
       </div>
       <div className="ProductList-bundles-pagination">
         {sortstate.page >= 10 && (
@@ -272,7 +273,7 @@ const Bundles = ({ ScreenWidth }) => {
               </div>
             )
         )}
-        {productsort &&
+        {_products &&
           _pageQuantity > 10 &&
           _pageQuantity - sortstate.page > 10 && (
             <>
