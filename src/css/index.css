@@ -27,7 +27,6 @@ body {
 }
 #root {
   max-width: 85%;
-  min-height: 100vh;
   margin: 0 auto;
   box-shadow: 0px 8px 35px -28px rgb(98, 41, 10);
   background: linear-gradient(
@@ -103,6 +102,9 @@ body {
     top: 5px;
     width: 40px;
     height: 40px;
+  }
+  .ProductList-bundles {
+    min-height: 0;
   }
   .fullscreenpromo {
     width: 100%;
@@ -261,8 +263,6 @@ body {
   .ProductCard-wrapper {
     margin: 0;
     border-radius: 2px;
-    width: 25%;
-    height: 100px;
   }
   .ProductCard-wrapper img {
     border-radius: 2px;
@@ -283,6 +283,9 @@ body {
     opacity: 0.9;
   }
   .fullscreen > img {
+    width: 100%;
+  }
+  .footer {
     width: 100%;
   }
 }

@@ -9,7 +9,6 @@ import { API_URL } from "./config";
 import Provider from "./components/Providers/DataProvider";
 import Layout from "./components/Layout";
 import Maintenance from "./components/StaticInfo/Maintenance";
-import { BrowserRouter as Router } from "react-router-dom";
 
 import "./css/index.css";
 
@@ -32,9 +31,7 @@ function App() {
   return online ? (
     <ApolloProvider client={client}>
       <Provider>
-        <Router>
-          <Layout />
-        </Router>
+        <Layout />
       </Provider>
     </ApolloProvider>
   ) : (

@@ -1,0 +1,42 @@
+.Product-sort {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 5px 0px 10px 0px;
+  height: 50px;
+  width: 100%;
+  border-radius: 0 25px 25px 0;
+  background: linear-gradient(
+    89.97deg,
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
+  );
+}
+.sort-by {
+  cursor: pointer;
+  position: relative;
+  font-size: 15px;
+  line-height: 46px;
+  letter-spacing: -0.04em;
+}
+.sort-by :first-child {
+  margin-left: 3px;
+}
+.sort {
+  position: absolute;
+  cursor: pointer;
+  right: 75px;
+}
+.reversed {
+  transform: rotate(180deg);
+}
+.small {
+  transform: scale(0.5);
+}
+.hidden {
+  display: none;
+}
+.inactive {
+  filter: opacity(70%);
+}

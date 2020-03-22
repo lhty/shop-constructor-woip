@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../Providers/DataProvider";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
 
@@ -8,22 +7,21 @@ import { useSpring, animated } from "react-spring";
 import "./ProductCard.css";
 
 const ProductCard = ({ product, ScreenWidth }) => {
-  const { cartDispath } = useContext(Context);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
-  const loadingStyle = useSpring({
+  const container = useSpring({
+    from: { opacity: 0 },
     opacity: loading ? 0 : 1
   });
 
   return (
     <animated.div
-      style={loadingStyle}
+      style={container}
       key={product.id}
       className="ProductCard-wrapper"
     >
-      <animated.img
-        style={loadingStyle}
+      <img
         src={ThumbnailUrl(product.image, ScreenWidth < 800 && "sm")}
         alt=""
         onLoad={() => setLoading(false)}
@@ -34,25 +32,6 @@ const ProductCard = ({ product, ScreenWidth }) => {
         <p>{product.price}</p>
         <p>₽</p>
       </div>
-      {ScreenWidth >= 800 && (
-        <button
-          className="ProductCard-addbutton"
-          onClick={() => {
-            cartDispath({
-              type: "CART_ADD",
-              payload: {
-                id: parseInt(product.id),
-                quantity: 1,
-                title: product.title,
-                image: product.image,
-                price: product.price
-              }
-            });
-          }}
-        >
-          <p>в корзину</p>
-        </button>
-      )}
     </animated.div>
   );
 };

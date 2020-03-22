@@ -1,24 +1,21 @@
-import React, { useContext, useState } from "react";
-import Spinner from "../Assets/Spinner";
+import React, { useContext } from "react";
 import Gallery from "../Gallery/Gallery";
 import { Link } from "react-router-dom";
 import { Context } from "../Providers/DataProvider";
-import { useQuery } from "react-apollo-hooks";
-import { PRODUCTS_QUERY } from "../Providers/Queries";
+import { PRODUCT_QUERY } from "../Providers/Queries";
 import { useParams } from "react-router-dom";
+import useGetAndSort from "../Hooks/useGetAndSort";
 
 import "./ProductPage.css";
 
 const Product = ({ scroll }) => {
-  const [expand, setExpand] = useState(false);
-  const { data, error, loading } = useQuery(PRODUCTS_QUERY);
+  const { setConstruct } = useContext(Context);
+  const id = parseInt(useParams().id);
 
-  const { MakeBundle, setConstruct } = useContext(Context);
-  const id = useParams().id;
-
-  if (loading || error) return <Spinner />;
-
-  const product = MakeBundle(data.products.find(obj => obj.id === id));
+  const {
+    output: { list: product },
+    loading
+  } = useGetAndSort(PRODUCT_QUERY, id);
 
   const contructStyle = {
     on: {
@@ -30,6 +27,8 @@ const Product = ({ scroll }) => {
       opacity: `0.3`
     }
   };
+
+  if (loading) return null;
 
   return (
     <main className="product-page-container">
@@ -50,25 +49,17 @@ const Product = ({ scroll }) => {
       <div className="product-page-right">
         <h1>{product.title}</h1>
         <div className="product-page-inside">
-          <div
-            className="product-page-inside-expand"
-            onClick={() => setExpand(!expand)}
-          >
+          <div className="product-page-inside-expand">
             <p>Состав</p>
-            <span className={expand ? "arrow up" : "arrow down"}></span>
           </div>
-          {expand &&
+          {product.items &&
             product.items.map(item => (
               <p
                 key={item.id}
                 onClick={() => setConstruct({ ...product, details: item.id })}
               >
                 {item.name} x{" "}
-                {
-                  product.set.filter(
-                    obj => parseInt(obj.id) === parseInt(item.id)
-                  ).length
-                }
+                {product.set.filter(obj => obj.id === item.id).length}
               </p>
             ))}
         </div>

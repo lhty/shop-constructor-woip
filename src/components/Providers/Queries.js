@@ -1,7 +1,73 @@
 import gql from "graphql-tag";
+
 export const PRODUCTS_QUERY = gql`
   query($start: Int, $limit: Int) {
     products(sort: "id:desc", start: $start, limit: $limit) {
+      ...Product
+    }
+  }
+
+  fragment Product on Product {
+    id
+    title
+    comment
+    show
+    tags {
+      name
+    }
+    image {
+      url
+    }
+    schema
+    user {
+      username
+      id
+    }
+    construct
+    proportion {
+      id
+      type
+      shape
+      price
+      proportion
+      construct
+      countmin
+      countmax
+      image {
+        url
+      }
+      x
+      y
+      z
+    }
+    items {
+      id
+      name
+      description
+      weight
+      chocolate
+      price
+      discount
+      taste
+      shelflife
+      letter
+      difficult
+      size_width
+      size_height
+      size_length
+      quantity
+      construct
+      editable
+      image {
+        url
+      }
+    }
+  }
+`;
+
+export const PRODUCT_QUERY = gql`
+  query($id: ID!) {
+    product(id: $id) {
       id
       title
       comment

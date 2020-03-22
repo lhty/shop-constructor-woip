@@ -1,22 +1,20 @@
-import React, { useContext, useState, useRef, useCallback } from "react";
+import React, { useState, useRef } from "react";
 import { Route, Switch } from "react-router-dom";
-import { useQuery } from "react-apollo-hooks";
 import { PRODUCTS_QUERY } from "../Providers/Queries";
 import ProductPage from "./ProductPage";
 import ProductCard from "./ProductCard";
+import ProductSort from "./ProductSort";
 import Constructor from "../Constructor/Constructor";
-import { Context } from "../Providers/DataProvider";
 
 import { useSpring, animated } from "react-spring";
 
-import useSort from "../Hooks/useSort";
-import sortprice from "../../img/sort-byprice.svg";
-import sortsize from "../../img/sort-bypsize.svg";
-import prodlistsvg from "../../img/productlisttop.svg";
+import useGetAndSort from "../Hooks/useGetAndSort";
+// import prodlistsvg from "../../img/productlisttop.svg";
 import "./ProductList.css";
 
 const ProductList = ({ ScreenWidth }) => {
   const [size, setSize] = useState();
+
   const _constructorref = useRef(null);
   const constructorScroll = () =>
     ScreenWidth < 1320 &&
@@ -24,6 +22,7 @@ const ProductList = ({ ScreenWidth }) => {
 
   const stylePropsLeft = useSpring({
     config: { mass: 1, tension: 280, friction: 40 },
+    position: `relative`,
     width:
       ScreenWidth > 1320
         ? size
@@ -48,8 +47,8 @@ const ProductList = ({ ScreenWidth }) => {
 
   return (
     <main className="ProductList-container">
-      <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
-      <img className="ProductList-topsvg right" src={prodlistsvg} alt="" />
+      {/* <img className="ProductList-topsvg" src={prodlistsvg} alt="" />
+      <img className="ProductList-topsvg right" src={prodlistsvg} alt="" /> */}
       <div className="ProductList-wrapper">
         <animated.div style={stylePropsLeft}>
           <div className="ProductList-bundles">
@@ -83,144 +82,28 @@ const ProductList = ({ ScreenWidth }) => {
 };
 
 const Bundles = ({ ScreenWidth }) => {
-  const { sortstate, setSortstate, MakeBundle } = useContext(Context);
+  const [sortstate, setSortstate] = useState({
+    tags: [],
+    offset: 0,
+    page: 0
+  });
 
-  // function sortReducer(state, action) {
-  //   switch (action.type) {
-  //     case "BY_PRICE":
-  //       return [
-  //         ...action.payload.sort((a, b) =>
-  //           sortstate.byprice ? a.price - b.price : b.price - a.price
-  //         )
-  //       ];
-  //     case "BY_SIZE":
-  //       return [
-  //         ...action.payload.sort((a, b) =>
-  //           sortstate.bysize
-  //             ? b.proportion.countmin - a.proportion.countmin
-  //             : a.proportion.countmin - b.proportion.countmin
-  //         )
-  //       ];
-  //     case "UPDATE":
-  //       return action.payload;
-  //     default:
-  //       return state;
-  //   }
-  // }
+  const {
+    output: { list, sortProps },
+    dispatch
+  } = useGetAndSort(PRODUCTS_QUERY);
 
-  const { data, error, loading } = useQuery(PRODUCTS_QUERY);
-
-  const [output, dispatch] = useSort();
-
-  // const initalState = useCallback(
-  //   () =>
-  //     data && data.products
-  //       ? MakeBundle(data.products).filter(obj => obj.show)
-  //       : [],
-  //   [data, MakeBundle]
-  // );
-  // const [productsort, sortDispatch] = useReducer(sortReducer, initalState());
-
-  // useEffect(() => {
-  //   !productsort.length &&
-  //     data &&
-  //     data.products &&
-  //     sortDispatch({
-  //       type: "UPDATE",
-  //       payload: MakeBundle(data.products).filter(obj => obj.show)
-  //     });
-  // }, [data, productsort, MakeBundle]);
-
-  // useEffect(() => {
-  //   if (sortstate.byprice)
-  //     sortDispatch({ type: "BY_PRICE", payload: productsort });
-
-  //   if (sortstate.bysize)
-  //     sortDispatch({ type: "BY_SIZE", payload: productsort });
-
-  //   sortDispatch({
-  //     type: "UPDATE",
-  //     payload: productsort
-  //   });
-  // }, [sortstate, productsort]);
-
-  const _limit =
-    ScreenWidth <= 1200
-      ? 12
-      : ScreenWidth <= 1600
-      ? 8
-      : ScreenWidth <= 1920
-      ? 8
-      : 15;
-
-  if (loading) return null;
-
-  const _pageQuantity = Math.ceil(data.products.length / _limit);
-  const _products = MakeBundle(data.products);
+  const productsPerPage =
+    ScreenWidth <= 1200 ? 12 : ScreenWidth <= 1920 ? 8 : 15;
 
   return (
     <>
-      {console.log(_products)}
-      <div className="ProductList-bundles-sort">
-        <div className="sort-by">Ключевые слова</div>
-        <div
-          className={
-            sortstate.byprice
-              ? "sort-by"
-              : sortstate.byprice === null
-              ? "sort-by inactive"
-              : "sort-by"
-          }
-          // onClick={() => {
-          //   sortDispatch({ type: "BY_PRICE", payload: productsort });
-          //   setSortstate({ ...sortstate, byprice: !sortstate.byprice });
-          // }}
-        >
-          по цене
-          <img
-            className={
-              sortstate.byprice === null
-                ? "hidden"
-                : sortstate.byprice
-                ? ""
-                : "reversed"
-            }
-            src={sortprice}
-            alt=""
-          />
-        </div>
-        <div
-          className={
-            sortstate.bysize
-              ? "sort-by"
-              : sortstate.bysize === null
-              ? "sort-by inactive"
-              : "sort-by"
-          }
-          // onClick={() => {
-          //   sortDispatch({ type: "BY_SIZE", payload: productsort });
-          //   setSortstate({ ...sortstate, bysize: !sortstate.bysize });
-          // }}
-        >
-          по размеру
-          <img
-            className={
-              sortstate.bysize === null
-                ? "hidden"
-                : sortstate.bysize
-                ? ""
-                : "small"
-            }
-            src={sortsize}
-            alt=""
-          />
-        </div>
-      </div>
+      <ProductSort sortProps={sortProps} dispatch={dispatch} />
       <div className="ProductList-bundles-list">
-        {_products.map(
+        {list.map(
           (product, index) =>
             index >= sortstate.offset &&
-            index < sortstate.offset + _limit && (
+            index < sortstate.offset + productsPerPage && (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -229,77 +112,90 @@ const Bundles = ({ ScreenWidth }) => {
             )
         )}
       </div>
-      <div className="ProductList-bundles-pagination">
-        {sortstate.page >= 10 && (
-          <>
+      <Pagination
+        length={list.length}
+        limit={productsPerPage}
+        sortstate={sortstate}
+        setSortstate={setSortstate}
+      />
+    </>
+  );
+};
+
+const Pagination = ({ length, limit, sortstate, setSortstate }) => {
+  const _pageQuantity = Math.ceil(length / limit);
+
+  if (length < 1) return null;
+
+  return (
+    <div className="ProductList-bundles-pagination">
+      {sortstate.page >= 10 && (
+        <>
+          <div
+            className="lastpage"
+            onClick={() =>
+              setSortstate({
+                ...sortstate,
+                offset: 0,
+                page: 0
+              })
+            }
+          >
+            1
+          </div>
+          <div
+            onClick={() =>
+              setSortstate({ ...sortstate, page: sortstate.page - 10 })
+            }
+          >
+            ...
+          </div>
+        </>
+      )}
+      {[...Array(_pageQuantity).keys()].map(
+        (_, index, arr) =>
+          index >= sortstate.page &&
+          index < sortstate.page + 10 && (
             <div
-              className="lastpage"
+              className={
+                Math.ceil(sortstate.offset / limit) === index ? "active" : ""
+              }
+              key={index}
               onClick={() =>
                 setSortstate({
                   ...sortstate,
-                  offset: 0,
-                  page: 0
+                  offset: limit * index
                 })
               }
             >
-              1
+              {index + 1}
             </div>
-            <div
-              onClick={() =>
-                setSortstate({ ...sortstate, page: sortstate.page - 10 })
-              }
-            >
-              ...
-            </div>
-          </>
-        )}
-        {[...Array(_pageQuantity).keys()].map(
-          (_, index, arr) =>
-            index >= sortstate.page &&
-            index < sortstate.page + 10 && (
-              <div
-                className={
-                  Math.ceil(sortstate.offset / _limit) === index ? "active" : ""
-                }
-                key={index}
-                onClick={() =>
-                  setSortstate({
-                    ...sortstate,
-                    offset: _limit * index
-                  })
-                }
-              >
-                {index + 1}
-              </div>
-            )
-        )}
-        {_products &&
-          _pageQuantity > 10 &&
-          _pageQuantity - sortstate.page > 10 && (
-            <>
-              <div
-                onClick={() =>
-                  setSortstate({ ...sortstate, page: sortstate.page + 10 })
-                }
-              >
-                ...
-              </div>
-              <div
-                className="lastpage"
-                onClick={() =>
-                  setSortstate({
-                    ...sortstate,
-                    offset: _limit * (_pageQuantity - 1),
-                    page: _pageQuantity - 10
-                  })
-                }
-              >
-                {_pageQuantity}
-              </div>
-            </>
-          )}
-      </div>
-    </>
+          )
+      )}
+      {length && _pageQuantity > 10 && _pageQuantity - sortstate.page > 10 && (
+        <>
+          <div
+            onClick={() =>
+              setSortstate({ ...sortstate, page: sortstate.page + 10 })
+            }
+          >
+            ...
+          </div>
+          <div
+            className="lastpage"
+            onClick={() =>
+              setSortstate({
+                ...sortstate,
+                offset: limit * (_pageQuantity - 1),
+                page: _pageQuantity - 10
+              })
+            }
+          >
+            {_pageQuantity}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

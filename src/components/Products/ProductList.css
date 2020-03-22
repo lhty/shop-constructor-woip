@@ -9,11 +9,12 @@
     #f8f2ed 53.05%,
     #f3ebe5 99.95%
   );
-  padding-bottom: 50px;
-  min-height: 70vh;
+  padding-bottom: 20px;
 }
 .ProductList-bundles {
   display: flex;
+  justify-content: space-between;
+  min-height: 50vh;
   flex-flow: column;
   border-radius: 0px 0px 25px 0px;
 }
@@ -23,6 +24,7 @@
   flex-flow: row wrap;
   justify-content: center;
   width: 100%;
+  padding-bottom: 20px;
 }
 .ProductList-topsvg {
   display: block;
@@ -38,27 +40,9 @@
   position: absolute;
   transform: translateY(-96%);
 }
-.ProductList-bundles-sort {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin: 5px 0px 10px 0px;
-  height: 50px;
-  width: 100%;
-  border-radius: 0 25px 25px 0;
-  background: linear-gradient(
-    89.97deg,
-    #efe3dbc4 0.01%,
-    rgba(244, 237, 232, 0.81) 99.99%
-  );
-}
 .ProductList-bundles-pagination {
-  position: relative;
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  padding: 0 0 10px 0;
   width: 100%;
   border-radius: 0 25px 25px 0;
   transition: 1s ease;
@@ -84,37 +68,10 @@
   background-color: #8a390d85;
   color: #ffffff;
 }
-.sort-by {
-  cursor: pointer;
-  position: relative;
-  font-size: 15px;
-  line-height: 46px;
-  letter-spacing: -0.04em;
-}
-.sort-by :first-child {
-  margin-left: 3px;
-}
 .bundles-checkbox {
   height: 24px;
   width: 24px;
   background-color: #f39c12;
   border: 1px solid #ffbc98;
   border-radius: 10px;
-}
-.sort {
-  position: absolute;
-  cursor: pointer;
-  right: 75px;
-}
-.reversed {
-  transform: rotate(180deg);
-}
-.small {
-  transform: scale(0.5);
-}
-.hidden {
-  display: none;
-}
-.inactive {
-  filter: opacity(70%);
 }

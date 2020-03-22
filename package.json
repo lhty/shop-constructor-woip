@@ -27,9 +27,8 @@
   "scripts": {
     "start": "set PORT=8080  &&  react-scripts start",
     "startnix": "PORT=8080  &&  react-scripts start",
-    "build": "PORT=8080 react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,5 +43,7 @@
       "since 2010"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }

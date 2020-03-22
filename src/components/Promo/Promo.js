@@ -66,14 +66,14 @@ const Promo = ({ ScreenWidth }) => {
     scale: 1,
     opacity: 0.15,
     top: `50%`,
-    left: 0,
+    left: 10,
     x: 0
   }));
   const [next, setNext] = useSpring(() => ({
     opacity: 0.15,
     scale: 1,
     top: `50%`,
-    right: 0,
+    right: 10,
     x: 0
   }));
   const [expand, setExpand] = useSpring(() => ({

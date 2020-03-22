@@ -1,8 +1,7 @@
 .footer {
-  position: relative;
+  bottom: 0;
   height: 30px;
-  width: 100%;
-  background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
+  background: linear-gradient(90.13deg, #ffccb0 0.04%, #ffd9c4 99.97%);
 }
 .footer-border {
   transform: scaleY(-1);
