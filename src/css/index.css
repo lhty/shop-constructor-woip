@@ -236,9 +236,6 @@ body {
   .ProductList-bundles-sort {
     margin: 0;
   }
-  .Constructor-progress {
-    padding: 10px 0px 10px 0px;
-  }
   .compose-offline p {
     font-size: 2vw;
   }
@@ -256,9 +253,6 @@ body {
   }
   .ProductList-topsvg {
     display: none;
-  }
-  .ProductList-bundles-pagination {
-    padding: 15px;
   }
   .ProductCard-wrapper {
     margin: 0;

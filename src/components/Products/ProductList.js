@@ -22,7 +22,6 @@ const ProductList = ({ ScreenWidth }) => {
 
   const stylePropsLeft = useSpring({
     config: { mass: 1, tension: 280, friction: 40 },
-    position: `relative`,
     width:
       ScreenWidth > 1320
         ? size
@@ -89,18 +88,23 @@ const Bundles = ({ ScreenWidth }) => {
   });
 
   const {
-    output: { list, sortProps },
+    output: { filtered, sortProps },
     dispatch
   } = useGetAndSort(PRODUCTS_QUERY);
 
-  const productsPerPage =
-    ScreenWidth <= 1200 ? 12 : ScreenWidth <= 1920 ? 8 : 15;
+  const productsPerPage = ScreenWidth <= 1000 ? 16 : 8;
+
+  // const _tags = [
+  //   ...new Set(
+  //     filtered.reduce((acc, i) => [...acc, ...i.tags.map(tag => tag.name)], [])
+  //   )
+  // ];
 
   return (
     <>
       <ProductSort sortProps={sortProps} dispatch={dispatch} />
       <div className="ProductList-bundles-list">
-        {list.map(
+        {filtered.map(
           (product, index) =>
             index >= sortstate.offset &&
             index < sortstate.offset + productsPerPage && (
@@ -113,7 +117,7 @@ const Bundles = ({ ScreenWidth }) => {
         )}
       </div>
       <Pagination
-        length={list.length}
+        length={filtered.length}
         limit={productsPerPage}
         sortstate={sortstate}
         setSortstate={setSortstate}

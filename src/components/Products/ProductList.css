@@ -9,13 +9,12 @@
     #f8f2ed 53.05%,
     #f3ebe5 99.95%
   );
-  padding-bottom: 20px;
 }
 .ProductList-bundles {
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  min-height: 50vh;
   flex-flow: column;
+  min-height: 50vh;
   border-radius: 0px 0px 25px 0px;
 }
 .ProductList-bundles-list {
@@ -24,7 +23,7 @@
   flex-flow: row wrap;
   justify-content: center;
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
 }
 .ProductList-topsvg {
   display: block;
@@ -41,6 +40,8 @@
   transform: translateY(-96%);
 }
 .ProductList-bundles-pagination {
+  position: absolute;
+  bottom: 10px;
   display: flex;
   justify-content: center;
   width: 100%;

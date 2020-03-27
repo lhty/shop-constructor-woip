@@ -13,7 +13,7 @@ const Product = ({ scroll }) => {
   const id = parseInt(useParams().id);
 
   const {
-    output: { list: product },
+    output: { filtered: product },
     loading
   } = useGetAndSort(PRODUCT_QUERY, id);
 

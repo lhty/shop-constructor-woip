@@ -383,11 +383,11 @@ const Slot = ({ currentitem, boxwidth, index }) => {
   } = useContext(ConstructorContext);
   const [item, setItem] = useState(currentitem);
   const slotStyle = useSpring({
-    from: { opacity: 0, width: `${2500 / boxwidth}%` },
+    from: { opacity: 0, width: `${(2500 / boxwidth).toFixed()}%`, margin: 0 },
     opacity: 1,
-    width: `${2500 / boxwidth}%`,
-    minHeight: "50px",
-    delay: 1000
+    width: `${(2500 / boxwidth).toFixed()}%`,
+    margin: 10,
+    minHeight: "50px"
   });
   return (
     <animated.div
@@ -658,7 +658,7 @@ const Reshuffle = () => {
           style={{
             width: `${(item.size_length * 100) / custom.proportion.x}%`,
             height: `70px`,
-            marginBottom: "2px",
+            margin: 2,
             backgroundImage: `url(${item &&
               item.image.length > 0 &&
               !item.editable &&
@@ -677,6 +677,7 @@ const Reshuffle = () => {
           animation: 200,
           easing: "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
           dragoverBubble: true,
+          removeCloneOnHide: true,
           draggable: ".slot-wrapper",
           chosenClass: "chosen",
           ghostClass: "ghost",

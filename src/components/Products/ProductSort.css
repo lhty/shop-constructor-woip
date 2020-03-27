@@ -3,10 +3,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin: 5px 0px 10px 0px;
   height: 50px;
   width: 100%;
-  border-radius: 0 25px 25px 0;
+  border-radius: 0 0 25px 0;
   background: linear-gradient(
     89.97deg,
     #efe3dbc4 0.01%,
@@ -39,4 +38,25 @@
 }
 .inactive {
   filter: opacity(70%);
+}
+.selected {
+  font-weight: bold;
+}
+.sort-tags {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background: linear-gradient(
+    89.97deg,
+    #f8e2d4c4 0.01%,
+    rgba(249, 218, 195, 0.04) 99.99%
+  );
+  width: 100%;
+  padding: 10px;
+}
+.sort-tags p {
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 10px;
+  letter-spacing: -0.04em;
 }

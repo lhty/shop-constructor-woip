@@ -65,13 +65,15 @@ const UserProvider = props => {
 
   const socialLogin = useCallback(
     async (provider, access_token) => {
-      const { jwt } = await request(
-        `${API_URL}auth${provider}callback${access_token}`,
-        "GET"
-      );
-      setToken(jwt);
-      getUser(jwt);
-      history.replace("/");
+      try {
+        const { jwt } = await request(
+          `${API_URL}auth${provider}callback${access_token}`,
+          "GET"
+        );
+        setToken(jwt);
+        getUser(jwt);
+        history.replace("/");
+      } catch (e) {}
     },
     [request, history, getUser]
   );

@@ -1,21 +1,41 @@
 import { useReducer, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
-import { ascend, descend, prop, sort } from "ramda";
+import { ascend, descend, prop, sort, intersection } from "ramda";
 
 const sortingReducer = (state, action) => {
-  let { list, sortProps } = { ...state, ...action };
+  let { initial, filtered, sortProps } = { ...state, ...action };
+  const sortParams = sortProps && Object.keys(sortProps).slice(1);
+  const tags = sortProps.tags.length;
 
-  if (!Array.isArray(list) || !sortProps) return { list };
+  // if (!Array.isArray(initial) || !sortParams.length)
+  //   return { initial, filtered: initial, sortProps };
 
-  const sortRules = Object.keys(sortProps);
+  const tagFilter = initial.filter(
+    product =>
+      intersection(
+        product.tags.map(tag => tag.name),
+        sortProps.tags
+      ).length > 0
+  );
 
-  sortRules.forEach(key => {
-    const direction = sortProps[key] ? ascend : descend;
-    const sorting = sort(direction(prop(key)));
-    list = sorting(list);
-  });
+  const doSort = (arr, params) => {
+    for (let param of params) {
+      const direction = sortProps[param] ? ascend : descend;
+      const sorted = sort(direction(prop(param)));
+      const result = sorted(filtered);
+      console.log(result);
 
-  return { list, sortProps };
+      return result;
+    }
+  };
+
+  // console.log(doSort(tagFilter, sortParams));
+
+  return {
+    initial,
+    filtered: tags ? tagFilter : initial,
+    sortProps
+  };
 };
 
 const useGetAndSort = (query, param) => {
@@ -25,18 +45,19 @@ const useGetAndSort = (query, param) => {
     }
   });
 
+  const [output, dispatch] = useReducer(sortingReducer, {
+    initial: [],
+    filtered: [],
+    sortProps: { tags: [] }
+  });
+
   useEffect(() => {
     if (!loading && !error) {
       dispatch({
-        list: composeBundle(data[Object.keys(data)[0]])
+        initial: composeBundle(data[Object.keys(data)[0]])
       });
     }
   }, [data, loading, error]);
-
-  const [output, dispatch] = useReducer(sortingReducer, {
-    list: [],
-    sortProps: {}
-  });
 
   return { output, loading, dispatch };
 };
@@ -60,8 +81,6 @@ function composeSet({ items = [], schema = [], proportion: { price = 0 } }) {
   };
 }
 function composeBundle(products = []) {
-  console.log("bump!");
-
   return products.length > 1
     ? products.map(product => ({ ...product, ...composeSet(product) }))
     : { ...products, ...composeSet(products) };
