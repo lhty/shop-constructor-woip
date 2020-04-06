@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const usePagination = (list, limit) => {
-  const [page, setPage] = useState(1);
-  const pages = Math.ceil(list.length / limit);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [currentPage, setCurrentPage] = useState([]);
 
-  function jump(page) {
-    const pageNumber = Math.max(1, page);
-    setPage(page => Math.min(pageNumber, pages));
-  }
+  const pagesQuantity = Math.ceil(list.length / limit);
 
-  function currentPage() {
-    const begin = (page - 1) * pages;
-    const end = begin + pages;
-    return list.slice(begin, end);
-  }
+  useEffect(() => {
+    const begin = pageNumber * limit;
+    const end = begin + limit;
+    setCurrentPage(list.slice(begin, end));
+  }, [list, limit, pagesQuantity, pageNumber]);
 
-  return { jump, currentPage, page, pages };
+  const changePage = (page) => {
+    setPageNumber(Math.min(Math.max(0, page), pagesQuantity));
+  };
+
+  return {
+    currentPage,
+    controls: { pageNumber, pagesQuantity, changePage },
+  };
 };

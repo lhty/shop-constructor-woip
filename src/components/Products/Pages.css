@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  border-radius: 0 25px 25px 0;
   transition: 1s ease;
 }
 .Pages-container div {

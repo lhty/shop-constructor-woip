@@ -66,29 +66,33 @@ const Constructor = ({ size, setSize }) => {
         dispatch({
           type: "CREATE_BOX",
           payload: {
-            name: `Custom bundle ${new Date().getTime() +
-              Math.floor(Math.random(construct.proportion.countmin))}`,
+            name: `Custom bundle ${
+              new Date().getTime() +
+              Math.floor(Math.random(construct.proportion.countmin))
+            }`,
             proportion: construct.proportion,
-            set: construct.set
-          }
+            set: construct.set,
+          },
         });
         setupdatectx(0);
       }, 150);
     }
     if (construct.details)
-      viewDetails(construct.items.find(item => item.id === construct.details));
+      viewDetails(
+        construct.items.find((item) => item.id === construct.details)
+      );
   }, [construct, setSize]);
 
   if (loading || error) return <></>;
 
   const _permissionBasedSizes = user
     ? user.role.id > 1
-      ? data.proportions.filter(size => size.countmin && size.countmax)
+      ? data.proportions.filter((size) => size.countmin && size.countmax)
       : data.proportions.filter(
-          size => size.countmin && size.countmax && size.construct
+          (size) => size.countmin && size.countmax && size.construct
         )
     : data.proportions.filter(
-        size => size.countmin && size.countmax && size.construct
+        (size) => size.countmin && size.countmax && size.construct
       );
 
   return (
@@ -108,7 +112,7 @@ const Constructor = ({ size, setSize }) => {
         updatectx,
         setupdatectx,
         edit,
-        setEdit
+        setEdit,
       }}
     >
       <div className="Constructor-wrapper">
@@ -133,18 +137,20 @@ const Summary = () => {
   const { custom } = useContext(ConstructorContext);
   return (
     <div className="box-overall">
-      <p>{`конфеты ${custom.set.filter(obj => obj).length} шт ${custom.set
-        .map(obj => obj.price)
-        .filter(obj => obj)
+      <p>{`конфеты ${custom.set.filter((obj) => obj).length} шт ${custom.set
+        .map((obj) => obj.price)
+        .filter((obj) => obj)
         .reduce((a, b) => a + b, 0)} руб`}</p>
       <p>{`коробка ${custom.proportion.type.toLowerCase()} ${
         custom.proportion.price
       } руб`}</p>
       <p>
-        {`Итого : ${custom.set
-          .map(obj => obj.price)
-          .filter(obj => obj)
-          .reduce((a, b) => a + b, 0) + custom.proportion.price} руб`}
+        {`Итого : ${
+          custom.set
+            .map((obj) => obj.price)
+            .filter((obj) => obj)
+            .reduce((a, b) => a + b, 0) + custom.proportion.price
+        } руб`}
       </p>
     </div>
   );
@@ -156,7 +162,7 @@ const ProgressBar = ({ size, setSize }) => {
     viewDetails,
     setCompose,
     setslotIndex,
-    dispatch
+    dispatch,
   } = useContext(ConstructorContext);
   return (
     <div className="Constructor-progress">
@@ -177,7 +183,7 @@ const ProgressBar = ({ size, setSize }) => {
               style={{
                 lineHeight: "15px",
                 letterSpacing: "0",
-                textAlign: `center`
+                textAlign: `center`,
               }}
             >
               Собери свой набор
@@ -200,7 +206,7 @@ const ProgressBar = ({ size, setSize }) => {
               viewDetails(false);
             }}
             className={
-              custom.set && custom.set.filter(obj => obj).length > 0
+              custom.set && custom.set.filter((obj) => obj).length > 0
                 ? "Constructor-stage"
                 : "Constructor-stage empty"
             }
@@ -208,7 +214,7 @@ const ProgressBar = ({ size, setSize }) => {
             <img src={sweetssvg} alt="" draggable="false" />
             {custom.set && (
               <p>
-                {custom.set && custom.set.filter(obj => obj).length} / {size}
+                {custom.set && custom.set.filter((obj) => obj).length} / {size}
               </p>
             )}
           </div>
@@ -249,10 +255,10 @@ const BoxSelector = ({ sizes }) => {
                   price: size.price,
                   x: size.x,
                   y: size.y,
-                  z: size.z
+                  z: size.z,
                 },
-                set: Array.from(Array(size.countmin).fill(false))
-              }
+                set: Array.from(Array(size.countmin).fill(false)),
+              },
             });
           }}
           key={i}
@@ -288,7 +294,7 @@ const Box = () => {
     setSize,
     details,
     viewDetails,
-    edit
+    edit,
   } = useContext(ConstructorContext);
 
   const [expand, setExpand] = useState(
@@ -303,7 +309,7 @@ const Box = () => {
             key: index,
             boxwidth: custom.proportion.x,
             currentitem: custom.set[index],
-            index
+            index,
           }}
         />
       )
@@ -317,14 +323,14 @@ const Box = () => {
   return (
     <>
       <div className="box-wrapper">
-        {custom.proportion.countmin <= custom.set.filter(obj => obj).length &&
+        {custom.proportion.countmin <= custom.set.filter((obj) => obj).length &&
           !compose &&
           !details && (
             <button
               className="compose"
               onClick={() => {
                 custom.proportion.countmin <=
-                  custom.set.filter(obj => obj).length && setCompose(true);
+                  custom.set.filter((obj) => obj).length && setCompose(true);
               }}
             >
               Продолжить
@@ -375,7 +381,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     viewDetails,
     dispatch,
     updatectx,
-    setupdatectx
+    setupdatectx,
   } = useContext(ConstructorContext);
   const [item, setItem] = useState(currentitem);
   const slotStyle = useSpring({
@@ -383,16 +389,18 @@ const Slot = ({ currentitem, boxwidth, index }) => {
     opacity: 1,
     width: `${(2500 / boxwidth).toFixed()}%`,
     margin: 10,
-    minHeight: "50px"
+    minHeight: "50px",
   });
   return (
     <animated.div
       style={{
         ...slotStyle,
-        backgroundImage: `url(${item &&
+        backgroundImage: `url(${
+          item &&
           item.image.length > 0 &&
           !item.editable &&
-          ThumbnailUrl(item.image)})`
+          ThumbnailUrl(item.image)
+        })`,
       }}
       className="slot-wrapper"
     >
@@ -402,7 +410,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
           onClick={() => {
             dispatch({
               type: "REMOVE",
-              index: index
+              index: index,
             });
             setupdatectx(updatectx + 1);
             setItem(false);
@@ -457,13 +465,13 @@ const ItemList = () => {
   const _permissionBasedList = user.online
     ? user.role.id > 1
       ? data.items
-      : data.items.filter(item => item.construct)
-    : data.items.filter(item => item.construct);
+      : data.items.filter((item) => item.construct)
+    : data.items.filter((item) => item.construct);
 
   const items = details ? (
     <Item />
   ) : (
-    _permissionBasedList.map(obj => (
+    _permissionBasedList.map((obj) => (
       <ul
         onClick={() => {
           viewDetails(obj);
@@ -486,7 +494,7 @@ const Item = () => {
     slotIndex,
     viewDetails,
     setslotIndex,
-    dispatch
+    dispatch,
   } = useContext(ConstructorContext);
   const [input, setInput] = useState();
   const [quantity, setQauntity] = useState(details.editable ? 0 : 1);
@@ -509,13 +517,13 @@ const Item = () => {
     e.preventDefault();
     input && input.length > 0 && input[0]
       ? input
-          .filter(val => val !== " ")
+          .filter((val) => val !== " ")
           .forEach((letter, index) => {
             dispatch({
               type: "ADD",
               payload: { ...details, letter: letter },
               index: slotIndex + index,
-              quantity: 1
+              quantity: 1,
             });
           })
       : !details.editable &&
@@ -523,7 +531,7 @@ const Item = () => {
           type: "ADD",
           payload: details,
           index: slotIndex,
-          quantity: quantity
+          quantity: quantity,
         });
     setslotIndex(-1);
     viewDetails(false);
@@ -531,7 +539,7 @@ const Item = () => {
   function handleRemove() {
     dispatch({
       type: "REMOVE",
-      index: slotIndex
+      index: slotIndex,
     });
     setslotIndex(-1);
     viewDetails(false);
@@ -561,7 +569,7 @@ const Item = () => {
                   onClick={() => {
                     setQauntity(
                       custom.set &&
-                        custom.set.filter(obj => !obj).length === quantity
+                        custom.set.filter((obj) => !obj).length === quantity
                         ? quantity
                         : quantity + 1
                     );
@@ -599,11 +607,11 @@ const Item = () => {
             maxLength={
               input
                 ? custom.set.filter((_, index) => index >= slotIndex).length +
-                  input.filter(char => char === " ").length
+                  input.filter((char) => char === " ").length
                 : 1
             }
             value={input ? input.join("") : ""}
-            onChange={e => {
+            onChange={(e) => {
               hadleInput(e);
             }}
           ></input>
@@ -646,7 +654,7 @@ const Reshuffle = () => {
 
   const SortableList = ({ set, setSet }) => {
     const items = set
-      .filter(item => item)
+      .filter((item) => item)
       .map((item, i) => (
         <div
           data-id={item.letter || "$" + item.id}
@@ -655,10 +663,12 @@ const Reshuffle = () => {
             width: `${(item.size_length * 100) / custom.proportion.x}%`,
             height: `70px`,
             margin: 2,
-            backgroundImage: `url(${item &&
+            backgroundImage: `url(${
+              item &&
               item.image.length > 0 &&
               !item.editable &&
-              ThumbnailUrl(item.image)})`
+              ThumbnailUrl(item.image)
+            })`,
           }}
           key={i}
           draggable="false"
@@ -677,12 +687,12 @@ const Reshuffle = () => {
           draggable: ".slot-wrapper",
           chosenClass: "chosen",
           ghostClass: "ghost",
-          dragClass: "drag"
+          dragClass: "drag",
         }}
-        onChange={order => {
+        onChange={(order) => {
           setSet(
-            order.map(val =>
-              set.find(obj =>
+            order.map((val) =>
+              set.find((obj) =>
                 val.charAt(0) === "$"
                   ? obj.id === val.substring(1)
                   : obj.letter === val

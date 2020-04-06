@@ -17,9 +17,15 @@ const Social = () => {
           v: "5.73"
         },
         async ({ response }) => {
-          const result = await response;
-          setData(result.items);
-          setLoading(false);
+          try {
+            const result = await response;
+            setData(result.items);
+            setLoading(false);
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
         }
       );
     })();

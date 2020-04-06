@@ -1,84 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./Pages.css";
 
-export const Pages = ({ length, limit }) => {
-  const [sortstate, setSortstate] = useState({
-    offset: 0,
-    page: 0
-  });
-  const _pageQuantity = Math.ceil(length / limit);
-
-  if (length <= 1 || length <= limit) return null;
-
+const Pages = ({ pageNumber, pagesQuantity, changePage }) => {
   return (
     <div className="Pages-container">
-      {sortstate.page >= 10 && (
+      {pageNumber >= 10 && (
         <>
-          <div
-            className="lastpage"
-            onClick={() =>
-              setSortstate({
-                ...sortstate,
-                offset: 0,
-                page: 0
-              })
-            }
-          >
+          <div className="lastpage" onClick={() => changePage(1)}>
             1
           </div>
-          <div
-            onClick={() =>
-              setSortstate({ ...sortstate, page: sortstate.page - 10 })
-            }
-          >
-            ...
-          </div>
+          <div onClick={() => changePage(pageNumber - 10)}>...</div>
         </>
       )}
-      {[...Array(_pageQuantity).keys()].map(
-        (_, index, arr) =>
-          index >= sortstate.page &&
-          index < sortstate.page + 10 && (
+      {[...Array(pagesQuantity).keys()].map(
+        (_, index) =>
+          index <= pageNumber + 10 && (
             <div
-              className={
-                Math.ceil(sortstate.offset / limit) === index ? "active" : ""
-              }
+              className={pageNumber === index ? "active" : ""}
               key={index}
-              onClick={() =>
-                setSortstate({
-                  ...sortstate,
-                  offset: limit * index
-                })
-              }
+              onClick={() => changePage(index)}
             >
               {index + 1}
             </div>
           )
       )}
-      {length && _pageQuantity > 10 && _pageQuantity - sortstate.page > 10 && (
+      {pagesQuantity > 10 && pagesQuantity - pageNumber > 10 && (
         <>
-          <div
-            onClick={() =>
-              setSortstate({ ...sortstate, page: sortstate.page + 10 })
-            }
-          >
-            ...
-          </div>
-          <div
-            className="lastpage"
-            onClick={() =>
-              setSortstate({
-                ...sortstate,
-                offset: limit * (_pageQuantity - 1),
-                page: _pageQuantity - 10
-              })
-            }
-          >
-            {_pageQuantity}
+          <div onClick={() => changePage(pageNumber + 10)}>...</div>
+          <div className="lastpage" onClick={() => changePage(pagesQuantity)}>
+            {pagesQuantity}
           </div>
         </>
       )}
     </div>
   );
 };
+
+export default Pages;
