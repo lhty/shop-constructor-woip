@@ -4,18 +4,18 @@ import { Link } from "react-router-dom";
 import { Context } from "../Providers/DataProvider";
 import { PRODUCT_QUERY } from "../Providers/Queries";
 import { useParams } from "react-router-dom";
-import useGetAndSort from "../Hooks/useGetAndSort";
+import useProducts from "../Hooks/useProducts";
 
 import "./ProductPage.css";
 
-const Product = ({ scroll }) => {
+const Product = ({ constructorScroll }) => {
   const { setConstruct } = useContext(Context);
   const id = parseInt(useParams().id);
 
   const {
     output: { filtered: product },
     loading
-  } = useGetAndSort(PRODUCT_QUERY, id);
+  } = useProducts(PRODUCT_QUERY, id);
 
   const contructStyle = {
     on: {
@@ -38,7 +38,9 @@ const Product = ({ scroll }) => {
         </Link>
         <button
           style={product.construct ? contructStyle.on : contructStyle.off}
-          onClick={() => product.construct && (setConstruct(product), scroll())}
+          onClick={() =>
+            product.construct && (setConstruct(product), constructorScroll())
+          }
         >
           В конструктор
         </button>

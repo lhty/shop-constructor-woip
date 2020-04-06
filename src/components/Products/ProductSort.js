@@ -102,7 +102,7 @@ export default function ProductSort({ sortProps, dispatch }) {
           />
         </div>
       </div>
-      {tagIsOpen && <Tags state={state} add={add} />}
+      {tagIsOpen && <Tags {...{ state, add }} />}
     </>
   );
 }

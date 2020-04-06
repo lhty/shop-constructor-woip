@@ -1,21 +1,14 @@
 .ProductCard-wrapper {
   position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-flow: column wrap;
-  align-items: center;
-  width: calc(100% / 4);
-  border-radius: 3px 25px 3px 3px;
   text-decoration: none;
+  width: 20%;
   font-size: 1rem;
-  border: 1px solid #efe3dbc4;
+  padding: 0.5rem;
 }
 .ProductCard-wrapper img {
-  cursor: pointer;
-  border: 5px solid #efe3dbc4;
   width: 100%;
-  height: 100%;
-  border-radius: 3px 25px 0px 0px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .ProductCard-title {
   display: none;
@@ -30,6 +23,7 @@
   position: absolute;
   display: flex;
   padding: 5px 5px 0px 5px;
+  border-radius: 5px 5px 0 0;
   background: linear-gradient(180deg, #ffda90 10%, #e9bc64 100%);
   box-shadow: 1px 5px 9px 2px rgba(0, 0, 0, 0.41);
   top: 0px;
@@ -66,43 +60,26 @@
   border-bottom: 15px solid #eee0;
   border-right: 25px solid #e9bc64;
 }
-.ProductCard-addbutton {
-  cursor: pointer;
-  position: absolute;
-  border: none;
-  outline: none;
-  border-radius: 5px 0 5px 5px;
-  background: linear-gradient(20deg, #ffda90 10%, #e9bc64 100%);
-  bottom: 0px;
-  right: 0px;
-  padding: 5px 0px 5px 5px;
-  box-shadow: 12px 2px 20px -13px rgba(0, 0, 0, 0.75);
+
+.loading {
+  background: linear-gradient(
+    90deg,
+    #efe3dbc4 30%,
+    #f5e9e3a3 50%,
+    #efe3dbc4 70%
+  );
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-size: 400%;
+  animation: loading 0.5s ease-in-out infinite;
+  transition: 0.3s ease;
 }
-.ProductCard-addbutton p {
-  padding-right: 3px;
-  color: #5b2600;
-  background: linear-gradient(135deg, #fada9a 10%, #d49f38 100%);
-  font-size: 0.85rem;
-  letter-spacing: -0.04em;
-}
-.ProductCard-addbutton:after {
-  content: "";
-  position: absolute;
-  right: 0px;
-  bottom: 25px;
-  width: 0;
-  height: 0;
-  border-top: 5px solid #eee0;
-  border-left: 5px solid #b18126;
-}
-@keyframes gradientBG {
+@keyframes loading {
   0% {
-    background-position: 0% 0%;
-  }
-  80% {
-    background-position: 100% 0%;
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 0%;
+    background-position: 0 50%;
   }
 }

@@ -1,14 +1,14 @@
 import React, { useState, useReducer, useContext, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
-import { PROPORTION_QUERY } from "../Providers/Queries";
-import Gallery from "../Gallery/Gallery";
-import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
-import { ITEM_QUERY } from "../Providers/Queries";
-import { Context } from "../Providers/DataProvider";
-import { UserContext } from "../Providers/UserProvider";
+import { PROPORTION_QUERY } from "../../Providers/Queries";
+import Gallery from "../../Gallery/Gallery";
+import { ThumbnailUrl } from "../../Providers/ThumbnailUrls";
+import { ITEM_QUERY } from "../../Providers/Queries";
+import { Context } from "../../Providers/DataProvider";
+import { UserContext } from "../../Providers/UserProvider";
 import Sortable from "react-sortablejs";
-import boxsvg from "../../img/constructorBox.svg";
-import sweetssvg from "../../img/constructorSweets.svg";
+import boxsvg from "../../../img/constructorBox.svg";
+import sweetssvg from "../../../img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
 import "./Constructor.css";
 
@@ -116,7 +116,7 @@ const Constructor = ({ size, setSize }) => {
           <></>
         ) : (
           <>
-            <ProgressBar size={size} setSize={setSize} />
+            <ProgressBar {...{ size, setSize }} />
             {!custom.set && <BoxSelector sizes={_permissionBasedSizes} />}
             {slotIndex >= 0 ? <ItemList /> : custom.set && <Box />}
             {custom.set && slotIndex < 0 && !details && (
@@ -299,23 +299,19 @@ const Box = () => {
     (_, index) =>
       custom.set && (
         <Slot
-          boxwidth={custom.proportion.x}
-          key={index}
-          currentitem={custom.set[index]}
-          index={index}
+          {...{
+            key: index,
+            boxwidth: custom.proportion.x,
+            currentitem: custom.set[index],
+            index
+          }}
         />
       )
   );
   const _expandableSlots = [...Array(expand).keys()].map(
     (_, index) =>
       custom.set && (
-        <ExpandableSlot
-          key={index}
-          size={size}
-          setSize={setSize}
-          expand={expand}
-          setExpand={setExpand}
-        />
+        <ExpandableSlot {...{ key: index, size, setSize, expand, setExpand }} />
       )
   );
   return (
@@ -343,7 +339,7 @@ const Box = () => {
         ) : (
           <>
             {details ? (
-              <Item item={details} viewDetails={viewDetails} />
+              <Item {...{ item: details, viewDetails }} />
             ) : (
               <>{_createBox}</>
             )}

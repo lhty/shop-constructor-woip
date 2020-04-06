@@ -1,0 +1,30 @@
+.Pages-container {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0 25px 25px 0;
+  transition: 1s ease;
+}
+.Pages-container div {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  opacity: 0.8;
+  margin: 5px;
+  font-size: 13px;
+  border-radius: 30%;
+  background-color: #8a390d33;
+  transition: 0.5s ease;
+}
+.active {
+  font-size: 14px;
+  font-weight: bold;
+  transform: scale(1.5);
+}
+.lastpage {
+  background-color: #8a390d85;
+  color: #ffffff;
+}

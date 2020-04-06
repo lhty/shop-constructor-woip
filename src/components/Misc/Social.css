@@ -1,0 +1,28 @@
+.Social-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  min-height: 40vh;
+  padding: 2rem;
+}
+
+.Social-user-wrapper {
+  display: flex;
+  flex-flow: column wrap;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  margin: 1rem;
+}
+.Social-user-wrapper > p {
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  letter-spacing: -0.05em;
+  color: #556997;
+}
+.Social-user-photo {
+  width: 100%;
+  border-radius: 50%;
+}

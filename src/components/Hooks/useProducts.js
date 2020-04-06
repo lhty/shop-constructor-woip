@@ -3,42 +3,36 @@ import { useQuery } from "react-apollo-hooks";
 import { ascend, descend, prop, sort, intersection } from "ramda";
 
 const sortingReducer = (state, action) => {
-  let { initial, filtered, sortProps } = { ...state, ...action };
-  const sortParams = sortProps && Object.keys(sortProps).slice(1);
-  const tags = sortProps.tags.length;
+  const {
+    initial,
+    sortProps: { tags, ...params }
+  } = { ...state, ...action };
 
-  // if (!Array.isArray(initial) || !sortParams.length)
-  //   return { initial, filtered: initial, sortProps };
-
-  const tagFilter = initial.filter(
-    product =>
-      intersection(
-        product.tags.map(tag => tag.name),
-        sortProps.tags
-      ).length > 0
-  );
-
-  const doSort = (arr, params) => {
-    for (let param of params) {
-      const direction = sortProps[param] ? ascend : descend;
-      const sorted = sort(direction(prop(param)));
-      const result = sorted(filtered);
-      console.log(result);
-
-      return result;
-    }
+  const doFilter = (list, selectedTags) => {
+    if (!selectedTags.length) return initial;
+    const getProdTags = prod => prod.tags.map(tag => tag.name);
+    return list.filter(
+      product => intersection(getProdTags(product), selectedTags).length > 0
+    );
   };
 
-  // console.log(doSort(tagFilter, sortParams));
+  const doSort = (list, key, value) => {
+    if (!key) return list;
+    const direction = value ? ascend : descend;
+    return sort(direction(prop(key)), list);
+  };
 
   return {
     initial,
-    filtered: tags ? tagFilter : initial,
-    sortProps
+    filtered: Object.entries(params).reduce(
+      (sorted, [key, value]) => (sorted = doSort(sorted, key, value)),
+      doFilter(initial, tags)
+    ),
+    sortProps: { tags, ...params }
   };
 };
 
-const useGetAndSort = (query, param) => {
+const useProducts = (query, param) => {
   const { data, error, loading } = useQuery(query, {
     variables: {
       id: param
@@ -86,4 +80,4 @@ function composeBundle(products = []) {
     : { ...products, ...composeSet(products) };
 }
 
-export default useGetAndSort;
+export default useProducts;

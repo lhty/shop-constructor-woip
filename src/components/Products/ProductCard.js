@@ -6,33 +6,35 @@ import { useSpring, animated } from "react-spring";
 
 import "./ProductCard.css";
 
-const ProductCard = ({ product, ScreenWidth }) => {
+const ProductCard = ({ product }) => {
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
-  const container = useSpring({
-    from: { opacity: 0 },
-    opacity: loading ? 0 : 1
+  const appearance = useSpring({
+    from: { opacity: 0, scale: 0 },
+    opacity: loading ? 0 : 1,
+    scale: loading ? 0 : 1,
+    config: { mass: 1, tension: 240, friction: 20 }
   });
 
   return (
-    <animated.div
-      style={container}
-      key={product.id}
-      className="ProductCard-wrapper"
-    >
-      <img
-        src={ThumbnailUrl(product.image, ScreenWidth < 800 && "sm")}
+    <div className="ProductCard-wrapper">
+      {loading && <div className="loading"></div>}
+      <animated.img
+        style={appearance}
+        src={ThumbnailUrl(product.image, window.innerWidth < 800 && "sm")}
         alt=""
-        onLoad={() => setLoading(false)}
+        onLoad={() => {
+          setLoading(false);
+        }}
         onClick={() => history.push(`${product.id}/${product.title}`)}
         draggable="false"
       />
-      <div className="ProductCard-price">
+      <animated.div style={appearance} className="ProductCard-price">
         <p>{product.price}</p>
         <p>₽</p>
-      </div>
-    </animated.div>
+      </animated.div>
+    </div>
   );
 };
 

@@ -11,7 +11,7 @@ import { useDrag } from "react-use-gesture";
 // import border from "../../img/promoborder.svg";
 import "./Promo.css";
 
-const Promo = ({ ScreenWidth }) => {
+const Promo = () => {
   const { data, error, loading } = useQuery(PROMO_QUERY);
   const [pages, setPages] = useState([]);
   const [index, setIndex] = useState(0);
@@ -42,8 +42,8 @@ const Promo = ({ ScreenWidth }) => {
   );
 
   const container = useSpring({
-    from: { y: -500, height: 200 },
-    height: collapse ? sizes.height : 200,
+    from: { y: -500 },
+    height: collapse ? sizes.height : 150,
     y: 0,
     config: { mass: 1, tension: 300, friction: 40 }
   });
@@ -65,33 +65,22 @@ const Promo = ({ ScreenWidth }) => {
     transform: `scaleX(-1)`,
     scale: 1,
     opacity: 0.15,
-    top: `50%`,
-    left: 10,
     x: 0
   }));
   const [next, setNext] = useSpring(() => ({
     opacity: 0.15,
     scale: 1,
-    top: `50%`,
-    right: 10,
     x: 0
-  }));
-  const [expand, setExpand] = useSpring(() => ({
-    transform: `rotate(90deg)`,
-    scale: 1,
-    opacity: 0.15,
-    right: ScreenWidth > 800 ? `50%` : `1%`,
-    y: ScreenWidth > 800 ? 0 : -40
   }));
 
   const bind = useDrag(
     ({ cancel, down, direction: [Xdir], movement: [mx], vxvy: [vx] }) => {
       set({
         x: down
-          ? Math.abs(mx) > ScreenWidth / 6
+          ? Math.abs(mx) > window.innerWidth / 6
             ? Xdir > 0
-              ? ScreenWidth
-              : -ScreenWidth
+              ? window.innerWidth
+              : -window.innerWidth
             : mx + vx
           : 0,
 
@@ -126,7 +115,7 @@ const Promo = ({ ScreenWidth }) => {
             })
           : null;
       }
-      if (Math.abs(mx) > ScreenWidth / 20)
+      if (Math.abs(mx) > window.innerWidth / 20)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
     },
     { dragDelay: 100 }
@@ -138,7 +127,7 @@ const Promo = ({ ScreenWidth }) => {
     });
     setTimeout(() => {
       set({ x: 0, opacity: 1 });
-      collapse && hadleExpand();
+      collapse && setCollapse(!collapse);
       setIndex(
         direction
           ? index === pages.length - 1
@@ -153,19 +142,6 @@ const Promo = ({ ScreenWidth }) => {
     setReset(!reset);
   };
 
-  const hadleExpand = () => {
-    setCollapse(!collapse);
-    setExpand({
-      to: [
-        { opacity: 0.75, scale: 1.5 },
-        {
-          opacity: 0.15,
-          scale: 1,
-          transform: `rotate(${collapse ? `90deg` : `-90deg`})`
-        }
-      ]
-    });
-  };
   return (
     <animated.aside style={container} className="Promo-container">
       <animated.span
@@ -226,11 +202,6 @@ const Promo = ({ ScreenWidth }) => {
             ]
           });
         }}
-      />
-      <animated.span
-        onClick={hadleExpand}
-        className="Promo-button"
-        style={expand}
       />
     </animated.aside>
   );

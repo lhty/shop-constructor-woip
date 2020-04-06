@@ -48,15 +48,12 @@
   width: 100%;
 }
 .Promo-content {
-  padding: 75px 0 30px 0;
   cursor: grab;
 }
 .Promo-container :active {
   cursor: grabbing;
 }
 .Promo-button {
-  position: absolute;
-  bottom: 10px;
   width: 25px;
   height: 30px;
   background: url(../../img/arrow.svg);

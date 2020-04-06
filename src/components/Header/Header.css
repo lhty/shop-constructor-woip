@@ -1,9 +1,8 @@
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
-  height: 65px;
-  width: 85%;
+  height: 60px;
   z-index: 10000;
 }
 .header-nav {
