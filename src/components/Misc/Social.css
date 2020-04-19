@@ -3,7 +3,8 @@
   flex-flow: row wrap;
   justify-content: center;
   min-height: 40vh;
-  padding: 2rem;
+  padding: 0 2rem;
+  width: 50%;
 }
 
 .Social-user-wrapper {

@@ -3,6 +3,8 @@ import { useQuery } from "react-apollo-hooks";
 import { PROMO_QUERY } from "../Providers/Queries";
 import { useInterval } from "../Hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
+
+import useDoubleclick from "../Hooks/useDoubleclick";
 import useResizeAware from "react-resize-aware";
 
 import { useSpring, useTransition, animated } from "react-spring";
@@ -31,8 +33,8 @@ const Promo = () => {
         set({
           to: [
             { scale: 0.5, opacity: 0 },
-            { scale: 1, opacity: 1 }
-          ]
+            { scale: 1, opacity: 1 },
+          ],
         });
         setIndex(index === pages.length - 1 ? 0 : index + 1);
       }
@@ -41,36 +43,38 @@ const Promo = () => {
     reset
   );
 
+  const handleExpand = useDoubleclick(() => setCollapse(!collapse), 250);
+
   const container = useSpring({
     from: { y: -500 },
     height: collapse ? sizes.height : 150,
     y: 0,
-    config: { mass: 1, tension: 300, friction: 40 }
+    config: { mass: 1, tension: 300, friction: 40 },
   });
 
   const transitions = useTransition(collapse, null, {
     from: { opacity: 0, y: -500, display: `none` },
     enter: { opacity: 1, y: 0, display: `block` },
-    leave: { opacity: 0, y: -500, display: `none` }
+    leave: { opacity: 0, y: -500, display: `none` },
   });
 
   const [{ x, opacity, filter }, set] = useSpring(() => ({
     filter: `brightness(1)`,
     opacity: 1,
     x: 0,
-    config: { mass: 1, tension: 50, friction: 12 }
+    config: { mass: 1, tension: 50, friction: 12 },
   }));
 
   const [prev, setPrev] = useSpring(() => ({
     transform: `scaleX(-1)`,
     scale: 1,
-    opacity: 0.15,
-    x: 0
+    opacity: 0,
+    x: 0,
   }));
   const [next, setNext] = useSpring(() => ({
-    opacity: 0.15,
+    opacity: 0,
     scale: 1,
-    x: 0
+    x: 0,
   }));
 
   const bind = useDrag(
@@ -84,34 +88,34 @@ const Promo = () => {
             : mx + vx
           : 0,
 
-        filter: down ? `brightness(1.05)` : `brightness(1)`
+        filter: down ? `brightness(1.05)` : `brightness(1)`,
       });
       if (down) {
         setPrev({
           to: [
             { x: 10, scale: 1.5, opacity: 0.75 },
-            { x: 0, scale: 1, opacity: 0.15 }
-          ]
+            { x: 0, scale: 1, opacity: 0 },
+          ],
         });
         setNext({
           to: [
             { x: -10, scale: 1.5, opacity: 0.75 },
-            { x: 0, scale: 1, opacity: 0.15 }
-          ]
+            { x: 0, scale: 1, opacity: 0 },
+          ],
         });
         return Xdir < 0 && mx < -10
           ? setPrev({
               to: [
                 { x: 50, opacity: 1 },
-                { x: 0, opacity: 0.15 }
-              ]
+                { x: 0, opacity: 0 },
+              ],
             })
           : Xdir > 0 && mx > 10
           ? setNext({
               to: [
                 { x: -50, opacity: 1 },
-                { x: 0, opacity: 0.15 }
-              ]
+                { x: 0, opacity: 0 },
+              ],
             })
           : null;
       }
@@ -121,9 +125,9 @@ const Promo = () => {
     { dragDelay: 100 }
   );
 
-  const handleChange = direction => {
+  const handleChange = (direction) => {
     set({
-      opacity: 0
+      opacity: 0,
     });
     setTimeout(() => {
       set({ x: 0, opacity: 1 });
@@ -147,21 +151,22 @@ const Promo = () => {
       <animated.span
         style={prev}
         className="Promo-button"
-        onClick={() => {
+        onMouseDown={() => {
           handleChange(false);
           setPrev({
             to: [
               { opacity: 0.75, scale: 1.5 },
               {
                 opacity: 0.15,
-                scale: 1
-              }
-            ]
+                scale: 1,
+              },
+            ],
           });
         }}
       />
       <animated.div
         className="Promo-content"
+        onClick={() => handleExpand()}
         {...bind()}
         style={{ x, opacity, filter }}
       >
@@ -197,9 +202,9 @@ const Promo = () => {
               { opacity: 0.75, scale: 1.5 },
               {
                 opacity: 0.15,
-                scale: 1
-              }
-            ]
+                scale: 1,
+              },
+            ],
           });
         }}
       />

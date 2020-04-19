@@ -1,25 +1,24 @@
 .Pages-container {
-  position: absolute;
-  bottom: 10px;
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: auto;
   transition: 1s ease;
 }
 .Pages-container div {
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 1.5rem;
+  height: 1.5rem;
   text-align: center;
   opacity: 0.8;
-  margin: 5px;
-  font-size: 13px;
+  margin: 1rem 0.3rem;
+  font-size: 1rem;
   border-radius: 30%;
   background-color: #8a390d33;
   transition: 0.5s ease;
 }
 .active {
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: bold;
   transform: scale(1.5);
 }

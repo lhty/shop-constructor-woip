@@ -1,12 +1,19 @@
 *:focus {
   outline: none;
 }
-.Constructor {
+.Constructor-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: 25px 0 0 25px;
-  background-color: #8339040d;
+  transition: 0.5s ease;
+}
+.Constructor-wrapper select {
+  border: none;
+  background: transparent;
+  width: 25%;
+  align-self: center;
+  font-size: 15px;
+  letter-spacing: -0.08em;
 }
 .boxselector-wrapper {
   position: relative;
@@ -15,13 +22,18 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  border-radius: 5px 0px 0px 10px;
+  border-top: 5px solid #efe3dbc4;
+  border-left: 5px solid #efe3dbc4;
 }
 .box-wrapper {
   position: relative;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  border: 1px solid #8339043d;
   background-color: #8339040d;
+  border-radius: 5px;
 }
 .box-wrapper section {
   display: flex;
@@ -36,6 +48,13 @@
   display: flex;
   white-space: pre;
   cursor: pointer;
+  box-shadow: -5px 3px 35px rgba(255, 190, 155, 0.03),
+    -7px 4px 25px rgba(255, 206, 180, 0.04);
+  background: linear-gradient(
+    89.97deg,
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
+  );
   overflow: hidden;
   padding-left: 10px;
 }
@@ -178,6 +197,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background: linear-gradient(
+    270deg,
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
+  );
 }
 .svgicon {
   cursor: pointer;
@@ -192,6 +216,11 @@
   height: 50px;
   min-width: 30%;
   border-radius: 25px 0 0 25px;
+  background: linear-gradient(
+    89.97deg,
+    #efe3dbc4 0.01%,
+    rgba(244, 237, 232, 0.81) 99.99%
+  );
 }
 .Constructor-stage img {
   cursor: pointer;

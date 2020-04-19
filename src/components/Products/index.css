@@ -13,17 +13,17 @@
 .ProductList-bundles {
   position: relative;
   display: flex;
-  flex-flow: column;
-  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
   border-radius: 0px 0px 25px 0px;
 }
-.ProductList-bundles-list {
+.Item-list {
   position: relative;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   width: 100%;
-  padding-bottom: 50px;
 }
 .ProductList-topsvg {
   display: block;

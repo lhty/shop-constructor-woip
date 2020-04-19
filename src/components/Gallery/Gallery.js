@@ -13,15 +13,14 @@ const Gallery = ({ image, isPromo }) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const style = useSpring({
-    from: { opacity: 0, scale: isPromo ? 0 : 1 },
-    scale: 1,
-    opacity: 1
+    from: { opacity: 0, scale: 0 },
+    to: { scale: 1, opacity: 1 },
   });
 
   const zoomIn = useSpring({
     from: { opacity: 0, scale: isPromo ? 0 : 1 },
     scale: loading ? 0 : 1,
-    opacity: loading ? 0 : 1
+    opacity: loading ? 0 : 1,
   });
 
   const fullscreenContainer = useSpring({
@@ -29,7 +28,7 @@ const Gallery = ({ image, isPromo }) => {
     scale: 1,
     opacity: loading ? 0 : 1,
     x: 0,
-    backgroundColor: isPromo ? `#ffffff00` : `#ffffffd1`
+    backgroundColor: isPromo ? `#ffffff00` : `#ffffffd1`,
   });
 
   const imagelist =

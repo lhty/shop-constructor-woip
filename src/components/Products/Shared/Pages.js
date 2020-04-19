@@ -3,6 +3,7 @@ import React from "react";
 import "./Pages.css";
 
 const Pages = ({ pageNumber, pagesQuantity, changePage }) => {
+  if (!pagesQuantity) return null;
   return (
     <div className="Pages-container">
       {pageNumber >= 10 && (
@@ -15,6 +16,7 @@ const Pages = ({ pageNumber, pagesQuantity, changePage }) => {
       )}
       {[...Array(pagesQuantity).keys()].map(
         (_, index) =>
+          pagesQuantity > 1 &&
           index <= pageNumber + 10 && (
             <div
               className={pageNumber === index ? "active" : ""}

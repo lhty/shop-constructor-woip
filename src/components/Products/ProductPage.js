@@ -8,24 +8,24 @@ import useProducts from "../Hooks/useProducts";
 
 import "./ProductPage.css";
 
-const Product = ({ constructorScroll }) => {
+const Product = () => {
   const { setConstruct } = useContext(Context);
   const id = parseInt(useParams().id);
 
   const {
     output: { filtered: product },
-    loading
+    loading,
   } = useProducts(PRODUCT_QUERY, id);
 
   const contructStyle = {
     on: {
-      cursor: `pointer`
+      cursor: `pointer`,
     },
     off: {
       cursor: `normal`,
       filter: `grayscale(100%)`,
-      opacity: `0.3`
-    }
+      opacity: `0.3`,
+    },
   };
 
   if (loading) return null;
@@ -38,9 +38,7 @@ const Product = ({ constructorScroll }) => {
         </Link>
         <button
           style={product.construct ? contructStyle.on : contructStyle.off}
-          onClick={() =>
-            product.construct && (setConstruct(product), constructorScroll())
-          }
+          onClick={() => product.construct && setConstruct(product)}
         >
           В конструктор
         </button>
@@ -55,13 +53,13 @@ const Product = ({ constructorScroll }) => {
             <p>Состав</p>
           </div>
           {product.items &&
-            product.items.map(item => (
+            product.items.map((item) => (
               <p
                 key={item.id}
                 onClick={() => setConstruct({ ...product, details: item.id })}
               >
                 {item.name} x{" "}
-                {product.set.filter(obj => obj.id === item.id).length}
+                {product.set.filter((obj) => obj.id === item.id).length}
               </p>
             ))}
         </div>
