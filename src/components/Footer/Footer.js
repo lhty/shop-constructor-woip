@@ -5,7 +5,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer className="footer side-bg">
       {/* <img className="footer-border" src={border} alt="" /> */}
       Footer TBD
     </footer>

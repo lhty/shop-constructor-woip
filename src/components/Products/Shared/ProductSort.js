@@ -5,19 +5,17 @@ import gql from "graphql-tag";
 
 import { useTransition, animated } from "react-spring";
 
-import sortprice from "../../../img/sort-byprice.svg";
-import sortsize from "../../../img/sort-bypsize.svg";
+import sortprice from "../../../resources/img/sort-byprice.svg";
+import sortsize from "../../../resources/img/sort-bypsize.svg";
 import "./ProductSort.css";
 
 export default function ProductSort({ sortProps, dispatch, controls }) {
   const [IsOpen, toggle] = useState(false);
 
-  const reducer = (state, tag) => {
+  const [state, add] = useReducer((state, tag) => {
     if (state.includes(tag)) return state.filter((val) => val !== tag);
     return [...state, tag];
-  };
-
-  const [state, add] = useReducer(reducer, []);
+  }, []);
 
   const updateTags = useCallback(() => {
     dispatch({
@@ -121,10 +119,9 @@ const Tags = ({ IsOpen, state, add, controls }) => {
   `);
 
   const transitions = useTransition(IsOpen, null, {
-    config: { duration: 300 },
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 0, y: -100 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: 100 },
   });
 
   if (loading || error) return null;

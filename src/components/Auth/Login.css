@@ -44,14 +44,14 @@
   cursor: pointer;
   width: 35px;
   height: 35px;
-  background: url(../../img/vk.svg);
+  background: url(../../resources/img/vk.svg);
   background-repeat: no-repeat;
 }
 .auth-page-fb {
   cursor: pointer;
   width: 35px;
   height: 35px;
-  background: url(../../img/fb.svg);
+  background: url(../../resources/img/fb.svg);
   background-repeat: no-repeat;
 }
 .auth-page-login-400 {

@@ -1,10 +1,6 @@
 .Promo-container {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
-  background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
 }
 .Banner-wrapper {
   position: relative;
@@ -30,12 +26,10 @@
   margin: 0 auto;
   width: 80%;
   align-self: center;
-  border-radius: 15px;
   padding: 15px;
   overflow: hidden;
   user-select: none;
   pointer-events: none;
-  background: linear-gradient(903deg, #f9cdb570 99.97%, #ffdcc9 0.04%);
 }
 .Banner-text p {
   cursor: pointer;
@@ -53,20 +47,67 @@
 .Promo-container :active {
   cursor: grabbing;
 }
-.Promo-button {
-  width: 25px;
-  height: 30px;
-  background: url(../../img/arrow.svg);
-  border: none;
-  outline: none;
+
+.arrow-icon {
+  height: 2.8em;
+  width: 2.8em;
+  display: block;
+  padding: 0.5em;
+  margin: 0.5em auto;
+  position: relative;
   cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center center;
-  z-index: 11;
+  border-radius: 4px;
 }
-.expand {
-  transform: rotate(90deg);
+
+.left-bar {
+  position: absolute;
+  background-color: transparent;
+  left: 0;
+  width: 30px;
+  display: block;
+  transform: rotate(35deg);
+  float: right;
+  border-radius: 2px;
 }
-.prev {
-  transform: rotate(180deg);
+.left-bar::after {
+  content: "";
+  background-color: #cbb2a6;
+  width: 35px;
+  height: 5px;
+  display: block;
+  float: right;
+  border-radius: 10px;
+  transition: all 1s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+  z-index: -1;
+}
+
+.right-bar {
+  position: absolute;
+  background-color: transparent;
+  left: 16px;
+  width: 40px;
+  display: block;
+  transform: rotate(-35deg);
+  float: right;
+  border-radius: 2px;
+}
+.right-bar::after {
+  content: "";
+  background-color: #cbb2a6;
+  width: 35px;
+  height: 5px;
+  display: block;
+  float: right;
+  border-radius: 10px;
+  transition: all 1s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+  z-index: -1;
+}
+
+.open::after {
+  transform-origin: center center;
+  transform: rotate(-70deg);
+}
+.openr::after {
+  transform-origin: center center;
+  transform: rotate(70deg);
 }

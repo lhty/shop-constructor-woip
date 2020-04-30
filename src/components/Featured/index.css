@@ -1,0 +1,12 @@
+.Featured-container {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+}
+.Featured-product {
+  background-color: rgb(255, 187, 150);
+}
+.Featured-item {
+  background-color: rgb(255, 187, 150);
+}

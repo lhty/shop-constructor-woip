@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { UserContext } from "../../Providers/UserProvider";
+import { UserContext } from "../../../containers/UserProvider";
 
 import "./Profile.css";
 
-const Profile = user => {
+const Profile = (user) => {
   const { setUser } = useContext(UserContext);
 
   return (

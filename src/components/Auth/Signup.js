@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import Spinner from "../Assets/Spinner";
-import { UserContext } from "../Providers/UserProvider";
+import { UserContext } from "../../containers/UserProvider";
 
 import "./Signup.css";
 
@@ -11,20 +11,20 @@ const Signup = () => {
     name: null,
     password: null,
     email: null,
-    phone: null
+    phone: null,
   });
-  const handleOnChange = event => {
+  const handleOnChange = (event) => {
     const { name, value } = event.target;
     clearError();
     setInputValues({ ...inputValues, [name]: value });
   };
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     signUp(inputValues);
   };
 
   const inputStyle = useSpring({
-    background: error ? "#ffcece75" : "#f4eae1"
+    background: error ? "#ffcece75" : "#f4eae1",
   });
 
   return (

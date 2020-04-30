@@ -6,11 +6,11 @@ import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo-hooks";
 import { API_URL } from "./config";
-import Provider from "./components/Providers/DataProvider";
+import Provider from "./containers/DataProvider";
 import Layout from "./components/Layout";
 import Maintenance from "./components/StaticInfo/Maintenance";
 
-import "./css/index.css";
+import "./css/main.css";
 
 function App() {
   const [online, setOnline] = useState(true);
@@ -22,16 +22,18 @@ function App() {
       }),
       new HttpLink({
         uri: `${API_URL}graphql`,
-        credentials: "same-origin"
-      })
+        credentials: "same-origin",
+      }),
     ]),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   });
 
   return online ? (
     <ApolloProvider client={client}>
       <Provider>
-        <Layout />
+        <main className="app">
+          <Layout />
+        </main>
       </Provider>
     </ApolloProvider>
   ) : (

@@ -19,7 +19,7 @@
   }
 }
 .Maintenance-logo {
-  background: url(../../img/maintenance.svg);
+  background: url(../../resources/img/maintenance.svg);
   min-height: 500px;
   width: 500px;
   animation: float 6s ease-in-out infinite;

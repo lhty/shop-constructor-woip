@@ -3,11 +3,11 @@
   text-decoration: none;
   width: 20%;
   font-size: 1rem;
-  padding-right: 0.5rem;
 }
 .ProductCard-wrapper img {
+  display: block;
+  height: auto;
   width: 100%;
-  border-radius: 5px;
   cursor: pointer;
 }
 .ProductCard-title {
@@ -16,14 +16,12 @@
   width: 100%;
   background: linear-gradient(270deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
   padding: 5px 0 0 5px;
-  border-radius: 5px;
   z-index: 1;
 }
 .ProductCard-price {
   position: absolute;
   display: flex;
-  padding: 5px 5px 0px 5px;
-  border-radius: 5px 5px 0 0;
+  padding: 4px 4px 0px 4px;
   background: linear-gradient(180deg, #ffda90 10%, #e9bc64 100%);
   box-shadow: 1px 5px 9px 2px rgba(0, 0, 0, 0.41);
   top: 0px;
@@ -67,6 +65,7 @@
   width: 15%;
   font-size: 1rem;
   padding: 2px;
+  cursor: pointer;
 }
 .ItemCard-wrapper > p {
   display: flex;
@@ -77,14 +76,12 @@
   font-size: 1rem;
   font-weight: bold;
   border: 1px #995c30b3 dashed;
-  border-radius: 5px 1px 5px 5px;
-  margin-bottom: 5px;
-  height: 95%;
+  height: 100%;
 }
 .ItemCard-wrapper img {
   width: 100%;
-  border-radius: 5px 1px 5px 5px;
-  cursor: pointer;
+  height: 100%;
+  object-fit: cover;
 }
 .ItemCard-price {
   position: absolute;

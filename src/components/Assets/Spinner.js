@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import './Spinner.css';
+import "./Spinner.css";
 
-const Spinner = () => {
+export default () => {
   return (
     <svg className="spinner" viewBox="0 0 50 50">
       <circle
@@ -16,5 +16,3 @@ const Spinner = () => {
     </svg>
   );
 };
-
-export default Spinner;

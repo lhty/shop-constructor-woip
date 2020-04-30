@@ -1,10 +1,8 @@
 .product-page-container {
-  position: relative;
   width: 100%;
   display: flex;
   flex-flow: row wrap;
   border-radius: 0px 0px 25px 0px;
-  padding-bottom: 30px;
   animation: 1s ease 0s 1 normal none running slideInLeft;
   transition: 1s ease;
 }
@@ -15,16 +13,10 @@
   height: 50px;
   width: 100%;
   border-radius: 0 25px 25px 0;
-  background: linear-gradient(
-    89.97deg,
-    #efe3dbc4 0.01%,
-    rgba(244, 237, 232, 0.81) 99.99%
-  );
 }
 .product-page-nav a {
   position: absolute;
   padding: 15px 0 15px 10px;
-  background-color: #83350c1f;
   height: 100%;
   min-width: 80px;
   font-size: 14px;
@@ -39,11 +31,8 @@
   font-size: 14px;
   height: 50px;
   padding: 15px;
-  border-radius: 25px 25px 0px 25px;
+  border-radius: 25px 0 0 25px;
   color: #5b2600;
-  background-color: #83350c1f;
-  box-shadow: 0px 1px 8px -16px rgba(0, 0, 0, 0.75);
-  transition: 0.2s ease;
 }
 .back {
   left: 0;
@@ -54,6 +43,7 @@
   border-radius: 0 10px 10px 0;
 }
 .product-page-right {
+  position: relative;
   display: flex;
   flex-flow: column wrap;
   padding: 0 25px 25px 25px;

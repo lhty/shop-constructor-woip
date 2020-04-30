@@ -5,7 +5,7 @@ import "./Userphoto.css";
 
 const Userphoto = ({ user, loading }) => {
   const photo = {
-    backgroundImage: user && user.photo && `url('${user.photo}')`
+    backgroundImage: user && user.photo && `url('${user.photo}')`,
   };
   return (
     <div className={user ? "auth" : "auth authFalse"} style={photo}>

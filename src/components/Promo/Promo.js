@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
-import { PROMO_QUERY } from "../Providers/Queries";
-import { useInterval } from "../Hooks/useInterval";
+import { PROMO_QUERY } from "../../containers/Queries";
+import { useInterval } from "../../hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
 
-import useDoubleclick from "../Hooks/useDoubleclick";
+import useDoubleclick from "../../hooks/useDoubleclick";
 import useResizeAware from "react-resize-aware";
 
 import { useSpring, useTransition, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 
-// import border from "../../img/promoborder.svg";
 import "./Promo.css";
 
 const Promo = () => {
@@ -65,18 +64,6 @@ const Promo = () => {
     config: { mass: 1, tension: 50, friction: 12 },
   }));
 
-  const [prev, setPrev] = useSpring(() => ({
-    transform: `scaleX(-1)`,
-    scale: 1,
-    opacity: 0,
-    x: 0,
-  }));
-  const [next, setNext] = useSpring(() => ({
-    opacity: 0,
-    scale: 1,
-    x: 0,
-  }));
-
   const bind = useDrag(
     ({ cancel, down, direction: [Xdir], movement: [mx], vxvy: [vx] }) => {
       set({
@@ -90,35 +77,7 @@ const Promo = () => {
 
         filter: down ? `brightness(1.05)` : `brightness(1)`,
       });
-      if (down) {
-        setPrev({
-          to: [
-            { x: 10, scale: 1.5, opacity: 0.75 },
-            { x: 0, scale: 1, opacity: 0 },
-          ],
-        });
-        setNext({
-          to: [
-            { x: -10, scale: 1.5, opacity: 0.75 },
-            { x: 0, scale: 1, opacity: 0 },
-          ],
-        });
-        return Xdir < 0 && mx < -10
-          ? setPrev({
-              to: [
-                { x: 50, opacity: 1 },
-                { x: 0, opacity: 0 },
-              ],
-            })
-          : Xdir > 0 && mx > 10
-          ? setNext({
-              to: [
-                { x: -50, opacity: 1 },
-                { x: 0, opacity: 0 },
-              ],
-            })
-          : null;
-      }
+
       if (Math.abs(mx) > window.innerWidth / 20)
         cancel(Xdir > 0 ? handleChange(true) : handleChange(false));
     },
@@ -147,23 +106,7 @@ const Promo = () => {
   };
 
   return (
-    <animated.aside style={container} className="Promo-container">
-      <animated.span
-        style={prev}
-        className="Promo-button"
-        onMouseDown={() => {
-          handleChange(false);
-          setPrev({
-            to: [
-              { opacity: 0.75, scale: 1.5 },
-              {
-                opacity: 0.15,
-                scale: 1,
-              },
-            ],
-          });
-        }}
-      />
+    <animated.section style={container} className="Promo-container">
       <animated.div
         className="Promo-content"
         onClick={() => handleExpand()}
@@ -191,24 +134,12 @@ const Promo = () => {
               </animated.div>
             )
           )}
+        <div onClick={() => setCollapse(!collapse)} className="arrow-icon">
+          <span className={collapse ? "left-bar open" : "left-bar"}></span>
+          <span className={collapse ? "right-bar openr" : "right-bar"}></span>
+        </div>
       </animated.div>
-      <animated.span
-        style={next}
-        className="Promo-button"
-        onClick={() => {
-          handleChange(true);
-          setNext({
-            to: [
-              { opacity: 0.75, scale: 1.5 },
-              {
-                opacity: 0.15,
-                scale: 1,
-              },
-            ],
-          });
-        }}
-      />
-    </animated.aside>
+    </animated.section>
   );
 };
 

@@ -14,7 +14,6 @@
   margin: 0.5rem;
   padding: 0.5rem;
   letter-spacing: -0.04em;
-  border-radius: 1rem;
 }
 .sort-by :first-child {
   margin-left: 0.1rem;
@@ -37,19 +36,18 @@
 }
 .sort-tags {
   position: absolute;
+  left: 0;
   top: 80%;
   z-index: 1;
   background-color: #eaded8;
-  border-radius: 10px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
-  width: 85%;
   box-shadow: 14px 8px 35px #5656562b, 0px 17px 25px #5a5a5a4a;
 }
 .sort-tags p {
   cursor: pointer;
-  padding: 0.4rem;
+  padding: 0.5rem;
   border-radius: 1rem;
   font-size: 0.8rem;
   letter-spacing: -0.04em;

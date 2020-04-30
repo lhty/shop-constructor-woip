@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { useFetch } from "../Hooks/useFetch";
-import { API_URL } from "../../config";
+import { useFetch } from "../hooks/useFetch";
+import { API_URL } from "../config";
 
 const StorageName = "user";
 export const UserContext = React.createContext();
 
-const UserProvider = props => {
+const UserProvider = (props) => {
   const [user, setUser] = useState(false);
   const [token, setToken] = useState(null);
   const [active, setActive] = useState({ auth: false, cart: false });
@@ -24,7 +24,7 @@ const UserProvider = props => {
     try {
       let data = await request(`${API_URL}auth/local`, "POST", {
         identifier: name,
-        password
+        password,
       });
 
       setToken(data.jwt);
@@ -37,14 +37,14 @@ const UserProvider = props => {
     password,
     photo = "",
     email = null,
-    phone = null
+    phone = null,
   }) => {
     let data = await request(`${API_URL}auth/local/register`, "POST", {
       username: name,
       password,
       email,
       phone,
-      photo
+      photo,
     });
 
     setToken(data.jwt);
@@ -53,9 +53,9 @@ const UserProvider = props => {
   };
 
   const getUser = useCallback(
-    async token => {
+    async (token) => {
       let user = await request(`${API_URL}users/me`, "GET", null, {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       });
 
       setUser(user);
@@ -109,7 +109,7 @@ const UserProvider = props => {
         signUp,
         active,
         setActive,
-        token
+        token,
       }}
     >
       {props.children}

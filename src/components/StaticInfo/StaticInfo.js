@@ -2,11 +2,11 @@ import React from "react";
 
 import "./StaticInfo.css";
 
-import calli from "../../img/calli.png";
+import calli from "../../resources/img/calli.png";
 
 const StaticInfo = () => {
   return (
-    <aside className="StaticInfo-container">
+    <section className="StaticInfo-container">
       <div className="StaticInfo-card">
         <p>
           Авторские конфеты ручной работы, наборы с шоколадными буквами под
@@ -23,7 +23,7 @@ const StaticInfo = () => {
         </p>
         <img src={calli} alt="" draggable="false" />
       </div>
-    </aside>
+    </section>
   );
 };
 

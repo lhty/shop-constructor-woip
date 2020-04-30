@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../Providers/UserProvider";
+import { UserContext } from "../../containers/UserProvider";
 import { useSpring, animated } from "react-spring";
 import { API_URL } from "../../config";
 import Spinner from "../Assets/Spinner";
@@ -10,22 +10,22 @@ const Login = () => {
   const { login, loading, error, clearError } = useContext(UserContext);
   const [inputValues, setInputValues] = useState({
     name: null,
-    password: null
+    password: null,
   });
 
   const callbackUrl = window.location.href;
 
   const inputStyle = useSpring({
-    background: error ? "#ffcece75" : "#f4eae1"
+    background: error ? "#ffcece75" : "#f4eae1",
   });
 
-  const handleOnChange = event => {
+  const handleOnChange = (event) => {
     const { name, value } = event.target;
     clearError();
     setInputValues({ ...inputValues, [name]: value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     login(inputValues);
   };

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../Providers/DataProvider";
+import { Context } from "../../containers/DataProvider";
 import { API_URL } from "../../config";
 
 import { useSpring, animated } from "react-spring";
@@ -13,8 +13,8 @@ const Gallery = ({ image, isPromo }) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const style = useSpring({
-    from: { opacity: 0, scale: 0 },
-    to: { scale: 1, opacity: 1 },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
   });
 
   const zoomIn = useSpring({

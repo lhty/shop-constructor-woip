@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ThumbnailUrl } from "../../Providers/ThumbnailUrls";
+import { ThumbnailUrl } from "../../../containers/ThumbnailUrls";
 
 import { useSpring, animated } from "react-spring";
 
 import "./ProductCard.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onClick }) => {
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
@@ -17,31 +17,16 @@ const ProductCard = ({ product }) => {
     config: { mass: 1, tension: 240, friction: 20 },
   });
 
-  if (product.__typename === "Product")
-    return (
-      <animated.div style={appearance} className="ProductCard-wrapper">
-        {!product.image.length ? (
-          <p>{product.name}</p>
-        ) : (
-          <img
-            src={ThumbnailUrl(product.image, window.innerWidth < 800 && "sm")}
-            alt=""
-            onLoad={() => {
-              setLoading(false);
-            }}
-            onClick={() => history.push(`${product.id}/${product.title}`)}
-            draggable="false"
-          />
-        )}
-        <div className="ProductCard-price">
-          <p>{product.price}</p>
-          <p>₽</p>
-        </div>
-      </animated.div>
-    );
-
   return (
-    <animated.div style={appearance} className="ItemCard-wrapper">
+    <animated.div
+      style={appearance}
+      className={`${product.__typename}Card-wrapper`}
+      onClick={() =>
+        product.__typename === "Product"
+          ? history.push(`${product.id}/${product.title}`)
+          : onClick()
+      }
+    >
       {!product.image.length ? (
         <p>{product.name}</p>
       ) : (
@@ -51,11 +36,10 @@ const ProductCard = ({ product }) => {
           onLoad={() => {
             setLoading(false);
           }}
-          onClick={() => null}
           draggable="false"
         />
       )}
-      <div className="ItemCard-price">
+      <div className={`${product.__typename}Card-price`}>
         <p>{product.price}</p>
         <p>₽</p>
       </div>

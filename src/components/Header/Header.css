@@ -1,26 +1,11 @@
 .header {
   position: sticky;
-  top: 0;
-  background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
-  height: 60px;
-  z-index: 10000;
-}
-.header-nav {
-  position: absolute;
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  width: 100%;
-}
-.headerbg {
-  background: linear-gradient(269.94deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
-  width: 100%;
-  height: 65px;
+  top: 0;
+  height: 70px;
+  z-index: 10000;
 }
 .header-title {
-  position: absolute;
-  top: 5px;
-  transform: translateX(-50%);
-  width: 215px;
-  z-index: 10000;
+  padding: 2px;
 }

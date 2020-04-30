@@ -1,14 +1,15 @@
 .ProductList-container {
   position: relative;
+  min-height: 10vh;
 }
 .ProductList-wrapper {
   display: flex;
-  background: linear-gradient(
+  /* background: linear-gradient(
     270.2deg,
     #f3ebe5 0.19%,
     #f8f2ed 53.05%,
     #f3ebe5 99.95%
-  );
+  ); */
 }
 .ProductList-bundles {
   position: relative;
@@ -24,6 +25,12 @@
   flex-flow: row wrap;
   justify-content: center;
   width: 100%;
+}
+.Item-list > div {
+  padding-bottom: 2px;
+}
+.Item-list > div:not(:first-child) {
+  padding-left: 2px;
 }
 .ProductList-topsvg {
   display: block;

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import Gallery from "../Gallery/Gallery";
 import { Link } from "react-router-dom";
-import { Context } from "../Providers/DataProvider";
-import { PRODUCT_QUERY } from "../Providers/Queries";
+import Gallery from "../Gallery/Gallery";
+import { Context } from "../../containers/DataProvider";
+import { PRODUCT_QUERY } from "../../containers/Queries";
 import { useParams } from "react-router-dom";
-import useProducts from "../Hooks/useProducts";
+import useProducts from "../../hooks/useProducts";
 
 import "./ProductPage.css";
 
@@ -38,7 +38,7 @@ const Product = () => {
         </Link>
         <button
           style={product.construct ? contructStyle.on : contructStyle.off}
-          onClick={() => product.construct && setConstruct(product)}
+          onClick={() => product.construct && setConstruct({ product })}
         >
           В конструктор
         </button>
@@ -54,18 +54,15 @@ const Product = () => {
           </div>
           {product.items &&
             product.items.map((item) => (
-              <p
-                key={item.id}
-                onClick={() => setConstruct({ ...product, details: item.id })}
-              >
+              <p key={item.id} onClick={() => setConstruct({ details: item })}>
                 {item.name} x{" "}
                 {product.set.filter((obj) => obj.id === item.id).length}
               </p>
             ))}
         </div>
         <p className="product-page-desc">{product.comment}</p>
+        <label>{product.price} руб</label>
       </div>
-      <label>{product.price} руб</label>
     </main>
   );
 };

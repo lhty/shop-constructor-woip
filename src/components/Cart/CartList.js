@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../Providers/DataProvider";
-import { ThumbnailUrl } from "../Providers/ThumbnailUrls";
+import { Context } from "../../containers/DataProvider";
+import { ThumbnailUrl } from "../../containers/ThumbnailUrls";
 
 import "./CartList.css";
 
@@ -9,7 +9,7 @@ const CartList = ({ url }) => {
   const { cartDispath, cart } = useContext(Context);
   const list = cart
     .sort((a, b) => b.id - a.id)
-    .map(item => (
+    .map((item) => (
       <div className="cart-element" key={item.id}>
         <Link
           className="cart-element-description"
@@ -29,7 +29,7 @@ const CartList = ({ url }) => {
               cartDispath({
                 type: "CART_REMOVE",
                 id: item.id,
-                quantity: item.quantity
+                quantity: item.quantity,
               });
             }}
           >
@@ -46,8 +46,8 @@ const CartList = ({ url }) => {
                   quantity: item.quantity,
                   title: item.title,
                   image: item.image,
-                  price: item.price
-                }
+                  price: item.price,
+                },
               });
             }}
           >

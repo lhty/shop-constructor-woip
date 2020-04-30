@@ -1,13 +1,15 @@
 import React from "react";
-import Header from "./Header/Header";
-import Staticinfo from "./StaticInfo/StaticInfo";
-import Promo from "./Promo/Promo";
-import Social from "./Misc/Social";
-import Footer from "./Footer/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route } from "react-router";
+
+import UserProvider from "../containers/UserProvider";
+
+import Header from "./Header/Header";
 import Products from "./Products";
-import UserProvider from "./Providers/UserProvider";
+import Promo from "./Promo/Promo";
+import Staticinfo from "./StaticInfo/StaticInfo";
+import Social from "./Misc/Social";
+import Footer from "./Footer/Footer";
 
 const Layout = () => {
   return (
@@ -15,9 +17,15 @@ const Layout = () => {
       <UserProvider>
         <Route component={Header} />
         <Promo />
-        <Staticinfo />
         <Products />
       </UserProvider>
+      <Staticinfo />
+      <Staticinfo />
+      <Staticinfo />
+      <Staticinfo />
+      <Staticinfo />
+      <Staticinfo />
+      <Staticinfo />
       <Social />
       <Footer />
     </Router>

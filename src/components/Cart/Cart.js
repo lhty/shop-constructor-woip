@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Context } from "../Providers/DataProvider";
-import { UserContext } from "../Providers/UserProvider";
+import { Context } from "../../containers/DataProvider";
+import { UserContext } from "../../containers/UserProvider";
 
 import { useSpring, animated } from "react-spring";
 
@@ -13,7 +13,7 @@ const Cart = () => {
   useEffect(() => {
     if (localStorage.getItem("cart"))
       cartDispath({
-        type: "CART_RETRIVE"
+        type: "CART_RETRIVE",
       });
   }, [cartDispath]);
   useEffect(() => {
@@ -39,7 +39,7 @@ export default Cart;
 const Bucket = ({ cart }) => {
   const [{ scale }, set] = useSpring(() => ({
     scale: 1,
-    config: { mass: 1, tension: 120, friction: 5 }
+    config: { mass: 1, tension: 120, friction: 5 },
   }));
 
   let bundleQuantity = cart.reduce(

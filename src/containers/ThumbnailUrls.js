@@ -1,4 +1,4 @@
-import { API_URL } from "../../config";
+import { API_URL } from "../config";
 
 export const ThumbnailUrl = (image, size) => {
   const _size = size ? size : "th";
