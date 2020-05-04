@@ -46,7 +46,7 @@ const Promo = () => {
 
   const container = useSpring({
     from: { y: -500 },
-    height: collapse ? sizes.height : 150,
+    height: collapse ? sizes.height : 180,
     y: 0,
     config: { mass: 1, tension: 300, friction: 40 },
   });

@@ -1,6 +1,5 @@
 .ProductList-container {
   position: relative;
-  min-height: 10vh;
 }
 .ProductList-wrapper {
   display: flex;

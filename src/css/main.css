@@ -62,6 +62,7 @@ body {
 }
 @media (max-width: 1320px) {
   .Constructor-toggle {
+    width: 100%;
     position: unset;
   }
   .Banner-wrapper > img {
@@ -101,7 +102,10 @@ body {
     width: 30%;
   }
   .StaticInfo-container {
-    display: none;
+    flex-flow: column wrap;
+  }
+  .StaticInfo-card {
+    width: 100%;
   }
   .Constructor-wrapper {
     padding-top: 0px;
@@ -157,6 +161,7 @@ body {
     max-width: 40vw;
   }
   .Banner-text {
+    font-size: 0.9rem;
     margin: 0;
     width: 100%;
     border: none;

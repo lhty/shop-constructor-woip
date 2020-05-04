@@ -5,11 +5,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* border-radius: 25px 0 0 25px;
-  background-color: #8339040d; */
 }
 .Constructor-toggle {
   position: absolute;
+  text-align: center;
+  width: 10%;
   right: 0px;
   height: 50px;
   padding: 0.5rem 0;

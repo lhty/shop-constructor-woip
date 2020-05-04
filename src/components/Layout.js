@@ -20,12 +20,6 @@ const Layout = () => {
         <Products />
       </UserProvider>
       <Staticinfo />
-      <Staticinfo />
-      <Staticinfo />
-      <Staticinfo />
-      <Staticinfo />
-      <Staticinfo />
-      <Staticinfo />
       <Social />
       <Footer />
     </Router>

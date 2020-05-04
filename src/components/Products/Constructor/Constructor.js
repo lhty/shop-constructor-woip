@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { ITEM_QUERY, PROPORTION_QUERY } from "../../../containers/Queries";
 
@@ -46,7 +46,7 @@ const Info = ({ state: { product, current_page }, setState }) => {
           })
         }
       >
-        {current_page > 0 ? "Back" : "Close"}
+        {current_page > 0 && product ? "Back" : "Close"}
       </div>
 
       <div
@@ -81,7 +81,7 @@ const Info = ({ state: { product, current_page }, setState }) => {
           <div
             onClick={() => setState({ current_page: 1 })}
             className={
-              product.set && product.set.filter((obj) => obj).length > 0
+              product.set && product.set.filter(Boolean).length > 0
                 ? "Constructor-stage"
                 : "Constructor-stage empty"
             }
@@ -131,6 +131,7 @@ const SelectBox = ({ setState }) => {
                 new Date().getTime() + Math.floor(Math.random(size.countmin));
               setState({
                 product: {
+                  id: null,
                   name: `Custom bundle ${_id}`,
                   proportion: size,
                   set: new Array(size.countmin).fill(false),
@@ -190,7 +191,7 @@ const Slots = ({ product, setState }) => {
           {slot && (
             <div
               className="slot-wrapper-del"
-              onClick={() => console.log("del slot")}
+              onClick={() => setState({ type: "REMOVE_ITEM", index: i })}
             >
               +
             </div>
@@ -204,7 +205,7 @@ const Slots = ({ product, setState }) => {
               🍬
             </span>
           ) : slot.editable ? (
-            <h1 onClick={() => console.log("dunno")}>{slot.letter}</h1>
+            <h1 onClick={() => setState({ current_page: 2 })}>{slot.letter}</h1>
           ) : slot.image.length > 0 ? (
             <div
               style={{ width: "100%", height: "100%" }}
@@ -244,7 +245,11 @@ const ItemPicker = ({ setState }) => {
 };
 
 const Details = ({ state, setState }) => {
-  const [quantity, set] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+
+  const _input = useRef();
+
+  const _max = state.product.set.filter((item) => !item).length;
 
   return (
     <div className="item-container">
@@ -253,11 +258,37 @@ const Details = ({ state, setState }) => {
           <>
             <div className="item-container-buttons-control">
               {!state.details.editable && (
-                <button onClick={() => set(quantity - 1)}>-</button>
+                <button
+                  disabled={quantity === 1}
+                  onClick={() => setQuantity(quantity - 1)}
+                >
+                  -
+                </button>
               )}
+              <input
+                ref={_input}
+                type="range"
+                onChange={(e) => setQuantity(Math.max(e.target.value, 1))}
+                value={quantity}
+                onInput={(quantity) =>
+                  _input.current &&
+                  (_input.current.style.background =
+                    "linear-gradient(to right, #ffa879 0%, #ffa879 " +
+                    quantity +
+                    "%, #ffbb96 " +
+                    quantity +
+                    "%, #ffbb96 100%)")
+                }
+                max={_max}
+              ></input>
               <p>{quantity} шт</p>
               {!state.details.editable && (
-                <button onClick={() => set(quantity + 1)}>+</button>
+                <button
+                  disabled={quantity === _max}
+                  onClick={() => setQuantity(Math.min(quantity + 1, _max))}
+                >
+                  +
+                </button>
               )}
             </div>
             <button className="item-container-buttons-add" onClick={() => {}}>
@@ -266,9 +297,10 @@ const Details = ({ state, setState }) => {
           </>
         </div>
       )}
-      {state.details.editable ? (
+      {state.product && state.details.editable && (
         <form onSubmit={null}>
           <input
+            className="item-container-letter"
             required
             maxLength={null}
             value={""}
@@ -277,25 +309,24 @@ const Details = ({ state, setState }) => {
             }}
           ></input>
         </form>
-      ) : (
-        <div className="item-container-info">
-          <div className="item-container-info-details">
-            <div className="item-container-info-details-size">
-              <p>длинна : {state.details.size_length} мм</p>
-              <p>высота : {state.details.size_height} мм</p>
-              <p>ширина : {state.details.size_width} мм</p>
-              <p>вес : {state.details.weight} грамм</p>
-            </div>
-            <div className="item-container-info-details-specs">
-              <p>вкус : {state.details.taste}</p>
-              <p>шоколад : {state.details.chocolate}</p>
-            </div>
+      )}
+      <div className="item-container-info">
+        <div className="item-container-info-details">
+          <div className="item-container-info-details-size">
+            <p>длинна : {state.details.size_length} мм</p>
+            <p>высота : {state.details.size_height} мм</p>
+            <p>ширина : {state.details.size_width} мм</p>
+            <p>вес : {state.details.weight} грамм</p>
           </div>
-          <div className="item-container-info-gallery">
-            <Gallery image={state.details.image} />
+          <div className="item-container-info-details-specs">
+            <p>вкус : {state.details.taste}</p>
+            <p>шоколад : {state.details.chocolate}</p>
           </div>
         </div>
-      )}
+        <div className="item-container-info-gallery">
+          <Gallery image={state.details.image} />
+        </div>
+      </div>
       <div className="item-container-details">
         <h1 className="item-container-title">{state.details.name}</h1>
         <p className="item-container-description">

@@ -7,5 +7,5 @@
   z-index: 10000;
 }
 .header-title {
-  padding: 2px;
+  transform: scale(0.8);
 }
