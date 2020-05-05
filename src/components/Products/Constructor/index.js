@@ -25,7 +25,7 @@ const Reducer = (state, action) => {
               iter--
           )
         : state.product.set.splice(action.index, 1, action.payload);
-      return state;
+      return { ...state, current_page: action.current_page };
     case "REMOVE_ITEM":
       return {
         ...state,

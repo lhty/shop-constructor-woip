@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { ITEM_QUERY, PROPORTION_QUERY } from "../../../containers/Queries";
 
@@ -46,7 +46,7 @@ const Info = ({ state: { product, current_page }, setState }) => {
           })
         }
       >
-        {current_page > 0 && product ? "Back" : "Close"}
+        {current_page > 1 && product ? "Back" : "Close"}
       </div>
 
       <div
@@ -247,51 +247,54 @@ const ItemPicker = ({ setState }) => {
 const Details = ({ state, setState }) => {
   const [quantity, setQuantity] = useState(1);
 
-  const _input = useRef();
-
-  const _max = state.product.set.filter((item) => !item).length;
+  const _max = state?.product?.set.filter((item) => !item).length;
+  const _fill = useSpring({ width: `${(quantity * 100) / _max}%` });
 
   return (
     <div className="item-container">
       {state.product && (
         <div className="item-container-buttons">
           <>
+            {!state.details.editable && (
+              <button
+                disabled={quantity === 1}
+                onClick={() => setQuantity(quantity - 1)}
+              >
+                -
+              </button>
+            )}
             <div className="item-container-buttons-control">
-              {!state.details.editable && (
-                <button
-                  disabled={quantity === 1}
-                  onClick={() => setQuantity(quantity - 1)}
-                >
-                  -
-                </button>
-              )}
+              <animated.div
+                style={_fill}
+                className="item-container-buttons-quantity"
+              ></animated.div>
               <input
-                ref={_input}
                 type="range"
                 onChange={(e) => setQuantity(Math.max(e.target.value, 1))}
                 value={quantity}
-                onInput={(quantity) =>
-                  _input.current &&
-                  (_input.current.style.background =
-                    "linear-gradient(to right, #ffa879 0%, #ffa879 " +
-                    quantity +
-                    "%, #ffbb96 " +
-                    quantity +
-                    "%, #ffbb96 100%)")
-                }
                 max={_max}
-              ></input>
+              />
               <p>{quantity} шт</p>
-              {!state.details.editable && (
-                <button
-                  disabled={quantity === _max}
-                  onClick={() => setQuantity(Math.min(quantity + 1, _max))}
-                >
-                  +
-                </button>
-              )}
             </div>
-            <button className="item-container-buttons-add" onClick={() => {}}>
+            {!state.details.editable && (
+              <button
+                disabled={quantity === _max}
+                onClick={() => setQuantity(Math.min(quantity + 1, _max))}
+              >
+                +
+              </button>
+            )}
+            <button
+              className="item-container-buttons-add"
+              onClick={() => {
+                setState({
+                  type: "ADD",
+                  quantity,
+                  payload: state.details,
+                  current_page: 1,
+                });
+              }}
+            >
               Добавить
             </button>
           </>
