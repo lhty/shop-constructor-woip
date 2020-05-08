@@ -1,10 +1,4 @@
-import React, {
-  useReducer,
-  useEffect,
-  useContext,
-  Suspense,
-  lazy,
-} from "react";
+import React, { useContext, Suspense, lazy } from "react";
 import { Context } from "../../../containers/DataProvider";
 import { useTransition, animated } from "react-spring";
 
@@ -12,52 +6,8 @@ import "./index.css";
 
 const Constructor = lazy(() => import("./Constructor"));
 
-const Reducer = (state, action) => {
-  switch (action.type) {
-    case "ADD":
-      let iter = action.quantity;
-      action.quantity > 1
-        ? state.product.set.map(
-            (obj, i) =>
-              !obj &&
-              iter !== 0 &&
-              state.product.set.splice(i, 1, action.payload) &&
-              iter--
-          )
-        : state.product.set.splice(action.index, 1, action.payload);
-      return { ...state, current_page: action.current_page };
-    case "REMOVE_ITEM":
-      return {
-        ...state,
-        product: {
-          ...state.product,
-          set: state.product.set.map((prod, i) =>
-            i === action.index ? (prod = false) : prod
-          ),
-        },
-      };
-    case "EXPAND":
-      state.product.set.push(false);
-      return state;
-    default:
-      return { ...state, ...action };
-  }
-};
-
 export default () => {
-  const [state, setState] = useReducer(Reducer, {
-    current_page: -1,
-    product: null,
-    details: null,
-  });
-  const { construct } = useContext(Context);
-
-  useEffect(() => {
-    if (construct.product)
-      setState({ current_page: 1, product: construct.product });
-    if (construct.details)
-      setState({ current_page: 3, details: construct.details });
-  }, [construct]);
+  const { state, setState } = useContext(Context);
 
   const transitions = useTransition(state.current_page >= 0, null, {
     from: {

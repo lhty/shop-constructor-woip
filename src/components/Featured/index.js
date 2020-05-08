@@ -23,7 +23,9 @@ const FeaturedProduct = ({ product }) => {
   return (
     <div
       className="Featured-product"
-      onClick={() => history.replace(`/${product.id}/${product.title}`)}
+      onClick={() =>
+        product && history.replace(`/${product.id}/${product.title}`)
+      }
     >
       Featured-product:{product?.title}
     </div>
@@ -31,11 +33,11 @@ const FeaturedProduct = ({ product }) => {
 };
 
 const FeaturedItem = ({ item }) => {
-  const { setConstruct } = useContext(Context);
+  const { setState } = useContext(Context);
   return (
     <div
       className="Featured-item"
-      onClick={() => setConstruct({ details: item })}
+      onClick={() => item && setState({ current_page: 3, details: item })}
     >
       Featured-item:{item?.name}
     </div>

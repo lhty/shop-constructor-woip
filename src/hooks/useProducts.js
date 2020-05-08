@@ -32,7 +32,7 @@ const sortingReducer = (state, action) => {
   };
 };
 
-const useProducts = (query, param) => {
+export const useProducts = (query, param) => {
   const { data, error, loading } = useQuery(query, {
     variables: {
       id: param,
@@ -81,5 +81,3 @@ function composeBundle(products = []) {
     ? products.map((product) => ({ ...product, ...composeSet(product) }))
     : { ...products, ...composeSet(products) };
 }
-
-export default useProducts;

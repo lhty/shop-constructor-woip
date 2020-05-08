@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route } from "react-router";
 
+import DataProvider from "../containers/DataProvider";
 import UserProvider from "../containers/UserProvider";
 
 import Header from "./Header/Header";
@@ -15,9 +16,11 @@ const Layout = () => {
   return (
     <Router>
       <UserProvider>
-        <Route component={Header} />
-        <Promo />
-        <Products />
+        <DataProvider>
+          <Route component={Header} />
+          <Promo />
+          <Products />
+        </DataProvider>
       </UserProvider>
       <Staticinfo />
       <Social />

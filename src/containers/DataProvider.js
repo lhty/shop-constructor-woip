@@ -1,19 +1,18 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 import { ThumbnailUrl, ImgUrl } from "./ThumbnailUrls";
 import { CartReducer } from "./Reducers/CartReducer";
+import { ConstructorReducer } from "./Reducers/ConstructorReducer";
 
 export const Context = React.createContext();
 
 const Provider = (props) => {
   const [cart, cartDispath] = useReducer(CartReducer, []);
-  const [construct, setConstruct] = useReducer(
-    (prevState, newState) => ({ ...prevState, ...newState }),
-    { product: null, details: null }
-  );
 
-  useEffect(() => {
-    setConstruct({ product: null, details: null });
-  }, []);
+  const [state, setState] = useReducer(ConstructorReducer, {
+    current_page: -1,
+    product: null,
+    details: null,
+  });
 
   return (
     <Context.Provider
@@ -22,8 +21,8 @@ const Provider = (props) => {
         cartDispath,
         ThumbnailUrl,
         ImgUrl,
-        construct,
-        setConstruct,
+        state,
+        setState,
       }}
     >
       {props.children}

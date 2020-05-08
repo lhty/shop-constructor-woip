@@ -118,19 +118,15 @@
 .expand-wrapper {
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: 100%;
   transition: 0.4s ease;
 }
 .expand-slot-wrapper {
   position: relative;
+  align-self: center;
   cursor: pointer;
   width: 25%;
   min-height: 50px;
-  border: 1px solid #8339043d;
   background-color: #8339040d;
-  border-radius: 5px;
-  margin: 5px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -190,9 +186,8 @@
 .Constructor-stage img {
   cursor: pointer;
   align-self: center;
-  max-width: 30px;
-  max-height: 30px;
-  margin: 10px;
+  max-width: 25px;
+  margin: 5px;
 }
 .empty {
   opacity: 0.5;
@@ -203,9 +198,9 @@
 .box-overall,
 .Constructor-stage p {
   align-self: center;
-  font-size: 11px;
+  font-size: 0.7rem;
+  letter-spacing: -0.04em;
   font-weight: bold;
-  letter-spacing: -0.08em;
 }
 .box-overall {
   display: flex;
@@ -388,6 +383,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .item-container-buttons p {
   position: absolute;
+  pointer-events: none;
   left: 45%;
   color: #5b2600d6;
   width: 10%;

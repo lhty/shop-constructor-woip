@@ -4,29 +4,18 @@ import Gallery from "../Gallery/Gallery";
 import { Context } from "../../containers/DataProvider";
 import { PRODUCT_QUERY } from "../../containers/Queries";
 import { useParams } from "react-router-dom";
-import useProducts from "../../hooks/useProducts";
+import { useProducts } from "../../hooks/useProducts";
 
 import "./ProductPage.css";
 
 const Product = () => {
-  const { setConstruct } = useContext(Context);
+  const { setState } = useContext(Context);
   const id = parseInt(useParams().id);
 
   const {
     output: { filtered: product },
     loading,
   } = useProducts(PRODUCT_QUERY, id);
-
-  const contructStyle = {
-    on: {
-      cursor: `pointer`,
-    },
-    off: {
-      cursor: `normal`,
-      filter: `grayscale(100%)`,
-      opacity: `0.3`,
-    },
-  };
 
   if (loading) return null;
 
@@ -36,17 +25,20 @@ const Product = () => {
         <Link to="/">
           <span className="arrow left"></span>Назад
         </Link>
-        <button
-          style={product.construct ? contructStyle.on : contructStyle.off}
-          onClick={() => product.construct && setConstruct({ product })}
-        >
-          В конструктор
-        </button>
       </div>
       <div className="product-page-left">
         <Gallery image={product.image} />
       </div>
       <div className="product-page-right">
+        <button
+          disabled={!product.construct}
+          onClick={() =>
+            product.construct &&
+            setState({ current_page: 1, product, details: null })
+          }
+        >
+          В конструктор
+        </button>
         <h1>{product.title}</h1>
         <div className="product-page-inside">
           <div className="product-page-inside-expand">
@@ -54,7 +46,10 @@ const Product = () => {
           </div>
           {product.items &&
             product.items.map((item) => (
-              <p key={item.id} onClick={() => setConstruct({ details: item })}>
+              <p
+                key={item.id}
+                onClick={() => setState({ current_page: 3, details: item })}
+              >
                 {item.name} x{" "}
                 {product.set.filter((obj) => obj.id === item.id).length}
               </p>

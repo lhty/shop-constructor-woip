@@ -22,18 +22,6 @@
   font-size: 14px;
   border-radius: 0 25px 25px 0;
 }
-.product-page-nav button {
-  position: absolute;
-  right: 180px;
-  border: none;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 14px;
-  height: 50px;
-  padding: 15px;
-  border-radius: 25px 0 0 25px;
-  color: #5b2600;
-}
 .back {
   left: 0;
 }
@@ -48,6 +36,17 @@
   flex-flow: column wrap;
   padding: 0 25px 25px 25px;
   width: 50%;
+}
+
+.product-page-right button {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  line-height: 2rem;
+  font-weight: bold;
+  letter-spacing: -0.04em;
+  background-color: rgb(255, 187, 150);
+  border: none;
+  width: 100px;
 }
 .product-page-right h1 {
   margin-bottom: 25px;

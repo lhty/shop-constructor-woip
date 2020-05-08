@@ -9,7 +9,7 @@ import ProductSort from "./Shared/ProductSort";
 import Pages from "./Shared/Pages";
 import Constructor from "./Constructor";
 
-import useProducts from "../../hooks/useProducts";
+import { useProducts } from "../../hooks/useProducts";
 import { usePagination } from "../../hooks/usePagination";
 
 import "./index.css";

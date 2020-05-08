@@ -25,6 +25,7 @@ body {
 .app {
   width: 85%;
   margin: 0 auto;
+  background-color: #8339040d;
 }
 .arrow {
   border: solid #7f330bb5;

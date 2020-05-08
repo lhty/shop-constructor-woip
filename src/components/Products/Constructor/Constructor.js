@@ -3,7 +3,7 @@ import { useQuery } from "react-apollo-hooks";
 import { ITEM_QUERY, PROPORTION_QUERY } from "../../../containers/Queries";
 
 import { ThumbnailUrl } from "../../../containers/ThumbnailUrls";
-import boxsvg from "../../../resources/img/constructorBox.svg";
+// import boxsvg from "../../../resources/img/constructorBox.svg";
 import sweetssvg from "../../../resources/img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
 
@@ -11,7 +11,7 @@ import Gallery from "../../Gallery/Gallery";
 import ProductCard from "../Shared/ProductCard";
 import ProductSort from "../Shared/ProductSort";
 import Pages from "../Shared/Pages";
-import useProducts from "../../../hooks/useProducts";
+import { useProducts } from "../../../hooks/useProducts";
 import { usePagination } from "../../../hooks/usePagination";
 
 import "./Constructor.css";
@@ -41,7 +41,7 @@ const Info = ({ state: { product, current_page }, setState }) => {
         onClick={() =>
           setState({
             current_page: product ? current_page - 1 : -1,
-            product: current_page > 0 ? product : null,
+            product: current_page > 1 ? product : null,
             details: null,
           })
         }
@@ -49,8 +49,8 @@ const Info = ({ state: { product, current_page }, setState }) => {
         {current_page > 1 && product ? "Back" : "Close"}
       </div>
 
-      <div
-        onClick={() => setState({ current_page: 0, details: null })}
+      {/* <div
+        // onClick={() => setState({ current_page: 0, details: null })}
         className={product ? "Constructor-stage" : "Constructor-stage empty"}
       >
         <img src={boxsvg} alt="" draggable="false" />
@@ -66,17 +66,12 @@ const Info = ({ state: { product, current_page }, setState }) => {
               Выбери упаковку
             </p>
           ) : (
-            product.proportion && (
-              <>
-                <p>{product.proportion.type}</p>{" "}
-                <p>{product.proportion.shape}</p>
-              </>
-            )
+            product.proportion && <p>{product.proportion.type}</p>
           )}
         </div>
-      </div>
+      </div> */}
 
-      {product && current_page > 0 && (
+      {product && (
         <>
           <div
             onClick={() => setState({ current_page: 1 })}
@@ -89,8 +84,8 @@ const Info = ({ state: { product, current_page }, setState }) => {
             <img src={sweetssvg} alt="" draggable="false" />
             {product.set && (
               <p>
-                {product.set && product.set.filter((obj) => obj).length} /{" "}
-                {product.proportion.countmin}
+                {product.set && product.set.filter(Boolean).length} /{" "}
+                {product.set && product.set.length}
               </p>
             )}
           </div>
@@ -101,13 +96,46 @@ const Info = ({ state: { product, current_page }, setState }) => {
 };
 
 const Box = ({ state, setState }) => {
+  const [selectedSlot, setSelectedSlot] = useState(null);
+
+  const _expandableSlots =
+    state.product &&
+    [
+      ...Array(
+        state.product.proportion.countmax - state.product.set.length
+      ).keys(),
+    ].map(
+      (_, index) =>
+        state.product.set && (
+          <div
+            key={index}
+            className="expand-slot-wrapper"
+            onClick={() =>
+              setState({
+                product: {
+                  ...state.product,
+                  set: [...state.product.set, false],
+                },
+              })
+            }
+          >
+            +1
+          </div>
+        )
+    );
+
   switch (state.current_page) {
     case 1:
-      return <Slots {...state} setState={setState} />;
+      return (
+        <>
+          <Slots {...{ state, setState, setSelectedSlot }} />
+          <div className="expand-wrapper">{_expandableSlots}</div>
+        </>
+      );
     case 2:
-      return <ItemPicker {...state} setState={setState} />;
+      return <ItemPicker {...{ setState }} />;
     case 3:
-      return <Details {...{ state, setState }} />;
+      return <Details {...{ state, setState, selectedSlot }} />;
     case 4:
       return <Reshuffle {...state} />;
     default:
@@ -162,7 +190,7 @@ const SelectBox = ({ setState }) => {
   );
 };
 
-const Slots = ({ product, setState }) => {
+const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
   const style_props = useSpring({
     from: {
       opacity: 0,
@@ -198,14 +226,24 @@ const Slots = ({ product, setState }) => {
           )}
           {!slot ? (
             <span
-              onClick={() => setState({ current_page: 2 })}
+              onClick={() => {
+                setState({ current_page: 2 });
+                setSelectedSlot(i);
+              }}
               role="img"
               aria-label="candy"
             >
               🍬
             </span>
           ) : slot.editable ? (
-            <h1 onClick={() => setState({ current_page: 2 })}>{slot.letter}</h1>
+            <h1
+              onClick={() => {
+                setState({ current_page: 2 });
+                setSelectedSlot(i);
+              }}
+            >
+              {slot.letter}
+            </h1>
           ) : slot.image.length > 0 ? (
             <div
               style={{ width: "100%", height: "100%" }}
@@ -244,15 +282,17 @@ const ItemPicker = ({ setState }) => {
   );
 };
 
-const Details = ({ state, setState }) => {
+const Details = ({ state, setState, selectedSlot }) => {
   const [quantity, setQuantity] = useState(1);
 
-  const _max = state?.product?.set.filter((item) => !item).length;
-  const _fill = useSpring({ width: `${(quantity * 100) / _max}%` });
+  const _maxAddLimit = state?.product?.set.filter((item) => !item).length;
+  const _fillInputRange = useSpring({
+    width: `${(quantity * 100) / _maxAddLimit}%`,
+  });
 
   return (
     <div className="item-container">
-      {state.product && (
+      {state.product && state.product.set.filter((item) => !item).length > 0 && (
         <div className="item-container-buttons">
           <>
             {!state.details.editable && (
@@ -265,21 +305,23 @@ const Details = ({ state, setState }) => {
             )}
             <div className="item-container-buttons-control">
               <animated.div
-                style={_fill}
+                style={_fillInputRange}
                 className="item-container-buttons-quantity"
               ></animated.div>
               <input
                 type="range"
                 onChange={(e) => setQuantity(Math.max(e.target.value, 1))}
                 value={quantity}
-                max={_max}
+                max={_maxAddLimit}
               />
               <p>{quantity} шт</p>
             </div>
             {!state.details.editable && (
               <button
-                disabled={quantity === _max}
-                onClick={() => setQuantity(Math.min(quantity + 1, _max))}
+                disabled={quantity === _maxAddLimit}
+                onClick={() =>
+                  setQuantity(Math.min(quantity + 1, _maxAddLimit))
+                }
               >
                 +
               </button>
@@ -289,6 +331,7 @@ const Details = ({ state, setState }) => {
               onClick={() => {
                 setState({
                   type: "ADD",
+                  fromIndex: selectedSlot,
                   quantity,
                   payload: state.details,
                   current_page: 1,

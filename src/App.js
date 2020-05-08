@@ -6,7 +6,6 @@ import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo-hooks";
 import { API_URL } from "./config";
-import Provider from "./containers/DataProvider";
 import Layout from "./components/Layout";
 import Maintenance from "./components/StaticInfo/Maintenance";
 
@@ -30,11 +29,9 @@ function App() {
 
   return online ? (
     <ApolloProvider client={client}>
-      <Provider>
-        <main className="app">
-          <Layout />
-        </main>
-      </Provider>
+      <main className="app">
+        <Layout />
+      </main>
     </ApolloProvider>
   ) : (
     <Maintenance />
