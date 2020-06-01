@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Context } from "../../containers/DataProvider";
-import { UserContext } from "../../containers/UserProvider";
+import { Context } from "../../store/DataProvider";
+import { UserContext } from "../../store/UserProvider";
 
 import { useSpring, animated } from "react-spring";
 

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useQuery } from "react-apollo-hooks";
-import { ITEM_QUERY, PROPORTION_QUERY } from "../../../containers/Queries";
+import Sortable from "react-sortablejs";
 
-import { ThumbnailUrl } from "../../../containers/ThumbnailUrls";
+import { ITEM_QUERY, PROPORTION_QUERY } from "../../../store/Queries";
+import { ThumbnailUrl } from "../../../store/Utils";
+// import { UserContext } from "../../../store/UserProvider";
 // import boxsvg from "../../../resources/img/constructorBox.svg";
 import sweetssvg from "../../../resources/img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
@@ -11,7 +13,7 @@ import Gallery from "../../Gallery/Gallery";
 import ProductCard from "../Shared/ProductCard";
 import ProductSort from "../Shared/ProductSort";
 import Pages from "../Shared/Pages";
-import { useProducts } from "../../../hooks/useProducts";
+import { useSort } from "../../../hooks/useSort";
 import { usePagination } from "../../../hooks/usePagination";
 
 import "./Constructor.css";
@@ -40,7 +42,11 @@ const Info = ({ state: { product, current_page }, setState }) => {
         }}
         onClick={() =>
           setState({
-            current_page: product ? current_page - 1 : -1,
+            current_page: product
+              ? current_page > 3
+                ? current_page - 3
+                : current_page - 1
+              : -1,
             product: current_page > 1 ? product : null,
             details: null,
           })
@@ -72,25 +78,46 @@ const Info = ({ state: { product, current_page }, setState }) => {
       </div> */}
 
       {product && (
-        <>
-          <div
-            onClick={() => setState({ current_page: 1 })}
-            className={
-              product.set && product.set.filter(Boolean).length > 0
-                ? "Constructor-stage"
-                : "Constructor-stage empty"
-            }
-          >
-            <img src={sweetssvg} alt="" draggable="false" />
-            {product.set && (
-              <p>
-                {product.set && product.set.filter(Boolean).length} /{" "}
-                {product.set && product.set.length}
-              </p>
-            )}
-          </div>
-        </>
+        <div
+          onClick={() => setState({ current_page: 1 })}
+          className={
+            product.set?.filter(Boolean).length > 0
+              ? "Constructor-stage"
+              : "Constructor-stage empty"
+          }
+        >
+          <img src={sweetssvg} alt="" draggable="false" />
+          <p>
+            {product?.set.filter(Boolean).length} / {product?.set.length}
+          </p>
+        </div>
       )}
+      {product &&
+        product.set.filter(Boolean).length >= product.proportion.countmin && (
+          <div
+            style={{
+              alignSelf: "center",
+              marginRight: "10px",
+              cursor: "pointer",
+              backgroundColor: " #ffbb96",
+            }}
+            onClick={() => {
+              current_page === 4
+                ? console.log(
+                    "schema-" +
+                      product.set
+                        .map((item) => item.letter || item.id)
+                        .join(",")
+                  )
+                : setState({
+                    current_page: 4,
+                    details: null,
+                  });
+            }}
+          >
+            {current_page === 4 ? "Finish" : "Next"}
+          </div>
+        )}
     </div>
   );
 };
@@ -98,46 +125,15 @@ const Info = ({ state: { product, current_page }, setState }) => {
 const Box = ({ state, setState }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
 
-  const _expandableSlots =
-    state.product &&
-    [
-      ...Array(
-        state.product.proportion.countmax - state.product.set.length
-      ).keys(),
-    ].map(
-      (_, index) =>
-        state.product.set && (
-          <div
-            key={index}
-            className="expand-slot-wrapper"
-            onClick={() =>
-              setState({
-                product: {
-                  ...state.product,
-                  set: [...state.product.set, false],
-                },
-              })
-            }
-          >
-            +1
-          </div>
-        )
-    );
-
   switch (state.current_page) {
     case 1:
-      return (
-        <>
-          <Slots {...{ state, setState, setSelectedSlot }} />
-          <div className="expand-wrapper">{_expandableSlots}</div>
-        </>
-      );
+      return <Slots {...{ state, setState, setSelectedSlot }} />;
     case 2:
       return <ItemPicker {...{ setState }} />;
     case 3:
       return <Details {...{ state, setState, selectedSlot }} />;
     case 4:
-      return <Reshuffle {...state} />;
+      return <Reshuffle {...{ state }} />;
     default:
       return <SelectBox {...{ setState }} />;
   }
@@ -169,20 +165,14 @@ const SelectBox = ({ setState }) => {
             }}
             key={i}
           >
-            <div
-              className={
-                size.shape === "Сердце"
-                  ? `box-shape heart`
-                  : size.shape === "Квадрат"
-                  ? `box-shape square`
-                  : `box-shape rectangle`
-              }
-            />
             <div className="boxselector-slot-info">
               <p>
-                Вместимость : {size.countmin}-{size.countmax} шт.
+                {size.countmin}-{size.countmax} шт.
               </p>
-              <p>Тип : {size.type}</p>
+              <p>{`${size.x / 10} x ${size.y / 10} x ${size.z / 10} см.`}</p>
+              <p>{size.shape}</p>
+              <p>{size.type}</p>
+              <p>{size.price} руб.</p>
             </div>
           </div>
         ))}
@@ -204,71 +194,103 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
   });
 
   return (
-    <div className="box-wrapper">
-      {product.set.map((slot, i) => (
-        <animated.div
-          key={i}
-          style={{
-            ...style_props,
-            backgroundImage: `url(${
-              slot && slot.image.length > 0 && ThumbnailUrl(slot.image, "sm")
-            })`,
-          }}
-          className="slot-wrapper"
-        >
-          {slot && (
-            <div
-              className="slot-wrapper-del"
-              onClick={() => setState({ type: "REMOVE_ITEM", index: i })}
-            >
-              +
-            </div>
-          )}
-          {!slot ? (
-            <span
-              onClick={() => {
-                setState({ current_page: 2 });
-                setSelectedSlot(i);
-              }}
-              role="img"
-              aria-label="candy"
-            >
-              🍬
-            </span>
-          ) : slot.editable ? (
-            <h1
-              onClick={() => {
-                setState({ current_page: 2 });
-                setSelectedSlot(i);
-              }}
-            >
-              {slot.letter}
-            </h1>
-          ) : slot.image.length > 0 ? (
-            <div
-              style={{ width: "100%", height: "100%" }}
-              onClick={() => console.log("woot")}
-            ></div>
-          ) : (
-            slot.image.length < 1 && <p>{slot.name}</p>
-          )}
-        </animated.div>
-      ))}
-    </div>
+    <>
+      <div className="box-wrapper">
+        {product.set.map((slot, i) => (
+          <animated.div
+            key={i}
+            style={{
+              ...style_props,
+              backgroundImage: `url(${
+                slot && slot.image.length > 0 && ThumbnailUrl(slot.image, "sm")
+              })`,
+            }}
+            className="slot-wrapper"
+          >
+            {slot && (
+              <div
+                className="slot-wrapper-del"
+                onClick={() => setState({ type: "REMOVE_ITEM", index: i })}
+              >
+                +
+              </div>
+            )}
+            {!slot ? (
+              <span
+                onClick={() => {
+                  setState({ current_page: 2 });
+                  setSelectedSlot(i);
+                }}
+                role="img"
+                aria-label="candy"
+              >
+                🍬
+              </span>
+            ) : slot.editable ? (
+              <h1
+                onClick={() => {
+                  setState({ current_page: 2 });
+                  setSelectedSlot(i);
+                }}
+              >
+                {slot.letter}
+              </h1>
+            ) : slot.image.length > 0 ? (
+              <div
+                style={{ width: "100%", height: "100%" }}
+                onClick={() => console.log("woot")}
+              ></div>
+            ) : (
+              slot.image.length < 1 && <p>{slot.name}</p>
+            )}
+          </animated.div>
+        ))}
+      </div>
+      <div className="expand-wrapper">
+        {Array.apply(null, {
+          length: Math.max(product.proportion.countmax - product.set.length, 0),
+        }).map(
+          (_, index) =>
+            product.set && (
+              <div
+                key={index}
+                className="expand-slot-wrapper"
+                onClick={() => setState({ type: "EXPAND" })}
+              >
+                +1
+              </div>
+            )
+        )}
+      </div>
+    </>
   );
 };
 
 const ItemPicker = ({ setState }) => {
+  const { data } = useQuery(ITEM_QUERY);
   const {
     output: { filtered, sortProps },
     dispatch,
-  } = useProducts(ITEM_QUERY);
+  } = useSort(data?.items);
 
   const { currentPage, controls } = usePagination(filtered, 30);
 
   return (
     <>
-      <ProductSort {...{ sortProps, dispatch, controls }} />
+      <ProductSort
+        {...{
+          sortProps,
+          dispatch,
+          controls,
+          options: [
+            ["Ключевые слова", "tags", data?.tags],
+            ["Вкусы", "taste", data?.items],
+            ["Номер", "id", data?.items],
+            "price",
+            "size",
+          ],
+        }}
+      />
       <div className="Item-list">
         {currentPage.map((product, index) => (
           <ProductCard
@@ -283,12 +305,18 @@ const ItemPicker = ({ setState }) => {
 };
 
 const Details = ({ state, setState, selectedSlot }) => {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(state.details.editable ? 0 : 1);
+  const [input, setInput] = useState("");
 
   const _maxAddLimit = state?.product?.set.filter((item) => !item).length;
   const _fillInputRange = useSpring({
     width: `${(quantity * 100) / _maxAddLimit}%`,
   });
+
+  const hadleInput = (e) => {
+    setQuantity(input.length);
+    setInput(e.target.value.toUpperCase());
+  };
 
   return (
     <div className="item-container">
@@ -310,6 +338,7 @@ const Details = ({ state, setState, selectedSlot }) => {
               ></animated.div>
               <input
                 type="range"
+                disabled={state.details.editable}
                 onChange={(e) => setQuantity(Math.max(e.target.value, 1))}
                 value={quantity}
                 max={_maxAddLimit}
@@ -328,6 +357,7 @@ const Details = ({ state, setState, selectedSlot }) => {
             )}
             <button
               className="item-container-buttons-add"
+              disabled={quantity < 1}
               onClick={() => {
                 setState({
                   type: "ADD",
@@ -348,11 +378,11 @@ const Details = ({ state, setState, selectedSlot }) => {
           <input
             className="item-container-letter"
             required
-            maxLength={null}
-            value={""}
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
+            type="text"
+            spellCheck="false"
+            maxLength={_maxAddLimit}
+            value={input}
+            onChange={(e) => hadleInput(e)}
           ></input>
         </form>
       )}
@@ -387,8 +417,58 @@ const Details = ({ state, setState, selectedSlot }) => {
   );
 };
 
-const Reshuffle = () => {
-  return <div>Reshuffle</div>;
+const Reshuffle = ({ state: { product } }) => {
+  const [reshuffledSet, reshuffle] = useState(product.set);
+
+  return (
+    <Sortable
+      options={{
+        animation: 200,
+        easing: "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+        dragoverBubble: true,
+        removeCloneOnHide: true,
+        draggable: ".item-wrapper",
+        chosenClass: "chosen",
+        ghostClass: "ghost",
+        dragClass: "drag",
+      }}
+      onChange={(order) => {
+        reshuffle(
+          order.map((val) =>
+            reshuffledSet.find((obj) =>
+              val.charAt(0) === "$"
+                ? obj.id === val.substring(1)
+                : obj.letter === val
+            )
+          )
+        );
+      }}
+      className="box-reshuffle"
+    >
+      {reshuffledSet
+        .filter((item) => item)
+        .map((item, i) => (
+          <div
+            data-id={item.letter || "$" + item.id}
+            className="item-wrapper"
+            style={{
+              width: `${(item.size_length * 100) / product.proportion.x}%`,
+              margin: 2,
+              backgroundImage: `url(${
+                item &&
+                item.image.length > 0 &&
+                !item.editable &&
+                ThumbnailUrl(item.image)
+              })`,
+            }}
+            key={i}
+            draggable="false"
+          >
+            {item.editable && <h1>{item.letter}</h1>}
+          </div>
+        ))}
+    </Sortable>
+  );
 };
 
 const Summary = () => {

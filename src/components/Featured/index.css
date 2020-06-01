@@ -5,6 +5,7 @@
   flex-flow: row wrap;
 }
 .Featured-product {
+  cursor: pointer;
   background-color: rgb(255, 187, 150);
 }
 .Featured-item {

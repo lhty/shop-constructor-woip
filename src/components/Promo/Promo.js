@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "react-apollo-hooks";
-import { PROMO_QUERY } from "../../containers/Queries";
+import { PROMO_QUERY } from "../../store/Queries";
 import { useInterval } from "../../hooks/useInterval";
 import Gallery from "../Gallery/Gallery";
 

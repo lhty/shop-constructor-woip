@@ -1,14 +1,11 @@
 .auth {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  transition: 0.4s;
+  align-self: center;
   cursor: pointer;
-  width: 50px;
-  height: 50px;
   border: 3px solid #e4bfa0;
   border-radius: 50px 50px 50px 50px;
   z-index: 10000;
+  width: 50px;
+  height: 50px;
 }
 .authFalse {
   border: 3px solid #dedede;

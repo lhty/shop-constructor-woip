@@ -1,14 +1,18 @@
 import React from "react";
 import Spinner from "../../Assets/Spinner";
 
-import "./Userphoto.css";
+import "./Userpic.css";
 
-const Userphoto = ({ user, loading }) => {
+const Userpic = ({ user, loading, handleAuthToggle }) => {
   const photo = {
     backgroundImage: user && user.photo && `url('${user.photo}')`,
   };
   return (
-    <div className={user ? "auth" : "auth authFalse"} style={photo}>
+    <div
+      className={user ? "auth" : "auth authFalse"}
+      style={photo}
+      onClick={() => handleAuthToggle()}
+    >
       {loading ? (
         <Spinner />
       ) : (
@@ -31,4 +35,4 @@ const Userphoto = ({ user, loading }) => {
   );
 };
 
-export default Userphoto;
+export default Userpic;

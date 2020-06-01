@@ -2,14 +2,14 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route } from "react-router";
 
-import DataProvider from "../containers/DataProvider";
-import UserProvider from "../containers/UserProvider";
+import DataProvider from "../store/DataProvider";
+import UserProvider from "../store/UserProvider";
 
 import Header from "./Header/Header";
 import Products from "./Products";
 import Promo from "./Promo/Promo";
 import Staticinfo from "./StaticInfo/StaticInfo";
-import Social from "./Misc/Social";
+// import Social from "./Misc/Social";
 import Footer from "./Footer/Footer";
 
 const Layout = () => {
@@ -23,7 +23,7 @@ const Layout = () => {
         </DataProvider>
       </UserProvider>
       <Staticinfo />
-      <Social />
+      {/* <Social /> */}
       <Footer />
     </Router>
   );

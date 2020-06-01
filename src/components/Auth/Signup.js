@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import Spinner from "../Assets/Spinner";
-import { UserContext } from "../../containers/UserProvider";
+import { UserContext } from "../../store/UserProvider";
 
 import "./Signup.css";
 

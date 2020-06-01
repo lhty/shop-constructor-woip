@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { PRODUCTS_QUERY } from "../../containers/Queries";
+
+import { useQuery } from "react-apollo-hooks";
+import { PRODUCTS_QUERY } from "../../store/Queries";
 
 import Featured from "../Featured";
 import ProductPage from "./ProductPage";
@@ -9,16 +11,18 @@ import ProductSort from "./Shared/ProductSort";
 import Pages from "./Shared/Pages";
 import Constructor from "./Constructor";
 
-import { useProducts } from "../../hooks/useProducts";
+import { useSort } from "../../hooks/useSort";
 import { usePagination } from "../../hooks/usePagination";
 
 import "./index.css";
 
 const Container = () => {
+  const { data } = useQuery(PRODUCTS_QUERY);
+
   const {
     output: { filtered, sortProps },
     dispatch,
-  } = useProducts(PRODUCTS_QUERY);
+  } = useSort(data?.products);
 
   return (
     <>
@@ -34,6 +38,7 @@ const Container = () => {
                   <BundlesContainer
                     {...{
                       products: filtered,
+                      tags: data?.tags,
                       sortProps,
                       dispatch,
                     }}
@@ -50,11 +55,31 @@ const Container = () => {
   );
 };
 
-const BundlesContainer = ({ products, limit = 20, sortProps, dispatch }) => {
+const BundlesContainer = ({
+  products,
+  tags,
+  limit = 20,
+  sortProps,
+  dispatch,
+}) => {
   const { currentPage, controls } = usePagination(products, limit);
+
   return (
     <>
-      <ProductSort {...{ sortProps, dispatch, controls }} />
+      <ProductSort
+        {...{
+          sortProps,
+          dispatch,
+          controls,
+          options: [
+            ["Ключевые слова", "tags", tags],
+            ["Заголовки", "title", products],
+            ["Номер", "id", products],
+            "price",
+            "size",
+          ],
+        }}
+      />
       <div className="Item-list">
         {currentPage.map((product, index) => (
           <ProductCard {...{ key: index, product }} />

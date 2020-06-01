@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../../containers/UserProvider";
+import { UserContext } from "../../store/UserProvider";
 import { useSpring, animated } from "react-spring";
 import { API_URL } from "../../config";
 import Spinner from "../Assets/Spinner";

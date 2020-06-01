@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../../../containers/UserProvider";
+import { UserContext } from "../../../store/UserProvider";
 
 import "./Profile.css";
 

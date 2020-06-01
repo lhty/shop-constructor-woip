@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import Cart from "../Cart/Cart";
 import CartList from "../Cart/CartList";
-import Userphoto from "../Auth/Elements/Userphoto";
+import Userpic from "../Auth/Elements/Userpic";
 import AuthPage from "../Auth/AuthPage";
-import { UserContext } from "../../containers/UserProvider";
+import { UserContext } from "../../store/UserProvider";
 
 import title from "../../resources/img/title.svg";
 import "./Header.css";
@@ -22,7 +22,7 @@ export default function Header({ match: { url } }) {
     };
   });
 
-  function handleClickOutside(e) {
+  const handleClickOutside = (e) => {
     if (
       AuthRef.current &&
       !AuthRef.current.contains(e.target) &&
@@ -34,21 +34,18 @@ export default function Header({ match: { url } }) {
         auth: false,
       });
     }
-  }
+  };
+
+  const handleAuthToggle = () =>
+    setActive({
+      ...active,
+      auth: !active.auth,
+    });
 
   return (
     <>
       <header ref={HeaderRef} className="header main-bg">
-        <span
-          onClick={() =>
-            setActive({
-              ...active,
-              auth: !active.auth,
-            })
-          }
-        >
-          <Userphoto user={user} loading={loading} />
-        </span>
+        <Userpic {...{ user, loading, handleAuthToggle }} />
         <img
           className="header-title"
           onClick={() => {

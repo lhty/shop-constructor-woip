@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../../containers/DataProvider";
-import { ThumbnailUrl } from "../../containers/ThumbnailUrls";
+import { Context } from "../../store/DataProvider";
+import { ThumbnailUrl } from "../../store/Utils";
 
 import "./CartList.css";
 

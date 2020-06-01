@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useCallback, useReducer } from "react";
-
-import { useQuery } from "react-apollo-hooks";
-import gql from "graphql-tag";
+import React, { useEffect, useCallback, useReducer } from "react";
 
 import { useTransition, animated } from "react-spring";
 
@@ -9,25 +6,48 @@ import sortprice from "../../../resources/img/sort-byprice.svg";
 import sortsize from "../../../resources/img/sort-bypsize.svg";
 import "./ProductSort.css";
 
-export default function ProductSort({ sortProps, dispatch, controls }) {
-  const [IsOpen, toggle] = useState(false);
+export default function ProductSort({
+  sortProps,
+  dispatch,
+  controls,
+  options = ["price", "size"],
+}) {
+  const complex_options = options.filter((prop) => Array.isArray(prop));
 
-  const [state, add] = useReducer((state, tag) => {
-    if (state.includes(tag)) return state.filter((val) => val !== tag);
-    return [...state, tag];
-  }, []);
+  const [IsOpen, toggle] = useReducer(
+    (IsOpen, toggle) => ({ ...IsOpen, ...toggle }),
+    {
+      ...complex_options.reduce((acc, key) => {
+        acc[key[1]] = false;
+        return acc;
+      }, {}),
+    }
+  );
 
-  const updateTags = useCallback(() => {
+  const [optionList, addOption] = useReducer(
+    (optionList, { key, value }) => {
+      return {
+        ...optionList,
+        [key]: optionList[key].includes(value)
+          ? optionList[key].filter((val) => val !== value)
+          : [...optionList[key], value],
+      };
+    },
+    complex_options.reduce((acc, key) => {
+      acc[key[1]] = [];
+      return acc;
+    }, {})
+  );
+
+  const updateOptions = useCallback(() => {
     dispatch({
-      sortProps: {
-        tags: state,
-      },
+      sortProps: { ...optionList },
     });
-  }, [dispatch, state]);
+  }, [dispatch, optionList]);
 
   useEffect(() => {
-    updateTags();
-  }, [updateTags]);
+    updateOptions();
+  }, [updateOptions]);
 
   const checkStyle = (prop, [active, inactive, disabled]) => {
     switch (prop) {
@@ -41,16 +61,21 @@ export default function ProductSort({ sortProps, dispatch, controls }) {
   };
 
   return (
-    <>
-      <div className="Product-sort">
+    <div className="Product-sort">
+      {complex_options.map((option, i) => (
         <div
+          key={i}
           className={
-            IsOpen || state.length ? "sort-by selected" : "sort-by inactive"
+            IsOpen[option[1]] || optionList[option[1]].length
+              ? "sort-by selected"
+              : "sort-by inactive"
           }
-          onClick={() => toggle(!IsOpen)}
+          onClick={() => toggle({ [option[1]]: !IsOpen[option[1]] })}
         >
-          Ключевые слова
+          {option[0]}
         </div>
+      ))}
+      {options.includes("price") && (
         <div
           className={checkStyle(sortProps.price, [
             "sort-by",
@@ -77,6 +102,8 @@ export default function ProductSort({ sortProps, dispatch, controls }) {
             alt=""
           />
         </div>
+      )}
+      {options.includes("size") && (
         <div
           className={checkStyle(sortProps.size, [
             "sort-by",
@@ -103,44 +130,45 @@ export default function ProductSort({ sortProps, dispatch, controls }) {
             alt=""
           />
         </div>
-        <Tags {...{ IsOpen, state, add, controls }} />
-      </div>
-    </>
+      )}
+      {complex_options.map((option, i) => (
+        <PropsList
+          key={i}
+          {...{
+            IsOpen: IsOpen[option[1]],
+            propKey: option[1],
+            selected: optionList[option[1]],
+            list:
+              option[1] === "tags"
+                ? option[2]?.map((prop) => prop.name)
+                : option[2]?.map((prop) => prop[option[1]]),
+            addOption,
+          }}
+        />
+      ))}
+    </div>
   );
 }
 
-const Tags = ({ IsOpen, state, add, controls }) => {
-  const { data, error, loading } = useQuery(gql`
-    {
-      tags {
-        name
-      }
-    }
-  `);
-
+const PropsList = ({ IsOpen, propKey, addOption, list, selected }) => {
   const transitions = useTransition(IsOpen, null, {
     from: { opacity: 0, y: -100 },
     enter: { opacity: 1, y: 0 },
     leave: { opacity: 0, y: 100 },
   });
 
-  if (loading || error) return null;
-
   return transitions.map(
     ({ item, key, props }) =>
       item && (
         <animated.div key={key} style={props} className="sort-tags">
-          {data &&
-            data.tags.map((tag) => (
+          {list &&
+            list.map((value, i) => (
               <p
-                className={state.includes(tag.name) ? "selected" : ""}
-                onClick={() => {
-                  controls.changePage(0);
-                  add(tag.name);
-                }}
-                key={tag.name}
+                className={selected.includes(value) ? "selected" : ""}
+                onClick={() => addOption({ key: propKey, value })}
+                key={i}
               >
-                #{tag.name}
+                {value}
               </p>
             ))}
         </animated.div>

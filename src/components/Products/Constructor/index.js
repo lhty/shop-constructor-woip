@@ -1,5 +1,5 @@
 import React, { useContext, Suspense, lazy } from "react";
-import { Context } from "../../../containers/DataProvider";
+import { Context } from "../../../store/DataProvider";
 import { useTransition, animated } from "react-spring";
 
 import "./index.css";

@@ -1,12 +1,13 @@
 .header {
   position: sticky;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   top: 0;
-  height: 70px;
+  padding: 0 5px;
   z-index: 10000;
 }
 .header-title {
+  align-self: center;
   cursor: pointer;
   transform: scale(0.8);
 }

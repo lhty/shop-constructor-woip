@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Context } from "../../containers/DataProvider";
+import { Context } from "../../store/DataProvider";
 
 import "./index.css";
 

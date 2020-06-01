@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../../containers/DataProvider";
+import { Context } from "../../store/DataProvider";
 import { API_URL } from "../../config";
+
+import Spinner from "../Assets/Spinner";
 
 import { useSpring, animated } from "react-spring";
 
@@ -12,14 +14,14 @@ const Gallery = ({ image, isPromo }) => {
   const [loading, setLoading] = useState(true);
   const [fullscreen, setFullscreen] = useState(false);
 
-  const style = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-  });
-
   const zoomIn = useSpring({
     from: { opacity: 0, scale: isPromo ? 0 : 1 },
     scale: loading ? 0 : 1,
+    opacity: loading ? 0 : 1,
+  });
+
+  const fadeIn = useSpring({
+    from: { opacity: 0 },
     opacity: loading ? 0 : 1,
   });
 
@@ -37,8 +39,8 @@ const Gallery = ({ image, isPromo }) => {
       (obj, i) =>
         i !== (isPromo ? null : selected) && (
           <animated.img
-            style={style}
             key={i}
+            style={fadeIn}
             src={
               API_URL + obj.url.slice(1, 9) + "thumbnail/sm-" + obj.url.slice(9)
             }
@@ -48,6 +50,7 @@ const Gallery = ({ image, isPromo }) => {
               setSelected(i);
               if (isPromo) setFullscreen(true);
             }}
+            onLoad={() => setLoading(false)}
             draggable="false"
           />
         )
@@ -55,7 +58,7 @@ const Gallery = ({ image, isPromo }) => {
 
   return (
     <>
-      {image && image[selected] && fullscreen && (
+      {image && fullscreen && (
         <animated.div
           style={fullscreenContainer}
           className={isPromo ? `fullscreenpromo` : `fullscreen`}
@@ -72,34 +75,28 @@ const Gallery = ({ image, isPromo }) => {
           />
         </animated.div>
       )}
+      {loading && <Spinner />}
       <div className="gallery-container">
-        {image ? (
-          <div
-            className={
-              image.length > 1
-                ? isPromo
-                  ? `promo`
-                  : `multi-img`
-                : `single-img`
-            }
-          >
-            {!isPromo && (
-              <animated.img
-                style={style}
-                src={image[selected] && ThumbnailUrl(image[selected])}
-                alt=""
-                onClick={() => {
-                  setLoading(true);
-                  setFullscreen(true);
-                }}
-                draggable="false"
-              />
-            )}
-            {image.length > 1 && imagelist}
-          </div>
-        ) : (
-          <img className="placholder" src={"TBD"} alt="" draggable="false" />
-        )}
+        <div
+          className={
+            image?.length > 1 ? (isPromo ? `promo` : `multi-img`) : `single-img`
+          }
+        >
+          {!isPromo && (
+            <animated.img
+              style={fadeIn}
+              src={image && ThumbnailUrl(image[selected])}
+              alt=""
+              onClick={() => {
+                setLoading(true);
+                setFullscreen(true);
+              }}
+              onLoad={() => setLoading(false)}
+              draggable="false"
+            />
+          )}
+          {image?.length > 1 && imagelist}
+        </div>
       </div>
     </>
   );

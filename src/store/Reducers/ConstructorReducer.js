@@ -33,8 +33,10 @@ export const ConstructorReducer = (state, action) => {
         },
       };
     case EXPAND:
-      state.product.set.push(false);
-      return state;
+      return {
+        ...state,
+        product: { ...state.product, set: [...state.product.set, false] },
+      };
     default:
       return { ...state, ...action };
   }

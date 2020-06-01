@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { ThumbnailUrl, ImgUrl } from "./ThumbnailUrls";
+import { ThumbnailUrl, ImgUrl } from "./Utils";
 import { CartReducer } from "./Reducers/CartReducer";
 import { ConstructorReducer } from "./Reducers/ConstructorReducer";
 

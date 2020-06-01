@@ -1,5 +1,4 @@
 .product-page-container {
-  width: 100%;
   display: flex;
   flex-flow: row wrap;
   border-radius: 0px 0px 25px 0px;
@@ -26,16 +25,15 @@
   left: 0;
 }
 .product-page-left {
-  width: 50%;
+  width: 40%;
   overflow: hidden;
-  border-radius: 0 10px 10px 0;
 }
 .product-page-right {
   position: relative;
   display: flex;
   flex-flow: column wrap;
-  padding: 0 25px 25px 25px;
-  width: 50%;
+  padding-left: 1em;
+  width: 60%;
 }
 
 .product-page-right button {

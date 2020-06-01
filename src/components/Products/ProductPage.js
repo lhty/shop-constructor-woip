@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Gallery from "../Gallery/Gallery";
-import { Context } from "../../containers/DataProvider";
-import { PRODUCT_QUERY } from "../../containers/Queries";
+import { Context } from "../../store/DataProvider";
+
+import { useQuery } from "react-apollo-hooks";
+import { PRODUCT_QUERY } from "../../store/Queries";
+
 import { useParams } from "react-router-dom";
-import { useProducts } from "../../hooks/useProducts";
+import { useSort } from "../../hooks/useSort";
 
 import "./ProductPage.css";
 
@@ -12,12 +15,11 @@ const Product = () => {
   const { setState } = useContext(Context);
   const id = parseInt(useParams().id);
 
+  const { data } = useQuery(PRODUCT_QUERY, { variables: { id } });
+
   const {
     output: { filtered: product },
-    loading,
-  } = useProducts(PRODUCT_QUERY, id);
-
-  if (loading) return null;
+  } = useSort(data?.product);
 
   return (
     <main className="product-page-container">

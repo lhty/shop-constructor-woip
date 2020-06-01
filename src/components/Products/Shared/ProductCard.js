@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ThumbnailUrl } from "../../../containers/ThumbnailUrls";
+import { ThumbnailUrl } from "../../../store/Utils";
 
 import { useSpring, animated } from "react-spring";
 
