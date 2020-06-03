@@ -20,7 +20,7 @@ const Container = () => {
   const { data } = useQuery(PRODUCTS_QUERY);
 
   const {
-    output: { filtered, sortProps },
+    output: { initial, filtered, sortProps },
     dispatch,
   } = useSort(data?.products);
 
@@ -41,6 +41,7 @@ const Container = () => {
                       tags: data?.tags,
                       sortProps,
                       dispatch,
+                      initial,
                     }}
                   />
                 )}
@@ -61,6 +62,7 @@ const BundlesContainer = ({
   limit = 20,
   sortProps,
   dispatch,
+  initial,
 }) => {
   const { currentPage, controls } = usePagination(products, limit);
 
@@ -73,8 +75,7 @@ const BundlesContainer = ({
           controls,
           options: [
             ["Ключевые слова", "tags", tags],
-            ["Заголовки", "title", products],
-            ["Номер", "id", products],
+            ["Вместимость", "size", initial],
             "price",
             "size",
           ],

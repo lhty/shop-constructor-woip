@@ -13,6 +13,16 @@
   flex-wrap: wrap;
   background-color: #8339040d;
 }
+.box-wrapper > button {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  line-height: 2rem;
+  font-weight: bold;
+  letter-spacing: -0.04em;
+  background-color: rgb(255, 187, 150);
+  border: none;
+  width: 100px;
+}
 .box-reshuffle {
   display: flex;
   flex-direction: row;
@@ -178,6 +188,7 @@
   height: 50px;
   width: 100%;
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
 }
 .svgicon {
@@ -186,13 +197,13 @@
   max-height: 50px;
 }
 .Constructor-stage {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 50px;
-  width: 100%;
-  min-width: 30%;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 25px 0 0 25px;
 }
 .Constructor-stage img {
@@ -209,6 +220,7 @@
 .box-overall,
 .Constructor-stage p {
   align-self: center;
+  white-space: pre;
   font-size: 0.7rem;
   letter-spacing: -0.04em;
   font-weight: bold;

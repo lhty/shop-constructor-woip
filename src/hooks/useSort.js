@@ -12,8 +12,7 @@ export const useSort = (input) => {
   useEffect(() => {
     if (input) {
       dispatch({
-        initial:
-          input[0].__typename === "product" ? composeBundle(input) : input,
+        initial: input[0]?.__typename === "Item" ? input : composeBundle(input),
       });
     }
   }, [input]);
@@ -32,6 +31,8 @@ const sortingReducer = (state, action) => {
             obj[key].map((tag) => tag.name),
             propsList
           ).length
+        : typeof obj[key] === "string"
+        ? obj[key].includes(propsList)
         : propsList.includes(obj[key])
     );
   };

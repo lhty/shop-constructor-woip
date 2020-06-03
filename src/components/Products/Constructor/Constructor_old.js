@@ -434,7 +434,7 @@ const Slot = ({ currentitem, boxwidth, index }) => {
           item &&
           item.image.length > 0 &&
           !item.editable &&
-          ThumbnailUrl(item.image)
+          ThumbnailUrl(item.image, 800)
         })`,
       }}
       className="slot-wrapper"
@@ -702,7 +702,7 @@ const Reshuffle = () => {
               item &&
               item.image.length > 0 &&
               !item.editable &&
-              ThumbnailUrl(item.image)
+              ThumbnailUrl(item.image, 800)
             })`,
           }}
           key={i}

@@ -31,7 +31,7 @@ const ProductCard = ({ product, onClick }) => {
         <p>{product.name}</p>
       ) : (
         <img
-          src={ThumbnailUrl(product.image, window.innerWidth < 800 && "sm")}
+          src={ThumbnailUrl(product.image, window.innerWidth)}
           alt=""
           onLoad={() => {
             setLoading(false);

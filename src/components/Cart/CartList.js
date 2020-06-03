@@ -17,7 +17,7 @@ const CartList = ({ url }) => {
         >
           <img
             className="cart-element-img"
-            src={ThumbnailUrl(item.image)}
+            src={ThumbnailUrl(item.image, 800)}
             alt=""
           ></img>
           <p>{item.title}</p>

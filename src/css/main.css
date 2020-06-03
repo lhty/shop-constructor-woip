@@ -217,11 +217,6 @@ body {
     left: -4px;
     opacity: 0.9;
   }
-  .ItemCard-price {
-    right: -12px;
-    top: -28px;
-    transform: rotate(-45deg) scale(0.8);
-  }
   .ProductCard-addbutton {
     transform: scale(0.8);
     bottom: -3px;

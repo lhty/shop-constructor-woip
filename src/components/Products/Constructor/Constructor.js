@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useQuery } from "react-apollo-hooks";
+import React, { useState, useContext } from "react";
+import { useQuery, useMutation } from "react-apollo-hooks";
 import Sortable from "react-sortablejs";
 
 import { ITEM_QUERY, PROPORTION_QUERY } from "../../../store/Queries";
 import { ThumbnailUrl } from "../../../store/Utils";
-// import { UserContext } from "../../../store/UserProvider";
+import { UserContext } from "../../../store/UserProvider";
 // import boxsvg from "../../../resources/img/constructorBox.svg";
 import sweetssvg from "../../../resources/img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
@@ -43,7 +43,7 @@ const Info = ({ state: { product, current_page }, setState }) => {
         onClick={() =>
           setState({
             current_page: product
-              ? current_page > 3
+              ? current_page === 4
                 ? current_page - 3
                 : current_page - 1
               : -1,
@@ -93,7 +93,8 @@ const Info = ({ state: { product, current_page }, setState }) => {
         </div>
       )}
       {product &&
-        product.set.filter(Boolean).length >= product.proportion.countmin && (
+        product.set.filter(Boolean).length >= product.proportion.countmin &&
+        current_page < 5 && (
           <div
             style={{
               alignSelf: "center",
@@ -103,12 +104,9 @@ const Info = ({ state: { product, current_page }, setState }) => {
             }}
             onClick={() => {
               current_page === 4
-                ? console.log(
-                    "schema-" +
-                      product.set
-                        .map((item) => item.letter || item.id)
-                        .join(",")
-                  )
+                ? setState({
+                    current_page: 5,
+                  })
                 : setState({
                     current_page: 4,
                     details: null,
@@ -134,6 +132,8 @@ const Box = ({ state, setState }) => {
       return <Details {...{ state, setState, selectedSlot }} />;
     case 4:
       return <Reshuffle {...{ state }} />;
+    case 5:
+      return <Submit {...{ state }} />;
     default:
       return <SelectBox {...{ setState }} />;
   }
@@ -202,7 +202,9 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
             style={{
               ...style_props,
               backgroundImage: `url(${
-                slot && slot.image.length > 0 && ThumbnailUrl(slot.image, "sm")
+                slot &&
+                slot.image.length > 0 &&
+                ThumbnailUrl(slot.image, window.innerWidth)
               })`,
             }}
             className="slot-wrapper"
@@ -283,9 +285,8 @@ const ItemPicker = ({ setState }) => {
           dispatch,
           controls,
           options: [
-            ["Ключевые слова", "tags", data?.tags],
             ["Вкусы", "taste", data?.items],
-            ["Номер", "id", data?.items],
+            ["Шоколад", "chocolate", data?.items],
             "price",
             "size",
           ],
@@ -313,9 +314,25 @@ const Details = ({ state, setState, selectedSlot }) => {
     width: `${(quantity * 100) / _maxAddLimit}%`,
   });
 
-  const hadleInput = (e) => {
-    setQuantity(input.length);
-    setInput(e.target.value.toUpperCase());
+  const handleInput = (e) => {
+    if (
+      e.target.value[e.target.value.length - 1]?.match(/[А-я0-9]/) ||
+      e.target.value === ""
+    ) {
+      setQuantity(e.target.value.length);
+      setInput(e.target.value.toUpperCase());
+    } else return;
+  };
+
+  const handleSubmit = () => {
+    setState({
+      type: "ADD",
+      fromIndex: selectedSlot,
+      quantity,
+      payload: state.details,
+      current_page: 1,
+      input,
+    });
   };
 
   return (
@@ -358,15 +375,7 @@ const Details = ({ state, setState, selectedSlot }) => {
             <button
               className="item-container-buttons-add"
               disabled={quantity < 1}
-              onClick={() => {
-                setState({
-                  type: "ADD",
-                  fromIndex: selectedSlot,
-                  quantity,
-                  payload: state.details,
-                  current_page: 1,
-                });
-              }}
+              onClick={handleSubmit}
             >
               Добавить
             </button>
@@ -374,7 +383,7 @@ const Details = ({ state, setState, selectedSlot }) => {
         </div>
       )}
       {state.product && state.details.editable && (
-        <form onSubmit={null}>
+        <form onSubmit={handleSubmit}>
           <input
             className="item-container-letter"
             required
@@ -382,7 +391,7 @@ const Details = ({ state, setState, selectedSlot }) => {
             spellCheck="false"
             maxLength={_maxAddLimit}
             value={input}
-            onChange={(e) => hadleInput(e)}
+            onChange={(e) => handleInput(e)}
           ></input>
         </form>
       )}
@@ -468,6 +477,35 @@ const Reshuffle = ({ state: { product } }) => {
           </div>
         ))}
     </Sortable>
+  );
+};
+const Submit = ({ state: { product } }) => {
+  const { user, active, setActive } = useContext(UserContext);
+
+  return (
+    <div className="box-wrapper">
+      {!user ? (
+        <button
+          disabled={active.auth}
+          onClick={() => setActive({ ...active, auth: !active.auth })}
+        >
+          Login
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            user.role.id > 2
+              ? console.log(
+                  "schema-" +
+                    product.set.map((item) => item.letter || item.id).join(",")
+                )
+              : console.log("Thank you");
+          }}
+        >
+          Submit
+        </button>
+      )}
+    </div>
   );
 };
 

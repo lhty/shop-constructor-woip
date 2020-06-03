@@ -41,9 +41,7 @@ const Gallery = ({ image, isPromo }) => {
           <animated.img
             key={i}
             style={fadeIn}
-            src={
-              API_URL + obj.url.slice(1, 9) + "thumbnail/sm-" + obj.url.slice(9)
-            }
+            src={ThumbnailUrl(obj, 800)}
             alt=""
             onClick={() => {
               selected === i ? setFullscreen(false) : setLoading(true);
@@ -55,6 +53,8 @@ const Gallery = ({ image, isPromo }) => {
           />
         )
     );
+
+  if (!image?.length) return null;
 
   return (
     <>
@@ -68,7 +68,7 @@ const Gallery = ({ image, isPromo }) => {
         >
           <animated.img
             style={zoomIn}
-            src={API_URL + image[selected].url}
+            src={API_URL.slice(0, -1) + image[selected].url}
             alt=""
             onLoad={() => setLoading(false)}
             draggable="false"

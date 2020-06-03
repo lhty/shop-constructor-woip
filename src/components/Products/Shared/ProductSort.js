@@ -162,7 +162,15 @@ const PropsList = ({ IsOpen, propKey, addOption, list, selected }) => {
       item && (
         <animated.div key={key} style={props} className="sort-tags">
           {list &&
-            list.map((value, i) => (
+            [
+              ...new Set(
+                list
+                  .map((str) =>
+                    typeof str === "string" ? str.split(",") : str
+                  )
+                  .flat()
+              ),
+            ].map((value, i) => (
               <p
                 className={selected.includes(value) ? "selected" : ""}
                 onClick={() => addOption({ key: propKey, value })}
