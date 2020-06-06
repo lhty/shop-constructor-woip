@@ -37,24 +37,22 @@
 }
 
 .product-page-right button {
+  position: absolute;
   align-self: flex-end;
   font-size: 0.8rem;
   line-height: 2rem;
   font-weight: bold;
   letter-spacing: -0.04em;
-  background-color: rgb(255, 187, 150);
   border: none;
   width: 100px;
 }
 .product-page-right h1 {
   margin-bottom: 25px;
   font-size: 30px;
-  color: #4f2202;
 }
 .product-page-right p {
   font-size: 16px;
   font-weight: normal;
-  color: #431d02;
   transition: 0.1s ease;
 }
 .product-page-container label {
@@ -63,9 +61,6 @@
   right: 20px;
   font-size: 20px;
   font-weight: bold;
-  color: #853a04;
-  text-shadow: 1px 2px 0px rgba(118, 62, 46, 0.32),
-    0px 0px 0px rgba(46, 11, 1, 0.29);
 }
 .product-page-back {
   position: absolute;
@@ -78,11 +73,6 @@
   position: relative;
   margin: 0 10px 25px 0;
   align-self: flex-end;
-}
-.product-page-inside p:hover {
-  transform: scale(1.05);
-  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
-    0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 .product-page-desc {
   margin-bottom: 25px;
@@ -99,8 +89,3 @@
 .product-page-inside-expand span {
   align-self: center;
 }
-/* @media only screen and (max-width: 1350px) {
-  .product-page-container {
-    flex-direction: column;
-  }
-} */

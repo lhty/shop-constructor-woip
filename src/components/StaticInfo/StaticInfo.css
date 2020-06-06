@@ -15,7 +15,6 @@
   object-fit: scale-down;
 }
 .StaticInfo-card p {
-  box-shadow: -13px 6px 35px #707c970d, -11px 11px 25px #707c970d;
   background: linear-gradient(
     90deg,
     #f3ebe5 23.44%,

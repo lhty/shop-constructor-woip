@@ -24,11 +24,11 @@ const Promo = () => {
     setPages(loading || error ? [] : data.promos);
   }, [loading, error, data, setPages]);
 
-  const [collapse, setCollapse] = useState(false);
+  const [isOpen, toggle] = useState(false);
 
   useInterval(
     () => {
-      if (!collapse) {
+      if (!isOpen) {
         set({
           to: [
             { scale: 0.5, opacity: 0 },
@@ -42,16 +42,16 @@ const Promo = () => {
     reset
   );
 
-  const handleExpand = useDoubleclick(() => setCollapse(!collapse), 250);
+  const handleExpand = useDoubleclick(() => toggle(!isOpen), 250);
 
   const container = useSpring({
     from: { y: -500 },
-    height: collapse ? sizes.height : 180,
+    height: isOpen ? sizes.height + 40 : 190,
     y: 0,
     config: { mass: 1, tension: 300, friction: 40 },
   });
 
-  const transitions = useTransition(collapse, null, {
+  const transitions = useTransition(isOpen, null, {
     from: { opacity: 0, y: -500, display: `none` },
     enter: { opacity: 1, y: 0, display: `block` },
     leave: { opacity: 0, y: -500, display: `none` },
@@ -90,7 +90,7 @@ const Promo = () => {
     });
     setTimeout(() => {
       set({ x: 0, opacity: 1 });
-      collapse && setCollapse(!collapse);
+      isOpen && toggle(!isOpen);
       setIndex(
         direction
           ? index === pages.length - 1
@@ -106,7 +106,10 @@ const Promo = () => {
   };
 
   return (
-    <animated.section style={container} className="Promo-container">
+    <animated.section
+      style={container}
+      className="Promo-container main-bg w85 center"
+    >
       <animated.div
         className="Promo-content"
         onClick={() => handleExpand()}
@@ -134,9 +137,9 @@ const Promo = () => {
               </animated.div>
             )
           )}
-        <div onClick={() => setCollapse(!collapse)} className="arrow-icon">
-          <span className={collapse ? "left-bar open" : "left-bar"}></span>
-          <span className={collapse ? "right-bar openr" : "right-bar"}></span>
+        <div onClick={() => toggle(!isOpen)} className="arrow-icon">
+          <span className={isOpen ? "left-bar open" : "left-bar"}></span>
+          <span className={isOpen ? "right-bar openr" : "right-bar"}></span>
         </div>
       </animated.div>
     </animated.section>

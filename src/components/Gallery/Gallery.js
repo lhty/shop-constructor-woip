@@ -68,7 +68,7 @@ const Gallery = ({ image, isPromo }) => {
         >
           <animated.img
             style={zoomIn}
-            src={API_URL.slice(0, -1) + image[selected].url}
+            src={API_URL.slice(0, -1) + image[selected]?.url}
             alt=""
             onLoad={() => setLoading(false)}
             draggable="false"

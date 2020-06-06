@@ -70,7 +70,17 @@ export default function ProductSort({
               ? "sort-by selected"
               : "sort-by inactive"
           }
-          onClick={() => toggle({ [option[1]]: !IsOpen[option[1]] })}
+          onClick={() =>
+            toggle(
+              Object.entries(IsOpen).reduce(
+                (res, prop) => ({
+                  ...res,
+                  [prop[0]]: prop[0] === option[1] ? !prop[1] : false,
+                }),
+                {}
+              )
+            )
+          }
         >
           {option[0]}
         </div>
@@ -91,7 +101,7 @@ export default function ProductSort({
             })
           }
         >
-          по цене
+          Цена
           <img
             className={checkStyle(sortProps.price, [
               "inactive",
@@ -119,7 +129,7 @@ export default function ProductSort({
             });
           }}
         >
-          по размеру
+          Вместимость
           <img
             className={checkStyle(sortProps.size, [
               "small",
@@ -160,7 +170,7 @@ const PropsList = ({ IsOpen, propKey, addOption, list, selected }) => {
   return transitions.map(
     ({ item, key, props }) =>
       item && (
-        <animated.div key={key} style={props} className="sort-tags">
+        <animated.div key={key} style={props} className="sort-tags main-bg">
           {list &&
             [
               ...new Set(

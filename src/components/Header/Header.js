@@ -44,7 +44,7 @@ export default function Header({ match: { url } }) {
 
   return (
     <>
-      <header ref={HeaderRef} className="header main-bg">
+      <header ref={HeaderRef} className="header center w85 main-bg">
         <Userpic {...{ user, loading, handleAuthToggle }} />
         <img
           className="header-title"
@@ -61,7 +61,7 @@ export default function Header({ match: { url } }) {
         <Cart />
       </header>
       {active.auth && (
-        <div ref={AuthRef}>
+        <div className="auth-page-container" ref={AuthRef}>
           <AuthPage user={user} />
         </div>
       )}

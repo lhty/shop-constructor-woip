@@ -11,7 +11,6 @@
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  background-color: #8339040d;
 }
 .box-wrapper > button {
   align-self: flex-end;
@@ -19,7 +18,6 @@
   line-height: 2rem;
   font-weight: bold;
   letter-spacing: -0.04em;
-  background-color: rgb(255, 187, 150);
   border: none;
   width: 100px;
 }
@@ -29,7 +27,6 @@
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  background-color: #ffffff63;
 }
 .boxselector-slot {
   width: 20%;
@@ -58,21 +55,13 @@
   width: 30px;
   height: 20px;
 }
-.heart {
-  background-image: url("../../../resources/img/heart.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border: none;
-  width: 30px;
-  height: 30px;
-}
 .slot-wrapper {
   position: relative;
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
   display: flex;
+  background-color: #f1e4db;
   justify-content: center;
   align-items: center;
   background-position: center;
@@ -104,15 +93,9 @@
 .slot-wrapper:hover > span:hover {
   transform: scale(1.1);
 }
-.slot-wrapper h1 {
-  font-size: 40px;
-  line-height: 65px;
-  width: 100%;
-  height: 100%;
-  border: 2px solid #763e2e1c;
-  border-radius: 5px;
-  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
-    0px 0px 0px rgba(46, 11, 1, 0.71);
+.slot-wrapper h1,
+.item-wrapper h1 {
+  font-size: 2rem;
 }
 .slot-wrapper p {
   width: 100%;
@@ -147,7 +130,6 @@
   cursor: pointer;
   width: 25%;
   min-height: 50px;
-  background-color: #8339040d;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -155,8 +137,6 @@
   transition: 0.4s ease;
   font-size: 30px;
   max-width: 100px;
-  text-shadow: 4px 2px 2px rgba(118, 62, 46, 0.32),
-    0px 0px 0px rgba(46, 11, 1, 0.71);
 }
 
 .centered {
@@ -185,11 +165,22 @@
 }
 .Constructor-progress {
   position: relative;
-  height: 50px;
+  min-height: 50px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+}
+.Constructor-progress > button {
+  align-self: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  padding: 0.5rem;
+  letter-spacing: -0.04em;
+  border: none;
+  color: #763e2e;
+  background-color: #fbf1ec75;
 }
 .svgicon {
   cursor: pointer;
@@ -201,10 +192,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 50px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 25px 0 0 25px;
 }
 .Constructor-stage img {
   cursor: pointer;
@@ -217,32 +206,11 @@
   cursor: default;
   filter: grayscale(70%);
 }
-.box-overall,
 .Constructor-stage p {
   align-self: center;
   white-space: pre;
   font-size: 0.7rem;
   letter-spacing: -0.04em;
-  font-weight: bold;
-}
-.box-overall {
-  display: flex;
-  flex-flow: column wrap;
-  align-items: flex-end;
-  width: 100%;
-  font-size: 18px;
-  font-weight: normal;
-  padding: 10px 10px 10px 0;
-  background: linear-gradient(90.94deg, #ffdcc900 0.04%, #f6d8c847 99.97%);
-}
-.box-overall p {
-  font-size: 15px;
-}
-.box-overall :last-child {
-  font-size: 20px;
-  margin: 10px 0 0 0;
-  padding: 5px 0 0 0;
-  border-top: 2px solid #763e2e63;
   font-weight: bold;
 }
 .Constructor-stage-info {
@@ -269,7 +237,7 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 100%;
-  background-color: rgb(255, 187, 150);
+  background-color: #fff;
   outline: none;
   transition: background 1s ease-in;
 }
@@ -281,19 +249,17 @@ input[type="range"]::-webkit-slider-thumb {
   height: 50px;
   width: 100%;
   padding: 5px;
-  font-weight: bold;
+  font-weight: 300;
   font-size: 1.5rem;
-  letter-spacing: 1px;
-  color: transparent;
-  background-color: #f4eae1;
+  letter-spacing: 5px;
+  color: #763e2e;
   text-align: center;
-  text-shadow: -20px 0px 0.5px rgb(118, 62, 46);
   transition: 0.2s ease;
+  transform: scale(0.9);
 }
 .item-container-letter:focus {
+  transform: scale(1);
   outline: none;
-  box-shadow: -2px 3px 20px 0px rgba(0, 0, 0, 0.08),
-    -4px 3px 20px 4px rgba(255, 87, 34, 0.12);
 }
 .item-container-details {
   padding: 0 1rem;
@@ -361,6 +327,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   flex-flow: row nowrap;
   height: 50px;
+  margin-bottom: 10px;
   outline: none;
   white-space: nowrap;
 }
@@ -369,7 +336,6 @@ input[type="range"]::-webkit-slider-thumb {
   outline: none;
   border: none;
   cursor: pointer;
-  background-color: rgb(255, 187, 150);
   height: 100%;
   color: #6f3a30;
   font-size: 1rem;
@@ -377,13 +343,16 @@ input[type="range"]::-webkit-slider-thumb {
   min-width: 25px;
 }
 .item-container-buttons button:disabled {
-  filter: grayscale(1);
+  color: #6f3a3038;
 }
 .item-container-buttons-quantity {
   position: absolute;
+  /* box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.05); */
+  border-radius: 20px;
   pointer-events: none;
   height: 50px;
-  background-color: rgb(213, 139, 98);
+  background-color: #f2ebe4;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6.172L6.172 0h5.656L0 11.828V6.172zm40 5.656L28.172 0h5.656L40 6.172v5.656zM6.172 12l12-12h3.656l12 12h-5.656L20 3.828 11.828 12H6.172zm12 0L20 10.172 21.828 12h-3.656z' fill='%23ddb895' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 .item-container-buttons-control {
   position: relative;
@@ -403,13 +372,15 @@ input[type="range"]::-webkit-slider-thumb {
   position: absolute;
   pointer-events: none;
   left: 50%;
-  color: #5b2600d6;
-  width: 10%;
+  background-color: #ffffff8c;
+  color: #7b4b1e;
   cursor: pointer;
+  padding: 0px 5px;
   align-self: center;
+  text-align: center;
   font-size: 1.3rem;
-  font-weight: bold;
-  border: none;
+  border-radius: 50px;
+  font-weight: 300;
 }
 .row {
   display: flex;
@@ -475,4 +446,21 @@ input[type="range"]::-webkit-slider-thumb {
   font-size: 1vw;
   font-weight: bold;
   margin: 0 10px 0 10px;
+}
+.receipt {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-content: flex-start;
+  height: 100%;
+  margin: 10px 0;
+}
+.receipt > div {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  padding: 1rem;
+}
+.receipt > h2 {
+  align-self: center;
 }

@@ -1,13 +1,15 @@
 .Featured-container {
+  margin: 1rem 0;
   position: relative;
   display: flex;
   justify-content: space-evenly;
   flex-flow: row wrap;
 }
 .Featured-product {
+  padding: 1rem;
   cursor: pointer;
-  background-color: rgb(255, 187, 150);
 }
 .Featured-item {
-  background-color: rgb(255, 187, 150);
+  padding: 1rem;
+  cursor: pointer;
 }

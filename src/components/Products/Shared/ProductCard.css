@@ -62,7 +62,7 @@
   position: relative;
   text-decoration: none;
   overflow: hidden;
-  width: 15%;
+  width: 25%;
   font-size: 1rem;
   padding: 2px;
   cursor: pointer;
@@ -80,6 +80,7 @@
 }
 .ItemCard-wrapper img {
   height: 100%;
+  width: calc(100% * 2);
   object-fit: cover;
 }
 .ItemCard-price {

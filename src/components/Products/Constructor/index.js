@@ -29,7 +29,7 @@ export default () => {
     <Suspense fallback={null}>
       {state.current_page < 0 && (
         <div
-          className="Constructor-toggle"
+          className="Constructor-toggle main-bg"
           onClick={() => setState({ current_page: 0 })}
         >
           <p>Собери свой набор</p>

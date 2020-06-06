@@ -1,13 +1,11 @@
 import React from "react";
 
-// import border from "../../img/promoborder.svg";
 import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="footer side-bg">
-      {/* <img className="footer-border" src={border} alt="" /> */}
-      Footer TBD
+    <footer className="footer main-bg">
+      <p>SweetDreams 2020</p>
     </footer>
   );
 };

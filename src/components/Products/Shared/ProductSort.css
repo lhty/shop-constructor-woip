@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  height: 50px;
+  min-height: 50px;
   width: 100%;
 }
 .sort-by {
@@ -38,11 +38,9 @@
   width: 100%;
   top: 80%;
   z-index: 1;
-  background-color: #eaded8;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  box-shadow: 14px 8px 35px #5656562b, 0px 17px 25px #5a5a5a4a;
   padding: 5px;
 }
 .sort-tags p {

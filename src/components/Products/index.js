@@ -20,14 +20,14 @@ const Container = () => {
   const { data } = useQuery(PRODUCTS_QUERY);
 
   const {
-    output: { initial, filtered, sortProps },
+    output: { filtered, sortProps },
     dispatch,
   } = useSort(data?.products);
 
   return (
     <>
       <Featured {...{ products: filtered }} />
-      <section className="ProductList-container">
+      <section className="ProductList-container w90 center">
         <div className="ProductList-wrapper">
           <div className="ProductList-bundles">
             <Switch>
@@ -41,7 +41,6 @@ const Container = () => {
                       tags: data?.tags,
                       sortProps,
                       dispatch,
-                      initial,
                     }}
                   />
                 )}
@@ -62,7 +61,6 @@ const BundlesContainer = ({
   limit = 20,
   sortProps,
   dispatch,
-  initial,
 }) => {
   const { currentPage, controls } = usePagination(products, limit);
 
@@ -73,12 +71,7 @@ const BundlesContainer = ({
           sortProps,
           dispatch,
           controls,
-          options: [
-            ["Ключевые слова", "tags", tags],
-            ["Вместимость", "size", initial],
-            "price",
-            "size",
-          ],
+          options: [["Ключевые слова", "tags", tags], "price", "size"],
         }}
       />
       <div className="Item-list">

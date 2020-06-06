@@ -2,7 +2,11 @@ import React, { useState, useContext } from "react";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import Sortable from "react-sortablejs";
 
-import { ITEM_QUERY, PROPORTION_QUERY } from "../../../store/Queries";
+import {
+  ITEM_QUERY,
+  PROPORTION_QUERY,
+  CREATE_ORDER,
+} from "../../../store/Queries";
 import { ThumbnailUrl } from "../../../store/Utils";
 import { UserContext } from "../../../store/UserProvider";
 // import boxsvg from "../../../resources/img/constructorBox.svg";
@@ -33,13 +37,7 @@ export default ({ state, setState }) => {
 const Info = ({ state: { product, current_page }, setState }) => {
   return (
     <div className="Constructor-progress">
-      <div
-        style={{
-          alignSelf: "center",
-          marginRight: "10px",
-          cursor: "pointer",
-          backgroundColor: " #ffbb96",
-        }}
+      <button
         onClick={() =>
           setState({
             current_page: product
@@ -52,31 +50,8 @@ const Info = ({ state: { product, current_page }, setState }) => {
           })
         }
       >
-        {current_page > 1 && product ? "Back" : "Close"}
-      </div>
-
-      {/* <div
-        // onClick={() => setState({ current_page: 0, details: null })}
-        className={product ? "Constructor-stage" : "Constructor-stage empty"}
-      >
-        <img src={boxsvg} alt="" draggable="false" />
-        <div className="Constructor-stage-info">
-          {!product ? (
-            <p
-              style={{
-                lineHeight: "15px",
-                letterSpacing: "0",
-                textAlign: `center`,
-              }}
-            >
-              Выбери упаковку
-            </p>
-          ) : (
-            product.proportion && <p>{product.proportion.type}</p>
-          )}
-        </div>
-      </div> */}
-
+        {current_page > 1 && product ? "Назад" : "Закрыть"}
+      </button>
       {product && (
         <div
           onClick={() => setState({ current_page: 1 })}
@@ -95,12 +70,11 @@ const Info = ({ state: { product, current_page }, setState }) => {
       {product &&
         product.set.filter(Boolean).length >= product.proportion.countmin &&
         current_page < 5 && (
-          <div
+          <button
             style={{
               alignSelf: "center",
               marginRight: "10px",
               cursor: "pointer",
-              backgroundColor: " #ffbb96",
             }}
             onClick={() => {
               current_page === 4
@@ -113,8 +87,8 @@ const Info = ({ state: { product, current_page }, setState }) => {
                   });
             }}
           >
-            {current_page === 4 ? "Finish" : "Next"}
-          </div>
+            {current_page === 4 ? "Закончить" : "Далее"}
+          </button>
         )}
     </div>
   );
@@ -256,7 +230,7 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
             product.set && (
               <div
                 key={index}
-                className="expand-slot-wrapper"
+                className="expand-slot-wrapper main-bg"
                 onClick={() => setState({ type: "EXPAND" })}
               >
                 +1
@@ -288,7 +262,6 @@ const ItemPicker = ({ setState }) => {
             ["Вкусы", "taste", data?.items],
             ["Шоколад", "chocolate", data?.items],
             "price",
-            "size",
           ],
         }}
       />
@@ -315,13 +288,13 @@ const Details = ({ state, setState, selectedSlot }) => {
   });
 
   const handleInput = (e) => {
-    if (
-      e.target.value[e.target.value.length - 1]?.match(/[А-я0-9]/) ||
-      e.target.value === ""
-    ) {
+    if ([].every.call(e.target.value, (c) => /[А-я0-9]/.test(c))) {
       setQuantity(e.target.value.length);
       setInput(e.target.value.toUpperCase());
-    } else return;
+    } else {
+      console.log("wrong input : ", e.target.value);
+      return;
+    }
   };
 
   const handleSubmit = () => {
@@ -351,7 +324,7 @@ const Details = ({ state, setState, selectedSlot }) => {
             <div className="item-container-buttons-control">
               <animated.div
                 style={_fillInputRange}
-                className="item-container-buttons-quantity"
+                className="item-container-buttons-quantity main-bg"
               ></animated.div>
               <input
                 type="range"
@@ -385,7 +358,7 @@ const Details = ({ state, setState, selectedSlot }) => {
       {state.product && state.details.editable && (
         <form onSubmit={handleSubmit}>
           <input
-            className="item-container-letter"
+            className="item-container-letter main-bg"
             required
             type="text"
             spellCheck="false"
@@ -452,14 +425,14 @@ const Reshuffle = ({ state: { product } }) => {
           )
         );
       }}
-      className="box-reshuffle"
+      className="box-reshuffle center w90"
     >
       {reshuffledSet
         .filter((item) => item)
         .map((item, i) => (
           <div
             data-id={item.letter || "$" + item.id}
-            className="item-wrapper"
+            className="item-wrapper main-bg"
             style={{
               width: `${(item.size_length * 100) / product.proportion.x}%`,
               margin: 2,
@@ -481,6 +454,11 @@ const Reshuffle = ({ state: { product } }) => {
 };
 const Submit = ({ state: { product } }) => {
   const { user, active, setActive } = useContext(UserContext);
+  const [createOrder] = useMutation(CREATE_ORDER);
+
+  const schema =
+    user?.role.id > 2 &&
+    product.set.map((item) => item.letter || item.id).join(",");
 
   return (
     <div className="box-wrapper">
@@ -494,12 +472,29 @@ const Submit = ({ state: { product } }) => {
       ) : (
         <button
           onClick={() => {
-            user.role.id > 2
-              ? console.log(
-                  "schema-" +
-                    product.set.map((item) => item.letter || item.id).join(",")
-                )
-              : console.log("Thank you");
+            createOrder({
+              variables: {
+                input: {
+                  data: {
+                    user: user.id,
+                    proportion: product.proportion.id,
+                    schema,
+                  },
+                },
+              },
+            }).catch((res) => {
+              const errors = res.graphQLErrors.map((error) => {
+                return error.message;
+              });
+              console.log({ errors });
+            });
+            console.log({
+              name: product.name,
+              user: { id: user.id },
+              proportion: { id: product.proportion.id },
+              schema,
+            });
+            console.log("Thank you");
           }}
         >
           Submit
@@ -509,15 +504,31 @@ const Submit = ({ state: { product } }) => {
   );
 };
 
-const Summary = () => {
+const Summary = ({ state: { product } }) => {
+  const items = product?.set.filter(Boolean);
+  const itemsTotalPrice = items?.reduce((sum, item) => (sum += item.price), 0);
+
+  if (!product) return null;
   return (
-    <div
-      style={{
-        alignSelf: "center",
-        backgroundColor: " #ffbb96",
-      }}
-    >
-      Summary
+    <div className="receipt">
+      <div className="main-bg">
+        <p>{product.proportion.shape}</p>
+        <p>{product.proportion.type}</p>
+        <p>{product.proportion.price} руб.</p>
+      </div>
+      {items.length > 0 && (
+        <>
+          <h2>+</h2>
+          <div className="main-bg">
+            <p>{items.length} шт.</p>
+            <p>{itemsTotalPrice} руб.</p>
+          </div>
+          <h2>=</h2>
+          <div className="main-bg">
+            <p>{itemsTotalPrice + product.proportion.price} руб.</p>
+          </div>
+        </>
+      )}
     </div>
   );
 };

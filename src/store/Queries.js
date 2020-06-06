@@ -193,3 +193,19 @@ export const ITEM_QUERY = gql`
     }
   }
 `;
+
+export const CREATE_ORDER = gql`
+  mutation createOrder($input: createOrderInput!) {
+    createOrder(input: $input) {
+      order {
+        user {
+          id
+        }
+        proportion {
+          id
+        }
+        schema
+      }
+    }
+  }
+`;
