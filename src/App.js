@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
-// import { onError } from "apollo-link-error";
+import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo-hooks";
 import { API_URL } from "./config";
@@ -27,10 +27,15 @@ function App() {
       return forward(operation);
     });
 
-  const httpLink = new HttpLink({
-    uri: `${API_URL}graphql`,
-    credentials: "same-origin",
-  });
+  const httpLink = ApolloLink.from([
+    onError(({ networkError }) => {
+      if (networkError) setOnline(false);
+    }),
+    new HttpLink({
+      uri: `${API_URL}graphql`,
+      credentials: "same-origin",
+    }),
+  ]);
 
   const cache = new InMemoryCache({});
 
@@ -53,13 +58,3 @@ function App() {
 }
 
 export default App;
-
-// link: ApolloLink.from([
-//   onError(({ networkError }) => {
-//     if (networkError) setOnline(false);
-//   }),
-//   new HttpLink({
-//     uri: `${API_URL}graphql`,
-//     credentials: "same-origin",
-//   }),
-// ])

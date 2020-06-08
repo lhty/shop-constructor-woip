@@ -192,13 +192,15 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
 }
 .Constructor-stage img {
   cursor: pointer;
   align-self: center;
-  max-width: 25px;
+  width: 25px;
+  height: 25px;
   margin: 5px;
 }
 .empty {
@@ -226,10 +228,12 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-left: 1em;
 }
 .item-container form {
   align-self: center;
   width: 100%;
+  margin-bottom: 10px;
 }
 input[type="range"] {
   width: 100%;
@@ -241,14 +245,20 @@ input[type="range"]::-webkit-slider-runnable-track {
   outline: none;
   transition: background 1s ease-in;
 }
+input[type="range"]::-moz-range-track {
+  background-color: #fff;
+  transition: background 1s ease-in;
+}
 input[type="range"]::-webkit-slider-thumb {
+  visibility: hidden;
+}
+input[type="range"]::-moz-range-thumb {
   visibility: hidden;
 }
 .item-container-letter {
   border: none;
   height: 50px;
   width: 100%;
-  padding: 5px;
   font-weight: 300;
   font-size: 1.5rem;
   letter-spacing: 5px;
@@ -260,9 +270,6 @@ input[type="range"]::-webkit-slider-thumb {
 .item-container-letter:focus {
   transform: scale(1);
   outline: none;
-}
-.item-container-details {
-  padding: 0 1rem;
 }
 .item-container-description {
   padding-bottom: 10px;
@@ -281,18 +288,16 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: hidden;
   white-space: nowrap;
 }
 .item-container-info-details-size {
-  padding: 5px;
   line-height: 1rem;
   font-size: 1rem;
   border-bottom: 1px dashed #83390447;
 }
 .item-container-info-details-specs {
-  padding: 5px;
   line-height: 1rem;
   font-size: 1rem;
 }
@@ -304,7 +309,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .item-container-quantity {
   align-self: flex-end;
-  margin-top: 25px;
+  margin: 10px 0;
   line-height: 2rem;
   font-weight: bold;
   font-size: 2rem;
@@ -321,7 +326,7 @@ input[type="range"]::-webkit-slider-thumb {
   padding: 0;
 }
 .item-container-title {
-  margin: 10px 0 10px 0;
+  margin: 10px 0;
 }
 .item-container-buttons {
   display: flex;
@@ -337,21 +342,26 @@ input[type="range"]::-webkit-slider-thumb {
   border: none;
   cursor: pointer;
   height: 100%;
-  color: #6f3a30;
+  color: #763e2e;
   font-size: 1rem;
-  font-weight: bold;
+  overflow: hidden;
   min-width: 25px;
+  background-color: transparent;
+}
+.item-container-buttons button:not(:last-child) {
+  font-size: 2rem;
+  color: #ddb895;
 }
 .item-container-buttons button:disabled {
-  color: #6f3a3038;
+  visibility: hidden;
 }
 .item-container-buttons-quantity {
   position: absolute;
-  /* box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.05); */
+  box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.05);
   border-radius: 20px;
   pointer-events: none;
   height: 50px;
-  background-color: #f2ebe4;
+  background-color: #fff;
   background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6.172L6.172 0h5.656L0 11.828V6.172zm40 5.656L28.172 0h5.656L40 6.172v5.656zM6.172 12l12-12h3.656l12 12h-5.656L20 3.828 11.828 12H6.172zm12 0L20 10.172 21.828 12h-3.656z' fill='%23ddb895' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 .item-container-buttons-control {
@@ -390,40 +400,15 @@ input[type="range"]::-webkit-slider-thumb {
 .item {
   width: 15%;
 }
-
-.compose {
-  border: none;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 1rem;
-  font-weight: normal;
-  border-radius: 10px;
-  color: #5b2600;
-  background-color: #83350c1f;
-  cursor: pointer;
-  width: 40%;
-  height: 3rem;
-  margin: 1rem auto;
-  box-shadow: 8px 8px 15px -16px rgba(0, 0, 0, 0.75);
-  transition: 0.2s ease;
-}
-.compose-nav {
-  display: flex;
-  flex-flow: row;
-  width: 90%;
-  margin-bottom: 15px;
-  justify-content: center;
-}
 .chosen {
   z-index: 1;
-  box-shadow: 5px 12px 50px 7px rgba(0, 0, 0, 0.22);
+  background-color: #f4dbc2;
   transform: scale(1.1);
   transition: 0.4s ease;
   cursor: grabbing;
 }
 .ghost {
-  box-shadow: 5px 12px 50px 7px rgba(0, 0, 0, 0.41);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 .drag {
   border: 2px solid red;

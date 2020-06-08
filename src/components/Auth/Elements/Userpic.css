@@ -4,8 +4,9 @@
   border: 3px solid #e4bfa0;
   border-radius: 50px 50px 50px 50px;
   z-index: 10000;
-  min-width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
+  margin-left: 3px;
 }
 .authFalse {
   border: 3px solid #dedede;

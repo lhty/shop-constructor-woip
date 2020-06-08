@@ -9,7 +9,10 @@ export const usePagination = (list, limit) => {
   useEffect(() => {
     const begin = pageNumber * limit;
     const end = begin + limit;
-    setCurrentPage(list.slice(begin, end));
+
+    list.length <= limit
+      ? setCurrentPage(list)
+      : setCurrentPage(list.slice(begin, end));
   }, [list, limit, pagesQuantity, pageNumber]);
 
   const changePage = (page) => {

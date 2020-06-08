@@ -3,7 +3,7 @@
   top: 0;
   left: 7.5%;
   border-radius: 0px 0px 15px 15px;
-  padding: 5em 1em 1em 1em;
+  padding: 4em 1em 1em 1em;
   color: #ad7247;
   background-color: #fbf1ec;
   z-index: 9999;
@@ -12,11 +12,13 @@
 .auth-page {
   font-size: 1em;
   cursor: pointer;
+  font-weight: 300;
+  letter-spacing: -0.06em;
 }
 .auth-active {
   text-decoration-style: solid;
   font-size: 1.6em;
-  transition: 0.5s;
+  transition: 0.2s;
   cursor: auto;
 }
 .auth-page-wrapper {

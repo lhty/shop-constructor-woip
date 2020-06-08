@@ -32,11 +32,7 @@ const Login = () => {
 
   return (
     <>
-      <form
-        autoComplete="off"
-        className="auth-page-login"
-        onSubmit={handleSubmit}
-      >
+      <form className="auth-page-login" onSubmit={handleSubmit}>
         <animated.input
           style={inputStyle}
           name="name"

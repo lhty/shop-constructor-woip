@@ -35,7 +35,7 @@
 .promo > img {
   vertical-align: middle;
   cursor: zoom-in;
-  margin: 0 5px 25px 0;
+  margin-right: 2px;
   box-shadow: 6px 4px 22px rgba(0, 0, 0, 0.14);
 }
 .fullscreen {

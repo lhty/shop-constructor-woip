@@ -14,8 +14,7 @@
   padding: 0.5rem 0;
 }
 .Constructor-toggle p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 2rem;
-  font-weight: bold;
-  letter-spacing: -0.04em;
+  font-weight: 400;
 }

@@ -1,7 +1,6 @@
 .Promo-container {
   position: relative;
   overflow: hidden;
-  padding-bottom: 10px;
 }
 .Banner-wrapper {
   position: relative;
@@ -10,13 +9,11 @@
   justify-content: center;
   align-items: center;
 }
-.Banner-wrapper h1 {
-  margin-bottom: 15px;
-}
 .Banner-wrapper p {
-  margin-bottom: 15px;
   width: 70%;
+  margin-bottom: 1rem;
 }
+
 .Banner-wrapper > img {
   align-self: center;
   max-width: 18vw;
@@ -27,13 +24,20 @@
   margin: 0 auto;
   width: 80%;
   align-self: center;
-  padding: 1rem 1rem 0 1rem;
   overflow: hidden;
   user-select: none;
   pointer-events: none;
+  padding: 1rem 1rem 0 1rem;
 }
 .Banner-text p {
   cursor: pointer;
+}
+.Banner-wrapper h2,
+.Banner-text h2 {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.05em;
 }
 .Banner-img {
   width: 50%;
@@ -53,7 +57,7 @@
   height: 2.8em;
   width: 2.8em;
   display: block;
-  margin: 0.5em auto;
+  margin: 5px auto 0;
   position: relative;
   cursor: pointer;
   border-radius: 4px;
@@ -62,8 +66,8 @@
 .left-bar {
   position: absolute;
   background-color: transparent;
-  left: -7px;
-  top: 40px;
+  right: 18px;
+  top: 25px;
   width: 30px;
   display: block;
   transform: rotate(35deg);
@@ -74,7 +78,7 @@
   content: "";
   background-color: #cbb2a6;
   width: 35px;
-  height: 5px;
+  height: 3px;
   display: block;
   float: right;
   border-radius: 10px;
@@ -85,8 +89,8 @@
 .right-bar {
   position: absolute;
   background-color: transparent;
-  top: 40px;
-  left: 10px;
+  top: 25px;
+  left: 14px;
   width: 40px;
   display: block;
   transform: rotate(-35deg);
@@ -97,7 +101,7 @@
   content: "";
   background-color: #cbb2a6;
   width: 35px;
-  height: 5px;
+  height: 3px;
   display: block;
   float: right;
   border-radius: 10px;

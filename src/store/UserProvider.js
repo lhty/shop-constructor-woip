@@ -57,7 +57,6 @@ const UserProvider = (props) => {
       let user = await request(`${API_URL}users/me`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
-
       setUser(user);
     },
     [request]

@@ -46,7 +46,7 @@ const Promo = () => {
 
   const container = useSpring({
     from: { y: -500 },
-    height: isOpen ? sizes.height + 40 : 190,
+    height: 10 + sizes.height,
     y: 0,
     config: { mass: 1, tension: 300, friction: 40 },
   });
@@ -122,14 +122,14 @@ const Promo = () => {
             item ? (
               <animated.div key={key} style={{ ...props }}>
                 <div className="Banner-wrapper">
-                  <h1>{pages[index].title}</h1>
+                  <h2>{pages[index].title}</h2>
                   <p>{pages[index].description}</p>
                   <Gallery image={pages[index].promo_banners} isPromo={true} />
                 </div>
               </animated.div>
             ) : (
               <animated.div key={key} style={props} className="Banner-text">
-                <h1>{pages[index].title}</h1>
+                <h2>{pages[index].title}</h2>
                 <p>
                   {pages[index].description.length > 200 &&
                     pages[index].description.substring(0, 200) + " ..."}

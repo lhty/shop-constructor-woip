@@ -107,7 +107,7 @@ const Box = ({ state, setState }) => {
     case 4:
       return <Reshuffle {...{ state }} />;
     case 5:
-      return <Submit {...{ state }} />;
+      return <Submit {...{ state, setState }} />;
     default:
       return <SelectBox {...{ setState }} />;
   }
@@ -288,11 +288,13 @@ const Details = ({ state, setState, selectedSlot }) => {
   });
 
   const handleInput = (e) => {
-    if ([].every.call(e.target.value, (c) => /[А-я0-9]/.test(c))) {
+    if (
+      [].every.call(e.target.value, (c) => /[А-я0-9]/.test(c)) &&
+      e.target.value.length <= _maxAddLimit
+    ) {
       setQuantity(e.target.value.length);
       setInput(e.target.value.toUpperCase());
     } else {
-      console.log("wrong input : ", e.target.value);
       return;
     }
   };
@@ -324,7 +326,7 @@ const Details = ({ state, setState, selectedSlot }) => {
             <div className="item-container-buttons-control">
               <animated.div
                 style={_fillInputRange}
-                className="item-container-buttons-quantity main-bg"
+                className="item-container-buttons-quantity"
               ></animated.div>
               <input
                 type="range"
@@ -385,12 +387,8 @@ const Details = ({ state, setState, selectedSlot }) => {
           <Gallery image={state.details.image} />
         </div>
       </div>
-      <div className="item-container-details">
-        <h1 className="item-container-title">{state.details.name}</h1>
-        <p className="item-container-description">
-          {state.details.description}
-        </p>
-      </div>
+      <h1 className="item-container-title">{state.details.name}</h1>
+      <p className="item-container-description">{state.details.description}</p>
       <div className="item-container-quantity">
         <p>{quantity} шт</p>
         <p>{quantity * state.details.price} руб</p>
@@ -452,54 +450,105 @@ const Reshuffle = ({ state: { product } }) => {
     </Sortable>
   );
 };
-const Submit = ({ state: { product } }) => {
+const Submit = ({ state: { product }, setState }) => {
   const { user, active, setActive } = useContext(UserContext);
   const [createOrder] = useMutation(CREATE_ORDER);
+  const [success, setSuccess] = useState(false);
 
   const schema =
-    user?.role.id > 2 &&
+    user?.role?.id > 2 &&
     product.set.map((item) => item.letter || item.id).join(",");
+
+  const noAuth = (
+    <button
+      disabled={active.auth}
+      onClick={() => setActive({ ...active, auth: !active.auth })}
+    >
+      Login
+    </button>
+  );
+
+  const Auth = (
+    <button
+      onClick={() => {
+        createOrder({
+          variables: {
+            input: {
+              data: {
+                user: user.id,
+                proportion: product.proportion.id,
+                schema,
+              },
+            },
+          },
+        })
+          .then(() => setSuccess(true))
+          .catch((res) => {
+            const errors = res.graphQLErrors.map((error) => {
+              return error.message;
+            });
+            console.log({ errors });
+          });
+      }}
+    >
+      Сохранить
+    </button>
+  );
+
+  const Success = (
+    <div
+      className="main-bg"
+      style={{
+        width: "100%",
+        display: "flex",
+        flexFlow: "column wrap",
+        alignContent: "center",
+        alignItems: "center",
+        padding: "1rem",
+      }}
+    >
+      <span
+        style={{
+          fontSize: "3rem",
+        }}
+        role="img"
+        aria-label="check"
+      >
+        ✔️
+      </span>
+      <h2>Спасибо!</h2>
+      <button
+        style={{
+          alignSelf: "center",
+          cursor: "pointer",
+          fontSize: "1rem",
+          padding: "1rem",
+          lineHeight: "1rem",
+          border: "none",
+          color: "#763e2e",
+          backgroundColor: "#e4d7cb",
+        }}
+        onClick={() =>
+          setState({ current_page: 0, product: null, details: null })
+        }
+      >
+        <span
+          style={{
+            fontSize: "2rem",
+          }}
+          role="img"
+          aria-label="backhand"
+        >
+          👈
+        </span>
+        Вернуться назад
+      </button>
+    </div>
+  );
 
   return (
     <div className="box-wrapper">
-      {!user ? (
-        <button
-          disabled={active.auth}
-          onClick={() => setActive({ ...active, auth: !active.auth })}
-        >
-          Login
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            createOrder({
-              variables: {
-                input: {
-                  data: {
-                    user: user.id,
-                    proportion: product.proportion.id,
-                    schema,
-                  },
-                },
-              },
-            }).catch((res) => {
-              const errors = res.graphQLErrors.map((error) => {
-                return error.message;
-              });
-              console.log({ errors });
-            });
-            console.log({
-              name: product.name,
-              user: { id: user.id },
-              proportion: { id: product.proportion.id },
-              schema,
-            });
-            console.log("Thank you");
-          }}
-        >
-          Submit
-        </button>
-      )}
+      {!user ? noAuth : success ? Success : Auth}
     </div>
   );
 };

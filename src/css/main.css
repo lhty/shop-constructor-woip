@@ -19,8 +19,9 @@ a {
 html,
 body {
   /* font-family: Noto; */
-  font-family: Roboto;
+  font-family: "Roboto", sans-serif;
   color: #763e2e;
+  background-color: #fff;
 }
 
 .arrow {
@@ -109,11 +110,11 @@ body {
     transform: scale(0.6);
   }
   .auth {
-    min-width: 40px;
+    width: 40px;
     height: 40px;
   }
   .cart svg {
-    width: 35px;
+    width: 40px;
   }
   .cart-list-wrapper {
     width: 100%;
@@ -142,8 +143,10 @@ body {
     border: none;
     background: none;
   }
-  .Banner-wrapper p {
+  .Banner-wrapper p,
+  .Banner-wrapper h2 {
     width: 100%;
+    padding: 1rem 1rem 0 1rem;
   }
   .Promo-img {
     max-width: 140vw;
@@ -183,8 +186,7 @@ body {
     width: 100%;
   }
   .item-container-info-details {
-    align-self: center;
-    flex-direction: row;
+    flex-flow: row wrap;
     justify-content: space-evenly;
     width: 100%;
   }
