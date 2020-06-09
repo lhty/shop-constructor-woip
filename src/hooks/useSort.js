@@ -31,9 +31,7 @@ const sortingReducer = (state, action) => {
             obj[key].map((tag) => tag.name),
             propsList
           ).length
-        : typeof obj[key] === "string"
-        ? obj[key].includes(propsList)
-        : propsList.includes(obj[key])
+        : obj[key] && intersection(obj[key].split(","), propsList).length
     );
   };
 

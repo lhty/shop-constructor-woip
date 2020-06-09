@@ -26,7 +26,7 @@ const Container = () => {
 
   return (
     <>
-      <Featured {...{ products: filtered }} />
+      <Featured {...{ products: data?.products }} />
       <section className="ProductList-container w90 center">
         <div className="ProductList-wrapper">
           <div className="ProductList-bundles">

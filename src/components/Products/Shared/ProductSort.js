@@ -6,18 +6,23 @@ import sortprice from "../../../resources/img/sort-byprice.svg";
 import sortsize from "../../../resources/img/sort-bypsize.svg";
 import "./ProductSort.css";
 
+const settings = {
+  price: { name: "Цена", img: sortprice },
+  size: { name: "Размер", img: sortsize },
+};
+
 export default function ProductSort({
   sortProps,
   dispatch,
-  controls,
   options = ["price", "size"],
 }) {
-  const complex_options = options.filter((prop) => Array.isArray(prop));
+  const numericOptions = options.filter((prop) => !Array.isArray(prop));
+  const arrayLikeOptions = options.filter((prop) => Array.isArray(prop));
 
   const [IsOpen, toggle] = useReducer(
     (IsOpen, toggle) => ({ ...IsOpen, ...toggle }),
     {
-      ...complex_options.reduce((acc, key) => {
+      ...arrayLikeOptions.reduce((acc, key) => {
         acc[key[1]] = false;
         return acc;
       }, {}),
@@ -26,6 +31,7 @@ export default function ProductSort({
 
   const [optionList, addOption] = useReducer(
     (optionList, { key, value }) => {
+      if (!value) return { ...optionList, [key]: [] };
       return {
         ...optionList,
         [key]: optionList[key].includes(value)
@@ -33,7 +39,7 @@ export default function ProductSort({
           : [...optionList[key], value],
       };
     },
-    complex_options.reduce((acc, key) => {
+    arrayLikeOptions.reduce((acc, key) => {
       acc[key[1]] = [];
       return acc;
     }, {})
@@ -62,7 +68,7 @@ export default function ProductSort({
 
   return (
     <div className="Product-sort">
-      {complex_options.map((option, i) => (
+      {arrayLikeOptions.map((option, i) => (
         <div
           key={i}
           className={
@@ -82,12 +88,26 @@ export default function ProductSort({
             )
           }
         >
-          {option[0]}
+          <p>{option[0]}</p>
+          {optionList[option[1]].length > 0 && (
+            <>
+              <p className="counter">{optionList[option[1]].length}</p>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addOption({ key: option[1] });
+                }}
+              >
+                +
+              </button>
+            </>
+          )}
         </div>
       ))}
-      {options.includes("price") && (
+      {numericOptions.map((option, i) => (
         <div
-          className={checkStyle(sortProps.price, [
+          key={i}
+          className={checkStyle(sortProps[option], [
             "sort-by",
             "sort-by",
             "sort-by inactive",
@@ -96,52 +116,24 @@ export default function ProductSort({
             dispatch({
               sortProps: {
                 ...sortProps,
-                price: !sortProps.price,
+                [option]: !sortProps[option],
               },
             })
           }
         >
-          Цена
+          {settings[option].name}
           <img
-            className={checkStyle(sortProps.price, [
+            className={checkStyle(sortProps[option], [
               "inactive",
               "reversed",
               "hidden",
             ])}
-            src={sortprice}
+            src={settings[option].img}
             alt=""
           />
         </div>
-      )}
-      {options.includes("size") && (
-        <div
-          className={checkStyle(sortProps.size, [
-            "sort-by",
-            "sort-by",
-            "sort-by inactive",
-          ])}
-          onClick={() => {
-            dispatch({
-              sortProps: {
-                ...sortProps,
-                size: !sortProps.size,
-              },
-            });
-          }}
-        >
-          Вместимость
-          <img
-            className={checkStyle(sortProps.size, [
-              "small",
-              "inactive",
-              "hidden",
-            ])}
-            src={sortsize}
-            alt=""
-          />
-        </div>
-      )}
-      {complex_options.map((option, i) => (
+      ))}
+      {arrayLikeOptions.map((option, i) => (
         <PropsList
           key={i}
           {...{
@@ -151,7 +143,7 @@ export default function ProductSort({
             list:
               option[1] === "tags"
                 ? option[2]?.map((prop) => prop.name)
-                : option[2]?.map((prop) => prop[option[1]]),
+                : option[2]?.filter(Boolean).map((prop) => prop[option[1]]),
             addOption,
           }}
         />

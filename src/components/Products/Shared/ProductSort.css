@@ -30,8 +30,28 @@
   filter: opacity(70%);
 }
 .selected {
+  display: flex;
   font-weight: bold;
   background-color: #a7817524;
+}
+.selected p {
+  align-self: center;
+}
+.selected > button {
+  cursor: pointer;
+  margin-left: 0.5em;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #d56464;
+  background-color: transparent;
+  transform: rotate(45deg);
+}
+.counter {
+  background-color: #e8d7d4;
+  padding: 0 0.5em;
+  font-weight: 400;
+  margin-left: 0.5em;
 }
 .sort-tags {
   position: absolute;
