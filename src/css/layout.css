@@ -174,6 +174,9 @@ body {
     padding-top: 1rem;
     margin: 0 auto;
   }
+  .item-container {
+    padding: 0 1em;
+  }
   .item-container-info-details-specs,
   .item-container-info-details-size {
     font-size: 0.5rem;

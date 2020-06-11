@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo-hooks";
-import { API_URL } from "./config";
-import Layout from "./components/Layout";
-import Maintenance from "./components/StaticInfo/Maintenance";
+import { API_URL } from "../config";
 
-import "./css/main.css";
+import { UserContext } from "./UserProvider";
+import Maintenance from "../components/StaticInfo/Maintenance";
 
-function App() {
+export default (props) => {
+  const { token } = useContext(UserContext);
   const [online, setOnline] = useState(true);
 
   const authMiddleware = (authToken) =>
@@ -41,7 +41,7 @@ function App() {
 
   const useAppApolloClient = () => {
     return new ApolloClient({
-      link: authMiddleware(localStorage.getItem("user")).concat(httpLink),
+      link: authMiddleware(token).concat(httpLink),
       cache,
     });
   };
@@ -49,12 +49,8 @@ function App() {
   const client = useAppApolloClient();
 
   return online ? (
-    <ApolloProvider client={client}>
-      <Layout />
-    </ApolloProvider>
+    <ApolloProvider client={client}>{props.children}</ApolloProvider>
   ) : (
     <Maintenance />
   );
-}
-
-export default App;
+};

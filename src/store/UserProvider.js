@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import { API_URL } from "../config";
+import { localStorageName } from "../config";
 
-const StorageName = "user";
 export const UserContext = React.createContext();
 
 const UserProvider = (props) => {
   const [user, setUser] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem(localStorageName));
   const [active, setActive] = useState({ auth: false, cart: false });
 
   const { loading, request, error, clearError } = useFetch();
@@ -16,8 +16,8 @@ const UserProvider = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (token && token !== localStorage.getItem(StorageName))
-      localStorage.setItem(StorageName, token);
+    if (token && token !== localStorage.getItem(localStorageName))
+      localStorage.setItem(localStorageName, token);
   }, [token]);
 
   const login = async ({ name, password }) => {
@@ -78,7 +78,7 @@ const UserProvider = (props) => {
   );
 
   useEffect(() => {
-    const token = localStorage.getItem(StorageName);
+    const token = localStorage.getItem(localStorageName);
     if (token) getUser(token);
   }, [getUser]);
 

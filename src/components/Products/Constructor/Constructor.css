@@ -13,6 +13,7 @@
   flex-wrap: wrap;
 }
 .box-wrapper > button {
+  position: relative;
   align-self: flex-end;
   font-size: 0.8rem;
   line-height: 2rem;
@@ -20,6 +21,11 @@
   letter-spacing: -0.04em;
   border: none;
   width: 100px;
+}
+.box-wrapper > button > svg {
+  position: absolute;
+  width: 35px;
+  right: -35px;
 }
 .box-reshuffle {
   display: flex;

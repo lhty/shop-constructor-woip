@@ -20,6 +20,8 @@ import Pages from "../Shared/Pages";
 import { useSort } from "../../../hooks/useSort";
 import { usePagination } from "../../../hooks/usePagination";
 
+import Spinner from "../../Assets/Spinner";
+
 import "./Constructor.css";
 
 export default ({ state, setState }) => {
@@ -453,6 +455,7 @@ const Reshuffle = ({ state: { product } }) => {
 const Submit = ({ state: { product }, setState }) => {
   const { user, active, setActive } = useContext(UserContext);
   const [createOrder] = useMutation(CREATE_ORDER);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const schema =
@@ -470,7 +473,9 @@ const Submit = ({ state: { product }, setState }) => {
 
   const Auth = (
     <button
+      disabled={loading}
       onClick={() => {
+        setLoading(true);
         createOrder({
           variables: {
             input: {
@@ -482,15 +487,14 @@ const Submit = ({ state: { product }, setState }) => {
             },
           },
         })
-          .then(() => setSuccess(true))
-          .catch((res) => {
-            const errors = res.graphQLErrors.map((error) => {
-              return error.message;
-            });
-            console.log({ errors });
-          });
+          .then(() => {
+            setSuccess(true);
+            setLoading(false);
+          })
+          .catch((e) => console.log(e));
       }}
     >
+      {loading && <Spinner />}
       Сохранить
     </button>
   );
