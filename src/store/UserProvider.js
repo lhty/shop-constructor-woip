@@ -6,30 +6,24 @@ import { localStorageName } from "../config";
 
 export const UserContext = React.createContext();
 
-const UserProvider = (props) => {
+const UserProvider = ({ children, token, setToken }) => {
   const [user, setUser] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem(localStorageName));
   const [active, setActive] = useState({ auth: false, cart: false });
 
   const { loading, request, error, clearError } = useFetch();
 
   const history = useHistory();
 
-  useEffect(() => {
-    if (token && token !== localStorage.getItem(localStorageName))
-      localStorage.setItem(localStorageName, token);
-  }, [token]);
-
   const login = async ({ name, password }) => {
-    try {
-      let data = await request(`${API_URL}auth/local`, "POST", {
-        identifier: name,
-        password,
-      });
+    let data = await request(`${API_URL}auth/local`, "POST", {
+      identifier: name,
+      password,
+    });
 
+    if (data) {
       setToken(data.jwt);
       setUser(data.user);
-    } catch (e) {}
+    }
   };
 
   const signUp = async ({
@@ -74,8 +68,13 @@ const UserProvider = (props) => {
         history.replace("/");
       } catch (e) {}
     },
-    [request, history, getUser]
+    [request, history, getUser, setToken]
   );
+
+  useEffect(() => {
+    if (token && token !== localStorage.getItem(localStorageName))
+      localStorage.setItem(localStorageName, token);
+  }, [token]);
 
   useEffect(() => {
     const token = localStorage.getItem(localStorageName);
@@ -111,7 +110,7 @@ const UserProvider = (props) => {
         token,
       }}
     >
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 };

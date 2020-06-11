@@ -12,7 +12,7 @@
     "graphql-tag": "^2.10.1",
     "prop-types": "^15.7.2",
     "ramda": "^0.27.0",
-    "react": "^16.9.0",
+    "react": "^16.13.1",
     "react-apollo-hooks": "^0.5.0",
     "react-dom": "^16.13.0",
     "react-resize-aware": "^3.0.0",

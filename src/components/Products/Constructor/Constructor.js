@@ -9,7 +9,7 @@ import {
 } from "../../../store/Queries";
 import { ThumbnailUrl } from "../../../store/Utils";
 import { UserContext } from "../../../store/UserProvider";
-// import boxsvg from "../../../resources/img/constructorBox.svg";
+
 import sweetssvg from "../../../resources/img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
 
@@ -107,7 +107,7 @@ const Box = ({ state, setState }) => {
     case 3:
       return <Details {...{ state, setState, selectedSlot }} />;
     case 4:
-      return <Reshuffle {...{ state }} />;
+      return <Reshuffle {...{ state, setState }} />;
     case 5:
       return <Submit {...{ state, setState }} />;
     default:
@@ -216,7 +216,7 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
             ) : slot.image.length > 0 ? (
               <div
                 style={{ width: "100%", height: "100%" }}
-                onClick={() => console.log("woot")}
+                onClick={() => setState({ current_page: 3, details: slot })}
               ></div>
             ) : (
               slot.image.length < 1 && <p>{slot.name}</p>
@@ -314,7 +314,7 @@ const Details = ({ state, setState, selectedSlot }) => {
 
   return (
     <div className="item-container">
-      {state.product && state.product.set.filter((item) => !item).length > 0 && (
+      {state.product && state.product.set.filter((item) => !item).length && (
         <div className="item-container-buttons">
           <>
             {!state.details.editable && (
@@ -436,12 +436,8 @@ const Reshuffle = ({ state: { product } }) => {
             style={{
               width: `${(item.size_length * 100) / product.proportion.x}%`,
               margin: 2,
-              backgroundImage: `url(${
-                item &&
-                item.image.length > 0 &&
-                !item.editable &&
-                ThumbnailUrl(item.image)
-              })`,
+              backgroundImage:
+                item.letter || `url(${ThumbnailUrl(item.image)})`,
             }}
             key={i}
             draggable="false"
@@ -452,6 +448,7 @@ const Reshuffle = ({ state: { product } }) => {
     </Sortable>
   );
 };
+
 const Submit = ({ state: { product }, setState }) => {
   const { user, active, setActive } = useContext(UserContext);
   const [createOrder] = useMutation(CREATE_ORDER);

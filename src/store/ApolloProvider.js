@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
@@ -7,11 +7,9 @@ import { ApolloLink } from "apollo-link";
 import { ApolloProvider } from "react-apollo-hooks";
 import { API_URL } from "../config";
 
-import { UserContext } from "./UserProvider";
 import Maintenance from "../components/StaticInfo/Maintenance";
 
-export default (props) => {
-  const { token } = useContext(UserContext);
+export default ({ children, token }) => {
   const [online, setOnline] = useState(true);
 
   const authMiddleware = (authToken) =>
@@ -49,7 +47,7 @@ export default (props) => {
   const client = useAppApolloClient();
 
   return online ? (
-    <ApolloProvider client={client}>{props.children}</ApolloProvider>
+    <ApolloProvider client={client}>{children}</ApolloProvider>
   ) : (
     <Maintenance />
   );

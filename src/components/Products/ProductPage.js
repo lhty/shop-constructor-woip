@@ -44,7 +44,7 @@ const Product = () => {
         <h1>{product.title}</h1>
         <div className="product-page-inside">
           <div className="product-page-inside-expand">
-            <p>Состав</p>
+            <p>Внутри :</p>
           </div>
           {product.items &&
             product.items.map((item) => (
