@@ -4,8 +4,8 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 5px;
   animation: 1s ease 0s 1 normal none running fadeInDown;
+  background-color: var(--background-secondary-color);
 }
 .StaticInfo-card {
   display: flex;
@@ -18,8 +18,8 @@
 .StaticInfo-card p {
   background: linear-gradient(
     90deg,
-    #f3ebe5 23.44%,
-    rgba(243, 235, 229, 0) 100%
+    var(--background-primary-color) 20%,
+    #ffffff00 100%
   );
   width: 70%;
   padding: 1rem 0 1rem 1rem;

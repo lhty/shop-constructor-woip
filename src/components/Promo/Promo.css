@@ -1,36 +1,18 @@
 .Promo-container {
   position: relative;
-  overflow: hidden;
-}
-.Banner-wrapper {
-  position: relative;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-items: center;
-}
-.Banner-wrapper p {
-  width: 70%;
-  margin-bottom: 1rem;
-}
-
-.Banner-wrapper > img {
-  align-self: center;
-  max-width: 18vw;
-  border-radius: 10px;
-  box-shadow: -2px 15px 16px -16px rgba(0, 0, 0, 0.75);
 }
 .Banner-text {
   margin: 0 auto;
   width: 80%;
-  align-self: center;
-  overflow: hidden;
-  user-select: none;
-  pointer-events: none;
   padding: 1rem 1rem 0 1rem;
+}
+.Banner-text > img {
+  align-self: center;
+  max-width: 18vw;
 }
 .Banner-text p {
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 .Banner-wrapper h2,
 .Banner-text h2 {
@@ -76,9 +58,9 @@
 }
 .left-bar::after {
   content: "";
-  background-color: #cbb2a6;
+  background-color: var(--accent-primary-color);
   width: 35px;
-  height: 3px;
+  height: 4px;
   display: block;
   float: right;
   border-radius: 10px;
@@ -99,9 +81,9 @@
 }
 .right-bar::after {
   content: "";
-  background-color: #cbb2a6;
+  background-color: var(--accent-primary-color);
   width: 35px;
-  height: 3px;
+  height: 4px;
   display: block;
   float: right;
   border-radius: 10px;

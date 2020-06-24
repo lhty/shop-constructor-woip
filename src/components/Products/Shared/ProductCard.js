@@ -11,9 +11,8 @@ const ProductCard = ({ product, onClick }) => {
   const history = useHistory();
 
   const appearance = useSpring({
-    from: { opacity: 0, scale: 0 },
+    from: { opacity: 0 },
     opacity: loading && product.image.length ? 0 : 1,
-    scale: loading && product.image.length ? 0 : 1,
     config: { mass: 1, tension: 240, friction: 20 },
   });
 

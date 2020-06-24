@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../store/UserProvider";
-import { useSpring, animated } from "react-spring";
 import { API_URL } from "../../config";
 import Spinner from "../Assets/Spinner";
 
@@ -9,47 +8,57 @@ import "./Login.css";
 const Login = () => {
   const { login, loading, error, clearError } = useContext(UserContext);
   const [inputValues, setInputValues] = useState({
-    name: null,
-    password: null,
+    name: "",
+    password: "",
   });
 
   const callbackUrl = window.location.href;
 
-  const inputStyle = useSpring({
-    background: error ? "#ffcece75" : "#f4eae1",
-  });
-
   const handleOnChange = (event) => {
     const { name, value } = event.target;
-    clearError();
     setInputValues({ ...inputValues, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     login(inputValues);
+    setInputValues({
+      ...inputValues,
+      prev: { name: inputValues.name, password: inputValues.password },
+    });
   };
+
+  useEffect(() => {
+    if (error)
+      setTimeout(() => {
+        clearError();
+      }, 1000);
+  }, [error, clearError]);
 
   return (
     <>
-      <form className="auth-page-login" onSubmit={handleSubmit}>
-        <animated.input
-          style={inputStyle}
+      <form onSubmit={handleSubmit}>
+        <input
+          disabled={error}
           name="name"
           placeholder="Номер телефона / Имя"
+          value={error ? "Неправильные данные" : inputValues.name}
           onChange={handleOnChange}
           required
-        ></animated.input>
-        <animated.input
-          style={inputStyle}
+        ></input>
+        <input
+          disabled={error}
           name="password"
-          placeholder="Пароль"
+          placeholder={error || "Пароль"}
+          value={error ? "Неправильные данные" : inputValues.password}
           onChange={handleOnChange}
           required
-        ></animated.input>
+        ></input>
         <button
           type="submit"
-          disabled={!inputValues.name || !inputValues.password || loading}
+          disabled={
+            !inputValues.name || !inputValues.password || loading || error
+          }
         >
           {loading ? <Spinner /> : "Войти"}
         </button>

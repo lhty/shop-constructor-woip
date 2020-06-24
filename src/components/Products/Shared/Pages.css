@@ -5,7 +5,7 @@
   margin-top: auto;
   transition: 1s ease;
 }
-.Pages-container div {
+.Pages-container > div {
   cursor: pointer;
   width: 1.5rem;
   height: 1.5rem;
@@ -14,15 +14,16 @@
   opacity: 0.8;
   margin: 1rem 0.3rem;
   font-size: 1rem;
-  background-color: #8a390d33;
+  background-color: var(--accent-secondary-color);
+  color: var(--font-secondary-color);
   transition: 0.5s ease;
 }
-.active {
+.Pages-container .active {
   font-size: 1rem;
   font-weight: bold;
   transform: scale(1.5);
+  background-color: var(--accent-primary-color);
 }
 .lastpage {
-  background-color: #8a390d85;
-  color: #ffffff;
+  background-color: var(--background-secondary-color);
 }

@@ -1,15 +1,19 @@
 .Featured-container {
-  margin: 1rem 0;
+  padding: 1rem 0;
   position: relative;
   display: flex;
   justify-content: space-evenly;
   flex-flow: row wrap;
 }
 .Featured-product {
+  background-color: var(--accent-primary-color);
+  color: var(--font-secondary-color);
   padding: 1rem;
   cursor: pointer;
 }
 .Featured-item {
+  background-color: var(--accent-primary-color);
+  color: var(--font-secondary-color);
   padding: 1rem;
   cursor: pointer;
 }

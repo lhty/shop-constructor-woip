@@ -3,7 +3,11 @@
   display: flex;
   justify-content: space-between;
   top: 0;
+  background-color: var(--accent-primary-color);
   z-index: 10000;
+}
+.header > h1 {
+  color: var(--font-secondary-color);
 }
 .header-title {
   align-self: center;

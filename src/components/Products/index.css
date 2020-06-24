@@ -1,14 +1,9 @@
 .ProductList-container {
   position: relative;
+  background-color: var(--background-secondary-color);
 }
 .ProductList-wrapper {
   display: flex;
-  /* background: linear-gradient(
-    270.2deg,
-    #f3ebe5 0.19%,
-    #f8f2ed 53.05%,
-    #f3ebe5 99.95%
-  ); */
 }
 .ProductList-bundles {
   position: relative;

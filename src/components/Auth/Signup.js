@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { useSpring, animated } from "react-spring";
+import React, { useContext, useState, useEffect } from "react";
 import Spinner from "../Assets/Spinner";
 import { UserContext } from "../../store/UserProvider";
 
@@ -23,48 +22,58 @@ const Signup = () => {
     signUp(inputValues);
   };
 
-  const inputStyle = useSpring({
-    background: error ? "#ffcece75" : "#f4eae1",
-  });
+  useEffect(() => {
+    if (error)
+      setTimeout(() => {
+        clearError();
+      }, 500);
+  }, [error, clearError]);
 
   return (
-    <form className="auth-page-signup" onSubmit={handleSubmit}>
-      <animated.input
-        style={inputStyle}
+    <form onSubmit={handleSubmit}>
+      <input
+        disabled={error}
         autoComplete="off"
         name="name"
+        type="text"
         placeholder="Имя"
         onChange={handleOnChange}
         required
-      ></animated.input>
-      <animated.input
-        style={inputStyle}
+      ></input>
+      <input
+        disabled={error}
         autoComplete="off"
         name="password"
+        type="password"
         placeholder="Пароль"
         onChange={handleOnChange}
         required
-      ></animated.input>
-      <animated.input
-        style={inputStyle}
+      ></input>
+      <input
+        disabled={error}
+        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$"
         name="email"
+        type="email"
         placeholder="Почта"
         onChange={handleOnChange}
         required
-      ></animated.input>
-      <animated.input
-        style={inputStyle}
+      ></input>
+      <input
+        disabled={error}
         name="phone"
+        type="tel"
         placeholder="Номер телефона"
         onChange={handleOnChange}
-      ></animated.input>
+        required
+      ></input>
       <button
         type="submit"
         disabled={
           !inputValues.name ||
           !inputValues.password ||
           !inputValues.email ||
-          !inputValues.phone
+          !inputValues.phone ||
+          error
         }
       >
         {loading ? <Spinner /> : "Зарегистрироваться"}

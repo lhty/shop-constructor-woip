@@ -11,7 +11,6 @@
   align-items: center;
   height: 50px;
   width: 100%;
-  border-radius: 0 25px 25px 0;
 }
 .product-page-nav a {
   position: absolute;
@@ -35,7 +34,6 @@
   padding-left: 1em;
   width: 60%;
 }
-
 .product-page-right button {
   position: absolute;
   align-self: flex-end;
@@ -45,6 +43,8 @@
   letter-spacing: -0.04em;
   border: none;
   width: 100px;
+  background-color: var(--accent-primary-color);
+  color: var(--font-secondary-color);
 }
 .product-page-right h1 {
   margin-bottom: 25px;

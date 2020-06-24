@@ -5,9 +5,6 @@ export const PRODUCTS_QUERY = gql`
     products(sort: "id:desc", start: $start, limit: $limit) {
       ...Product
     }
-    tags {
-      name
-    }
   }
 
   fragment Product on Product {
@@ -187,9 +184,6 @@ export const ITEM_QUERY = gql`
       image {
         url
       }
-    }
-    tags {
-      name
     }
   }
 `;

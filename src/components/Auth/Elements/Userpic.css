@@ -1,7 +1,7 @@
 .auth {
   align-self: center;
   cursor: pointer;
-  border: 3px solid #e4bfa0;
+  border: 3px solid var(--font-secondary-color);
   border-radius: 50px 50px 50px 50px;
   z-index: 10000;
   width: 45px;
@@ -9,7 +9,8 @@
   margin-left: 3px;
 }
 .authFalse {
-  border: 3px solid #dedede;
+  opacity: 0.5;
+  border: 3px solid var(--font-secondary-color);
 }
 .photo {
   position: absolute;

@@ -10,31 +10,30 @@
   height: 100%;
   cursor: pointer;
 }
-.ProductCard-title {
-  display: none;
-  position: absolute;
-  width: 100%;
-  background: linear-gradient(270deg, #f9f3ee -5.08%, #f2ebe4 89.21%);
-  padding: 5px 0 0 5px;
-  z-index: 1;
-}
 .ProductCard-price {
   position: absolute;
   display: flex;
-  padding: 4px 4px 0px 4px;
-  background: linear-gradient(180deg, #ffda90 10%, #e9bc64 100%);
-  box-shadow: 1px 5px 9px 2px rgba(0, 0, 0, 0.41);
+  padding: 3px 3px 0px 3px;
+  background: linear-gradient(
+    180deg,
+    var(--accent-secondary-color) 20%,
+    var(--accent-primary-color) 100%
+  );
   top: 0px;
   left: 0px;
 }
 .ProductCard-price p {
-  color: #5b2600;
-  background-color: #e9bc64;
+  color: var(--font-secondary-color);
+  background-color: var(--accent-primary-color);
   font-weight: bold;
   font-size: 0.7rem;
   padding: 5px 0 5px 2px;
 }
+.ProductCard-price p:first-child {
+  border-radius: 3px 0 0 0;
+}
 .ProductCard-price p:last-child {
+  border-radius: 0 3px 0 0;
   padding: 5px 1px 0 2px;
   font-weight: normal;
 }
@@ -46,7 +45,7 @@
   width: 0;
   height: 0;
   border-bottom: 15px solid #eee0;
-  border-left: 25px solid #e9bc64;
+  border-left: 25px solid var(--accent-primary-color);
 }
 .ProductCard-price:before {
   content: "";
@@ -56,7 +55,7 @@
   width: 0;
   height: 0;
   border-bottom: 15px solid #eee0;
-  border-right: 25px solid #e9bc64;
+  border-right: 25px solid var(--accent-primary-color);
 }
 .ItemCard-wrapper {
   position: relative;
@@ -75,7 +74,9 @@
   text-align: center;
   font-size: 1rem;
   font-weight: bold;
-  border: 1px #995c30b3 dashed;
+  color: var(--font-primary-color);
+  border: 1px var(--font-primary-color) dashed;
+  min-height: 200px;
   height: 100%;
 }
 .ItemCard-wrapper img {
@@ -86,14 +87,18 @@
 .ItemCard-price {
   position: absolute;
   right: 10px;
-  top: -15px;
+  top: -20px;
   transform: rotate(-45deg);
-  background: linear-gradient(90.13deg, #ffdcc9 0.04%, #ffbb96 99.97%);
-  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-  padding: 20px 2px;
+  background: linear-gradient(
+    45deg,
+    var(--accent-secondary-color) 1%,
+    var(--accent-primary-color) 99%
+  );
+  border: 1px solid var(--accent-primary-color);
+  padding: 25px 2px;
 }
 .ItemCard-price p {
   transform: rotate(90deg);
-  font-weight: bold;
-  font-size: 0.8rem;
+  color: var(--font-secondary-color);
+  font-size: 0.7rem;
 }

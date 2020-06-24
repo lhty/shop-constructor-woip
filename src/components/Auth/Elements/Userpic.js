@@ -14,7 +14,7 @@ const Userpic = ({ user, loading, handleAuthToggle }) => {
       onClick={() => handleAuthToggle()}
     >
       {loading ? (
-        <Spinner />
+        <Spinner stroke={11} color={"#dedede"} />
       ) : (
         photo &&
         !user.photo && (

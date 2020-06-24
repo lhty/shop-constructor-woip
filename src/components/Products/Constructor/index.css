@@ -2,19 +2,30 @@
   outline: none;
 }
 .Constructor {
+  --constructor-primary-color: var(--block-primary-color);
+  --constructor-secondary-color: var(--block-secondary-color);
+
+  --constructor-accent-primary-color: var(--accent-primary-color);
+  --constructor-accent-secondary-color: var(--accent-secondary-color);
+
+  --constructor-font-primary-color: var(--font-primary-color);
+  --constructor-font-secondary-color: var(--font-secondary-color);
   position: relative;
   display: flex;
   flex-direction: column;
+  background-color: var(--constructor-primary-color);
+  color: var(--constructor-font-primary-color);
 }
 .Constructor-toggle {
   position: absolute;
-  text-align: center;
-  width: 10%;
   right: 0px;
-  padding: 0.5rem 0;
+  background-color: var(--accent-primary-color);
+  color: var(--font-secondary-color);
 }
-.Constructor-toggle p {
-  font-size: 1rem;
-  line-height: 2rem;
+.Constructor-toggle > p {
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 0.9rem;
   font-weight: 400;
+  padding: 0.8rem;
 }

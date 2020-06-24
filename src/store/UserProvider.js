@@ -10,16 +10,15 @@ const UserProvider = ({ children, token, setToken }) => {
   const [user, setUser] = useState(false);
   const [active, setActive] = useState({ auth: false, cart: false });
 
-  const { loading, request, error, clearError } = useFetch();
+  const { request, loading, error, clearError } = useFetch();
 
   const history = useHistory();
 
   const login = async ({ name, password }) => {
-    let data = await request(`${API_URL}auth/local`, "POST", {
+    const data = await request(`${API_URL}auth/local`, "POST", {
       identifier: name,
       password,
     });
-
     if (data) {
       setToken(data.jwt);
       setUser(data.user);
@@ -33,7 +32,7 @@ const UserProvider = ({ children, token, setToken }) => {
     email = null,
     phone = null,
   }) => {
-    let data = await request(`${API_URL}auth/local/register`, "POST", {
+    const data = await request(`${API_URL}auth/local/register`, "POST", {
       username: name,
       password,
       email,
@@ -48,7 +47,7 @@ const UserProvider = ({ children, token, setToken }) => {
 
   const getUser = useCallback(
     async (token) => {
-      let user = await request(`${API_URL}users/me`, "GET", null, {
+      const user = await request(`${API_URL}users/me`, "GET", null, {
         Authorization: `Bearer ${token}`,
       });
       setUser(user);
@@ -58,15 +57,13 @@ const UserProvider = ({ children, token, setToken }) => {
 
   const socialLogin = useCallback(
     async (provider, access_token) => {
-      try {
-        const { jwt } = await request(
-          `${API_URL}auth${provider}callback${access_token}`,
-          "GET"
-        );
-        setToken(jwt);
-        getUser(jwt);
-        history.replace("/");
-      } catch (e) {}
+      const { jwt } = await request(
+        `${API_URL}auth${provider}callback${access_token}`,
+        "GET"
+      );
+      setToken(jwt);
+      getUser(jwt);
+      history.replace("/");
     },
     [request, history, getUser, setToken]
   );

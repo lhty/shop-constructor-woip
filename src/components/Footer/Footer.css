@@ -4,12 +4,14 @@
   height: 30px;
   display: flex;
   justify-content: center;
+  background-color: var(--accent-primary-color);
 }
 .footer p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 2rem;
   font-weight: 300;
   letter-spacing: -0.04em;
+  color: var(--font-secondary-color);
 }
 .footer-border {
   transform: scaleY(-1);

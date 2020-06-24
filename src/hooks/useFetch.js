@@ -17,15 +17,13 @@ export const useFetch = () => {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || "Wrong user data");
+          throw new Error(data.error);
         }
-
-        setLoading(false);
         return data;
       } catch (e) {
-        setLoading(false);
         setError(e.message);
-        throw e;
+      } finally {
+        setTimeout(() => setLoading(false), 500);
       }
     },
     []

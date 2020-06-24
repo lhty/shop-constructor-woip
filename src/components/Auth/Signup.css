@@ -4,34 +4,3 @@
   align-items: center;
   margin-top: 15px;
 }
-.auth-page-signup input {
-  border: 0.5px dashed #833904;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  height: 25px;
-  padding: 5px;
-  background-color: #f4eae1;
-  text-align: center;
-}
-.auth-page-signup button {
-  border: 0.5px dashed #833904;
-  box-sizing: border-box;
-  font-size: 15px;
-  font-weight: bold;
-  width: 100%;
-  margin-top: 5px;
-  border-radius: 5px;
-  color: #7e4a24;
-  height: 35px;
-  padding: 5px;
-  background-color: #f6e0cd;
-}
-.auth-page-signup button:disabled {
-  filter: grayscale(0.8);
-  opacity: 0.6;
-}
-.auth-page-signup button:hover:enabled {
-  background-color: #f3cdac;
-  cursor: pointer;
-}

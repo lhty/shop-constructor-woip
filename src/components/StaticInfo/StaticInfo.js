@@ -6,7 +6,7 @@ import calli from "../../resources/img/calli.png";
 
 const StaticInfo = () => {
   return (
-    <section className="StaticInfo-container">
+    <section className="StaticInfo-container w85">
       <div className="StaticInfo-card">
         <p>
           Авторские конфеты ручной работы, наборы с шоколадными буквами под

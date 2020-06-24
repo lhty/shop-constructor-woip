@@ -22,7 +22,7 @@ const FeaturedProduct = ({ product }) => {
 
   return (
     <div
-      className="Featured-product main-bg"
+      className="Featured-product"
       onClick={() =>
         product && history.replace(`/${product.id}/${product.title}`)
       }
@@ -36,7 +36,7 @@ const FeaturedItem = ({ item }) => {
   const { setState } = useContext(Context);
   return (
     <div
-      className="Featured-item main-bg"
+      className="Featured-item"
       onClick={() => item && setState({ current_page: 3, details: item })}
     >
       Featured-item: {item?.name}

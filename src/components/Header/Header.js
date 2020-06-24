@@ -43,28 +43,27 @@ export default function Header({ match: { url } }) {
     });
 
   return (
-    <>
-      <header ref={HeaderRef} className="header center w90 main-bg">
-        <Userpic {...{ user, loading, handleAuthToggle }} />
-        <h1
-          style={{
-            fontSize: "3rem",
-            lineHeight: "3rem",
-            fontWeight: "200",
-            letterSpacing: "-0.11em",
-            textAlign: "center",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            window.pageYOffset === 0
-              ? setActive({ auth: false, cart: false })
-              : window.scrollTo(0, 0);
-            history.replace("/");
-          }}
-        >
-          SweetDreams
-        </h1>
-        {/* <img
+    <header ref={HeaderRef} className="header w85">
+      <Userpic {...{ user, loading, handleAuthToggle }} />
+      <h1
+        style={{
+          fontSize: "3rem",
+          lineHeight: "3rem",
+          fontWeight: "200",
+          letterSpacing: "-0.11em",
+          textAlign: "center",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          window.pageYOffset === 0
+            ? setActive({ auth: false, cart: false })
+            : window.scrollTo(0, 0);
+          history.replace("/");
+        }}
+      >
+        SweetDreams
+      </h1>
+      {/* <img
           className="header-title"
           onClick={() => {
             window.pageYOffset === 0
@@ -76,14 +75,13 @@ export default function Header({ match: { url } }) {
           alt=""
           draggable="false"
         /> */}
-        <Cart />
-      </header>
+      <Cart />
       {active.auth && (
         <div className="auth-page-container" ref={AuthRef}>
           <AuthPage user={user} />
         </div>
       )}
       {active.cart && <CartList url={url} />}
-    </>
+    </header>
   );
 }

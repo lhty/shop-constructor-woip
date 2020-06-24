@@ -3,9 +3,10 @@
   opacity: 0.6;
   top: 0;
   height: 100%;
+  opacity: 1;
 }
 .path {
-  stroke: #c999858a;
+  stroke: var(--accent-primary-color);
   stroke-linecap: round;
   animation: dash 1.5s ease-in-out infinite;
 }

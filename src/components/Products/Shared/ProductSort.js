@@ -2,21 +2,20 @@ import React, { useEffect, useCallback, useReducer } from "react";
 
 import { useTransition, animated } from "react-spring";
 
-import sortprice from "../../../resources/img/sort-byprice.svg";
-import sortsize from "../../../resources/img/sort-bypsize.svg";
 import "./ProductSort.css";
 
 const settings = {
-  price: { name: "Цена", img: sortprice },
-  size: { name: "Размер", img: sortsize },
+  price: { name: "Цена" },
+  size: { name: "Размер" },
 };
 
 export default function ProductSort({
   sortProps,
   dispatch,
+  products,
+  filtered,
   options = ["price", "size"],
 }) {
-  const numericOptions = options.filter((prop) => !Array.isArray(prop));
   const arrayLikeOptions = options.filter((prop) => Array.isArray(prop));
 
   const [IsOpen, toggle] = useReducer(
@@ -35,7 +34,7 @@ export default function ProductSort({
       return {
         ...optionList,
         [key]: optionList[key].includes(value)
-          ? optionList[key].filter((val) => val !== value)
+          ? optionList[key].filter((val) => val !== !value)
           : [...optionList[key], value],
       };
     },
@@ -66,11 +65,22 @@ export default function ProductSort({
     }
   };
 
+  const getPropList = (key, list) =>
+    key === "tags"
+      ? list.reduce(
+          (list, prod) =>
+            prod[key].length
+              ? [...list, prod[key].map((prop) => prop.name)]
+              : list,
+          []
+        )
+      : list?.map((prod) => prod[key]);
   return (
     <div className="Product-sort">
       {arrayLikeOptions.map((option, i) => (
-        <div
+        <button
           key={i}
+          disabled={!getPropList(option[1], products).length}
           className={
             IsOpen[option[1]] || optionList[option[1]].length
               ? "sort-by selected"
@@ -90,49 +100,42 @@ export default function ProductSort({
         >
           <p>{option[0]}</p>
           {optionList[option[1]].length > 0 && (
-            <>
+            <div className="selected-info">
               <p className="counter">{optionList[option[1]].length}</p>
-              <button
+              <div
                 onClick={(e) => {
                   e.stopPropagation();
                   addOption({ key: option[1] });
                 }}
               >
                 +
-              </button>
-            </>
+              </div>
+            </div>
           )}
-        </div>
+        </button>
       ))}
-      {numericOptions.map((option, i) => (
-        <div
-          key={i}
-          className={checkStyle(sortProps[option], [
-            "sort-by",
-            "sort-by",
-            "sort-by inactive",
-          ])}
-          onClick={() =>
-            dispatch({
-              sortProps: {
-                ...sortProps,
-                [option]: !sortProps[option],
-              },
-            })
-          }
-        >
-          {settings[option].name}
-          <img
+      {options
+        .filter((prop) => !Array.isArray(prop))
+        .map((option, i) => (
+          <div
+            key={i}
             className={checkStyle(sortProps[option], [
-              "inactive",
-              "reversed",
-              "hidden",
+              "sort-by",
+              "sort-by",
+              "sort-by inactive",
             ])}
-            src={settings[option].img}
-            alt=""
-          />
-        </div>
-      ))}
+            onClick={() =>
+              dispatch({
+                sortProps: {
+                  ...sortProps,
+                  [option]: !sortProps[option],
+                },
+              })
+            }
+          >
+            {settings[option].name}
+          </div>
+        ))}
       {arrayLikeOptions.map((option, i) => (
         <PropsList
           key={i}
@@ -140,10 +143,11 @@ export default function ProductSort({
             IsOpen: IsOpen[option[1]],
             propKey: option[1],
             selected: optionList[option[1]],
-            list:
-              option[1] === "tags"
-                ? option[2]?.map((prop) => prop.name)
-                : option[2]?.filter(Boolean).map((prop) => prop[option[1]]),
+            list: getPropList(option[1], products),
+            availableList:
+              Object.entries(optionList).filter(
+                (prop) => prop[0] !== option[1] && prop[1].length
+              ).length && getPropList(option[1], filtered),
             addOption,
           }}
         />
@@ -152,35 +156,44 @@ export default function ProductSort({
   );
 }
 
-const PropsList = ({ IsOpen, propKey, addOption, list, selected }) => {
+const PropsList = ({
+  IsOpen,
+  propKey,
+  addOption,
+  list,
+  availableList,
+  selected,
+}) => {
   const transitions = useTransition(IsOpen, null, {
-    from: { opacity: 0, y: -100 },
+    from: { opacity: 0, y: 0 },
     enter: { opacity: 1, y: 0 },
     leave: { opacity: 0, y: 100 },
   });
 
+  if (!list) return null;
   return transitions.map(
     ({ item, key, props }) =>
       item && (
-        <animated.div key={key} style={props} className="sort-tags main-bg">
-          {list &&
-            [
-              ...new Set(
-                list
-                  .map((str) =>
-                    typeof str === "string" ? str.split(",") : str
-                  )
-                  .flat()
-              ),
-            ].map((value, i) => (
-              <p
-                className={selected.includes(value) ? "selected" : ""}
-                onClick={() => addOption({ key: propKey, value })}
-                key={i}
-              >
-                {value}
-              </p>
-            ))}
+        <animated.div key={key} style={props} className="sort-tags">
+          {[
+            ...new Set(
+              list
+                .map((str) => (typeof str === "string" ? str.split(",") : str))
+                .flat()
+            ),
+          ].map((value, i) => (
+            <button
+              disabled={
+                availableList &&
+                !availableList.some((str) => str?.includes(value))
+              }
+              className={selected.includes(value) ? "selected" : "unchecked"}
+              onClick={() => addOption({ key: propKey, value })}
+              key={i}
+            >
+              {value}
+            </button>
+          ))}
         </animated.div>
       )
   );

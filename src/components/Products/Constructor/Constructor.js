@@ -10,7 +10,6 @@ import {
 import { ThumbnailUrl } from "../../../store/Utils";
 import { UserContext } from "../../../store/UserProvider";
 
-import sweetssvg from "../../../resources/img/constructorSweets.svg";
 import { useSpring, animated } from "react-spring";
 
 import Gallery from "../../Gallery/Gallery";
@@ -52,7 +51,7 @@ const Info = ({ state: { product, current_page }, setState }) => {
           })
         }
       >
-        {current_page > 1 && product ? "Назад" : "Закрыть"}
+        {current_page > 0 && product ? "Назад" : "Закрыть"}
       </button>
       {product && (
         <div
@@ -63,9 +62,8 @@ const Info = ({ state: { product, current_page }, setState }) => {
               : "Constructor-stage empty"
           }
         >
-          <img src={sweetssvg} alt="" draggable="false" />
           <p>
-            {product?.set.filter(Boolean).length} / {product?.set.length}
+            {product?.set.filter(Boolean).length}/{product?.set.length}
           </p>
         </div>
       )}
@@ -73,11 +71,6 @@ const Info = ({ state: { product, current_page }, setState }) => {
         product.set.filter(Boolean).length >= product.proportion.countmin &&
         current_page < 5 && (
           <button
-            style={{
-              alignSelf: "center",
-              marginRight: "10px",
-              cursor: "pointer",
-            }}
             onClick={() => {
               current_page === 4
                 ? setState({
@@ -120,7 +113,7 @@ const SelectBox = ({ setState }) => {
 
   if (loading || error) return <></>;
   return (
-    <div className="boxselector-wrapper">
+    <div className="box-wrapper">
       {data?.proportions
         .filter((item) => item.construct)
         .map((size, i) => (
@@ -142,6 +135,13 @@ const SelectBox = ({ setState }) => {
             key={i}
           >
             <div className="boxselector-slot-info">
+              <span
+                aria-label="box"
+                role="img"
+                style={{ fontSize: "2rem", lineHeight: "4rem" }}
+              >
+                🎁
+              </span>
               <p>
                 {size.countmin}-{size.countmax} шт.
               </p>
@@ -160,13 +160,11 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
   const style_props = useSpring({
     from: {
       opacity: 0,
-      scale: 0,
     },
     opacity: 1,
-    scale: 1,
     width: `${(2500 / product.proportion.x).toFixed()}%`,
-    margin: 10,
-    minHeight: "50px",
+    padding: 5,
+    minHeight: "70px",
   });
 
   return (
@@ -232,7 +230,7 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
             product.set && (
               <div
                 key={index}
-                className="expand-slot-wrapper main-bg"
+                className="expand-slot-wrapper"
                 onClick={() => setState({ type: "EXPAND" })}
               >
                 +1
@@ -247,7 +245,7 @@ const Slots = ({ state: { product }, setState, setSelectedSlot }) => {
 const ItemPicker = ({ setState }) => {
   const { data } = useQuery(ITEM_QUERY);
   const {
-    output: { filtered, sortProps },
+    output: { filtered, initial, sortProps },
     dispatch,
   } = useSort(data?.items);
 
@@ -259,10 +257,13 @@ const ItemPicker = ({ setState }) => {
         {...{
           sortProps,
           dispatch,
+          products: initial,
+          filtered,
           controls,
           options: [
-            ["Вкусы", "taste", data?.items],
-            ["Шоколад", "chocolate", data?.items],
+            ["Ключевые слова", "tags"],
+            ["Вкусы", "taste"],
+            ["Шоколад", "chocolate"],
             "price",
           ],
         }}
@@ -314,7 +315,7 @@ const Details = ({ state, setState, selectedSlot }) => {
 
   return (
     <div className="item-container">
-      {state.product && state.product.set.filter((item) => !item).length && (
+      {state.product?.set.filter((item) => !item).length > 0 && (
         <div className="item-container-buttons">
           <>
             {!state.details.editable && (
@@ -331,7 +332,12 @@ const Details = ({ state, setState, selectedSlot }) => {
                 className="item-container-buttons-quantity"
               ></animated.div>
               <input
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
                 type="range"
+                hidden={state.details.editable}
                 disabled={state.details.editable}
                 onChange={(e) => setQuantity(Math.max(e.target.value, 1))}
                 value={quantity}
@@ -362,9 +368,10 @@ const Details = ({ state, setState, selectedSlot }) => {
       {state.product && state.details.editable && (
         <form onSubmit={handleSubmit}>
           <input
-            className="item-container-letter main-bg"
-            required
+            className="item-container-letter"
             type="text"
+            required
+            pattern="[а-яА-Я0-9-]+"
             spellCheck="false"
             maxLength={_maxAddLimit}
             value={input}
@@ -408,6 +415,7 @@ const Reshuffle = ({ state: { product } }) => {
         animation: 200,
         easing: "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
         dragoverBubble: true,
+        delayOnTouchOnly: true,
         removeCloneOnHide: true,
         draggable: ".item-wrapper",
         chosenClass: "chosen",
@@ -431,13 +439,17 @@ const Reshuffle = ({ state: { product } }) => {
         .filter((item) => item)
         .map((item, i) => (
           <div
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
             data-id={item.letter || "$" + item.id}
-            className="item-wrapper main-bg"
+            className="item-wrapper"
             style={{
               width: `${(item.size_length * 100) / product.proportion.x}%`,
-              margin: 2,
-              backgroundImage:
-                item.letter || `url(${ThumbnailUrl(item.image)})`,
+              backgroundImage: !item.letter
+                ? `url(${ThumbnailUrl(item.image)})`
+                : "none",
             }}
             key={i}
             draggable="false"
@@ -498,10 +510,10 @@ const Submit = ({ state: { product }, setState }) => {
 
   const Success = (
     <div
-      className="main-bg"
       style={{
         width: "100%",
         display: "flex",
+        backgroundColor: "var(--background-secondary-color)",
         flexFlow: "column wrap",
         alignContent: "center",
         alignItems: "center",
@@ -526,7 +538,7 @@ const Submit = ({ state: { product }, setState }) => {
           padding: "1rem",
           lineHeight: "1rem",
           border: "none",
-          color: "#763e2e",
+          color: "var(--font-primary-color)",
           backgroundColor: "#e4d7cb",
         }}
         onClick={() =>
@@ -561,7 +573,7 @@ const Summary = ({ state: { product } }) => {
   if (!product) return null;
   return (
     <div className="receipt">
-      <div className="main-bg">
+      <div>
         <p>{product.proportion.shape}</p>
         <p>{product.proportion.type}</p>
         <p>{product.proportion.price} руб.</p>
@@ -569,12 +581,12 @@ const Summary = ({ state: { product } }) => {
       {items.length > 0 && (
         <>
           <h2>+</h2>
-          <div className="main-bg">
+          <div>
             <p>{items.length} шт.</p>
             <p>{itemsTotalPrice} руб.</p>
           </div>
           <h2>=</h2>
-          <div className="main-bg">
+          <div>
             <p>{itemsTotalPrice + product.proportion.price} руб.</p>
           </div>
         </>

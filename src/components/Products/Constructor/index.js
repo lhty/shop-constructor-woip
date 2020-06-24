@@ -19,7 +19,6 @@ export default () => {
       width: state.current_page >= 0 ? `100%` : `0%`,
     },
     leave: {
-      position: window.screen.width < 1024 ? "absolute" : "",
       opacity: 0,
       width: `0%`,
     },
@@ -29,7 +28,7 @@ export default () => {
     <Suspense fallback={null}>
       {state.current_page < 0 && (
         <div
-          className="Constructor-toggle main-bg"
+          className="Constructor-toggle"
           onClick={() => setState({ current_page: 0 })}
         >
           <p>Собери свой набор</p>
